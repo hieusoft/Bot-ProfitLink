@@ -1,0 +1,194 @@
+-- =====================================
+-- DATABASE: telegram_bot_system
+-- =====================================
+
+CREATE DATABASE IF NOT EXISTS telegram_bot_system
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci;
+
+USE telegram_bot_system;
+
+-- =====================================
+-- 1. USERS
+-- =====================================
+CREATE TABLE users (
+  user_id BIGINT PRIMARY KEY,
+  username VARCHAR(255),
+  language VARCHAR(10) DEFAULT 'en',
+  ref_by BIGINT NULL,
+  wallet_address VARCHAR(100),
+  verified_kol TINYINT(1) DEFAULT 0,
+  commission_percent DECIMAL(5,2) DEFAULT 30.00, 
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  CONSTRAINT fk_users_ref_by FOREIGN KEY (ref_by)
+    REFERENCES users(user_id) ON DELETE SET NULL
+);
+CREATE INDEX idx_users_ref_by ON users(ref_by);
+
+-- =====================================
+-- 2. SUBSCRIPTION PLANS
+-- =====================================
+CREATE TABLE subscription_plans (
+  plan_id INT PRIMARY KEY AUTO_INCREMENT,
+  name VARCHAR(100) NOT NULL,
+  price DECIMAL(10,2) DEFAULT 0.00,
+  sale_percent DECIMAL(5,2) DEFAULT 0.00,
+  sale_start DATETIME NULL, -- Thời gian bắt đầu sale
+  sale_end DATETIME NULL,   -- Thời gian kết thúc sale
+  duration_days INT NOT NULL,
+  is_active TINYINT(1) DEFAULT 1,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+
+
+-- =====================================
+-- 3. PAYMENTS
+-- =====================================
+CREATE TABLE payments (
+  payment_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  user_id BIGINT NOT NULL,
+  plan_id INT NULL,
+  order_id VARCHAR(100) NULL,
+  amount DECIMAL(10,2) NOT NULL,
+  currency VARCHAR(10) DEFAULT 'USDT',
+  method VARCHAR(50) DEFAULT 'OxaPay',
+  status ENUM('pending','success','failed') DEFAULT 'pending',
+  merchant_id VARCHAR(50) NULL,
+  track_id VARCHAR(50) NULL,
+  expired_at BIGINT NULL,
+  invoice_date BIGINT NULL,
+  completed_at BIGINT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  CONSTRAINT fk_payment_user FOREIGN KEY (user_id)
+    REFERENCES users(user_id) ON DELETE CASCADE,
+  CONSTRAINT fk_payment_plan FOREIGN KEY (plan_id)
+    REFERENCES subscription_plans(plan_id) ON DELETE SET NULL
+);
+CREATE INDEX idx_payment_user_id ON payments(user_id);
+CREATE INDEX idx_payment_track_id ON payments(track_id);
+
+-- =====================================
+-- 4. SUBSCRIPTIONS
+-- =====================================
+CREATE TABLE subscriptions (
+  sub_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  user_id BIGINT NOT NULL,
+  start_date DATETIME,
+  end_date DATETIME,
+  status ENUM('active','expired','pending') DEFAULT 'pending',
+  trial BOOLEAN DEFAULT FALSE,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  CONSTRAINT fk_sub_user FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+CREATE INDEX idx_sub_user_id ON subscriptions(user_id);
+
+-- =====================================
+-- 5. AFFILIATE REFERRALS
+-- =====================================
+CREATE TABLE affiliate_referrals (
+  ref_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  referrer_id BIGINT NOT NULL,
+  referred_id BIGINT NOT NULL,
+  commission_usd DECIMAL(10,2) DEFAULT 0.00,
+  status ENUM('pending','approved','paid') DEFAULT 'pending',
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_ref_referrer FOREIGN KEY (referrer_id) REFERENCES users(user_id) ON DELETE CASCADE,
+  CONSTRAINT fk_ref_referred FOREIGN KEY (referred_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+CREATE INDEX idx_ref_referrer ON affiliate_referrals(referrer_id);
+CREATE INDEX idx_ref_referred ON affiliate_referrals(referred_id);
+
+-- =====================================
+-- 6. AFFILIATE WITHDRAWALS
+-- =====================================
+CREATE TABLE affiliate_withdrawals (
+  withdraw_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  user_id BIGINT NOT NULL,
+  amount DECIMAL(10,2) NOT NULL,
+  wallet_address VARCHAR(100),
+  status ENUM('pending','approved','rejected') DEFAULT 'pending',
+  tx_hash VARCHAR(255),
+  approved_at DATETIME NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_withdraw_user FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+CREATE INDEX idx_withdraw_user_id ON affiliate_withdrawals(user_id);
+
+-- =====================================
+-- 7. SYSTEM LOGS
+-- =====================================
+CREATE TABLE system_logs (
+  log_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  user_id BIGINT NULL,
+  action VARCHAR(255),
+  details TEXT,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_log_user FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE SET NULL
+);
+CREATE INDEX idx_log_user_id ON system_logs(user_id);
+
+-- =====================================
+-- 8. INSERT SUBSCRIPTION PLANS
+-- =====================================
+INSERT INTO subscription_plans (name, price, sale_percent, sale_start, sale_end, duration_days, is_active)
+VALUES 
+  ('Trial', 0.00, 0.00, NULL, NULL, 7, 1),
+  ('Monthly', 19.99, 10.00, '2025-11-01 00:00:00', '2025-11-10 23:59:59', 30, 1),
+  ('Quarterly', 49.99, 15.00, '2025-11-01 00:00:00', '2025-11-10 23:59:59', 90, 1),
+  ('Yearly', 149.99, 25.00, '2025-11-01 00:00:00', '2025-11-10 23:59:59', 365, 1);
+
+
+-- =====================================
+-- 9. SUBSCRIPTION DETAILS (NEW)
+-- =====================================
+CREATE TABLE subscription_details (
+  detail_id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  sub_id BIGINT NOT NULL,
+  plan_id INT NOT NULL,
+  payment_id BIGINT NULL,
+  activated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  expired_at DATETIME NULL,
+  renewed BOOLEAN DEFAULT FALSE,
+  CONSTRAINT fk_detail_sub FOREIGN KEY (sub_id) REFERENCES subscriptions(sub_id) ON DELETE CASCADE,
+  CONSTRAINT fk_detail_plan FOREIGN KEY (plan_id) REFERENCES subscription_plans(plan_id) ON DELETE CASCADE,
+  CONSTRAINT fk_detail_payment FOREIGN KEY (payment_id) REFERENCES payments(payment_id) ON DELETE SET NULL
+);
+CREATE INDEX idx_detail_sub_id ON subscription_details(sub_id);
+CREATE INDEX idx_detail_plan_id ON subscription_details(plan_id);
+CREATE INDEX idx_detail_payment_id ON subscription_details(payment_id);
+
+CREATE TABLE qna_category (
+    category_id INT AUTO_INCREMENT PRIMARY KEY,
+    category_name VARCHAR(100) NOT NULL,
+    is_active BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE qna (
+    qna_id INT AUTO_INCREMENT PRIMARY KEY,
+    category_id INT NULL,             -- khóa ngoại liên kết category
+    question TEXT NOT NULL,
+    answer TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (category_id) REFERENCES qna_category(category_id) ON DELETE SET NULL
+);
+INSERT INTO qna_category (category_name, is_active) VALUES
+('Subscription', TRUE),
+('Affiliate', TRUE),
+('Cashback', TRUE),
+('Technical', TRUE),
+('Support', TRUE);
+INSERT INTO qna (category_id, question, answer) VALUES
+(1, 'Làm thế nào để đăng ký Subscription?', 'Bạn có thể đăng ký Subscription bằng cách vào trang Subscription và nhấn "Subscribe".'),
+(2, 'Làm sao để tham gia chương trình Affiliate?', 'Bạn cần đăng ký tài khoản Affiliate và nhận link giới thiệu để chia sẻ.'),
+(3, 'Cashback có áp dụng cho tất cả sản phẩm không?', 'Cashback chỉ áp dụng cho các sản phẩm được đánh dấu trên website.'),
+(4, 'Tôi gặp lỗi khi đăng nhập, phải làm sao?', 'Hãy thử reset mật khẩu hoặc liên hệ bộ phận Technical Support để được giúp đỡ.'),
+(5, 'Làm sao để liên hệ Support?', 'Bạn có thể gửi email đến support@example.com hoặc chat trực tiếp trên website.');
+

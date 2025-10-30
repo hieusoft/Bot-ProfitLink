@@ -1,0 +1,67 @@
+{
+    "start": {
+        "welcome": "👋 Welcome back, {name}!\n\n📊 *Your Crypto Companion*\nPlease choose an option below 👇",
+        "no_username": "Trader"
+    },
+    "account": {
+        "title": "💼 <b><u>MY ACCOUNT</u></b>",
+        "user": "👤 <b>User:</b> <i>{name}</i>",
+        "subscription_title": "💎 <b>Subscription Info</b>",
+        "plan": "• <b>Plan:</b> <code>{plan}</code>",
+        "status_active": "• <b>Status:</b> <i>Active</i>",
+        "remaining": "• <b>Remaining:</b> <code>{days} days</code>",
+        "expires": "• <b>Expires:</b> <code>{date}</code>",
+        "affiliate": "🔗 <b>Your Affiliate Link:</b>\n<code>{link}</code>",
+        "footer_active": "🚀 <i>Thank you for being a premium member!</i>",
+        "status_inactive": "⚠️ <b>Status:</b> <i>No active subscription</i>",
+        "subscribe_hint": "💎 <i>Go to Subscription Plans to start your journey!</i>",
+        "footer_inactive": "🌟 <i>Don’t miss premium signals and VIP features!</i>"
+    },
+    "affiliate_menu": {
+        "title": "🤝 Affiliate Menu",
+        "subtitle": "Manage your referral program",
+        "total_commission": "🏦 <b>Total Commission:</b> ${balance_text} USD",
+        "referral_stats": "📊 <b>Referral Stats</b>",
+        "active": "✅ Active: <b>{active_count}</b>",
+        "pending": "⏳ Pending: <b>{pending_count}</b>",
+        "referral_link": "🔗 <b>Your Referral Link:</b>\n<a href=\"{affiliate_link}\">{affiliate_link}</a>",
+        "footer": "<i>Use the buttons below to withdraw funds or verify as a KOL/KOC.</i>"
+    },
+    "affiliate_withdraw": {
+        "not_enough_balance": "❌ Minimum balance required for withdrawal is $20.",
+        "confirm_withdraw": "💰 You are about to withdraw your affiliate commission.\nAvailable balance: <b>${balance}</b>\n\n👉 Please enter your <b>BEP-20 (BSC)</b> wallet address to receive the funds.",
+        "cancel_button": "⬅️ Cancel",
+        "invalid_wallet": "⚠️ Invalid wallet address.\n\nPlease provide a valid <b>BEP-20 (BSC)</b> address.",
+        "try_again_button": "🔁 Try Again",
+        "back_button": "⬅️ Back",
+        "withdraw_success": "✅ <b>Withdrawal request received!</b>\n\n💵 Amount: <b>${balance}</b>\n🏦 Wallet: <code>{wallet}</code>\n\nYour request will be reviewed and processed by the admin soon.",
+        "new_withdraw_request": "📩 <b>New Affiliate Withdrawal Request</b>\n\n👤 User ID: <code>{user_id}</code>\n💰 Amount: ${balance}\n🏦 Wallet: <code>{wallet}</code>\n\n🔗 Telegram: @{username}",
+        "confirm_withdraw_button": "✅ Confirm Withdrawal",
+        "withdraw_approved": "✅ Withdrawal <b>#{withdraw_id}</b> has been <b>approved</b>.\nUser <code>{user_id}</code> balance has been reset to $0.",
+        "user_not_authorized": "⛔ You are not authorized.",
+        "invalid_data_format": "⚠️ Invalid data format.",
+        "withdraw_approved_user": "🎉 Your withdrawal has been approved and processed! Your affiliate balance is now $0.",
+        "withdraw_approved_alert": "Withdrawal approved ✅"
+    },
+    "affiliate_verify": {
+        "title": "🌟 <b>Social Verification</b>",
+        "instruction": "Please send a link or short description related to your <b>social media</b>.\nFor example:\n- TikTok: https://www.tiktok.com/@yourname\n- Facebook page or group\n- YouTube channel\n- Or just a brief text describing your social profile.\n\n<i>Send your link or text below 👇</i>",
+        "cancel_button": "⬅️ Cancel",
+        "admin_new_request": "📢 <b>New Social Verification Request</b>\n\n👤 User ID: <code>{user_id}</code>\n🔗 Username: @{username}\n📝 Info: {social_info}\n\n📎 Telegram: <a href='https://t.me/{username}'>@{username}</a>",
+        "user_success": "✅ <b>Verification request sent!</b>\n\nOur team will review your social profile and contact you soon."
+    },
+    "cashback":{
+        "title":"⚙️ The Cashback feature is currently being updated.\nPlease check back later!"
+    },
+    "free_trial": {
+    "title": "🎁 3-Day Free Trial",
+    "description": "Try our premium trading signals for *72 hours* completely free!",
+    "activate_cta": "Click below to activate your trial 👇",
+    "not_found": "❌ Free Trial plan not found!",
+    "already_used": "❌ You have already used your Free Trial!",
+    "already_active": "❌ You already have an active subscription!",
+    "activated_title": "✅ Free Trial Activated!",
+    "activated_message": "🎉 You now have *{days} days* of premium access.\nYour trial will expire on *{expire_time} UTC*.\n\nEnjoy premium trading signals and exclusive tools! 🚀",
+    "success_alert": "✅ Free Trial activated successfully!"
+  }
+}
