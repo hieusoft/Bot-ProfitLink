@@ -3,14 +3,22 @@ from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 from services.affiliate_service import AffiliateService
+from services.user_service import UserService
 from bot.keyboards.affiliate_menu import get_affiliate_menu
 from bot.keyboards.back_buttons import back_main_menu
 from config.translator import Translator
 from config.settings import settings
+import re
 affiliate_router = Router()
 ADMIN_CHAT_ID = settings.ADMIN_CHAT_ID
 URL_BOT = settings.URL_BOT
-
+URL_REGEX = re.compile(
+    r'^(https?:\/\/)?'  # http hoặc https (tùy chọn)
+    r'([\w.-]+)\.'      # tên miền
+    r'([a-zA-Z]{2,})'   # phần mở rộng (com, net, org,...)
+    r'(\/\S*)?$',        # phần path (tùy chọn)
+    re.IGNORECASE
+)
 class WithdrawState(StatesGroup):
     waiting_for_wallet = State()
 class VerifyState(StatesGroup):
@@ -207,6 +215,28 @@ async def approve_withdrawal(callback: types.CallbackQuery):
 
 @affiliate_router.callback_query(F.data == "aff_verify")
 async def handle_affiliate_verify(callback: types.CallbackQuery, state: FSMContext):
+    user_id = callback.from_user.id
+    user = UserService.get_user_by_telegram_id(user_id)
+
+    if user and user.verified_kol == "under_review":
+        await callback.answer(
+            "You have already submitted verification. Please wait for our review and approval.",
+            show_alert=True
+        )
+        return
+
+    elif user.verified_kol == "approved":
+        await callback.answer(
+            "Your verification has been approved! 🎉",
+            show_alert=True
+        )
+        return
+    elif user.verified_kol == "rejected":
+        await callback.answer(
+            "Your verification request was rejected. Please try again.",
+            show_alert=True
+        )
+        return
     translator = Translator(lang="en")
     kb = InlineKeyboardBuilder()
     kb.button(text=translator.t("affiliate_verify.cancel_button"), callback_data="affiliate")
@@ -234,6 +264,19 @@ async def process_social_verification(message: types.Message, state: FSMContext)
     username = message.from_user.username or "No username"
     social_info = message.text.strip()
 
+    try:
+        await message.delete()
+    except Exception:
+        pass
+    if not URL_REGEX.match(social_info):
+
+        await message.answer(
+            "⚠️ Please send a valid social media link (e.g., https://instagram.com/yourname)",
+            parse_mode="HTML"
+
+        )
+        return 
+
     data = await state.get_data()
     edit_msg_id = data.get("edit_msg_id")
 
@@ -241,15 +284,21 @@ async def process_social_verification(message: types.Message, state: FSMContext)
         await message.delete()
     except Exception:
         pass
-
     admin_text = translator.t(
         "affiliate_verify.admin_new_request",
         user_id=user_id,
         username=username,
         social_info=social_info
     )
-    await message.bot.send_message(chat_id=ADMIN_CHAT_ID, text=admin_text, parse_mode="HTML")
 
+
+    admin_text += f"\n\nTo update the user, run the command:\n/affiliate {user_id} &lt;commission_percent&gt;"
+
+    await message.bot.send_message(
+        chat_id=ADMIN_CHAT_ID,
+        text=admin_text,
+        parse_mode="HTML"
+    )
     try:
         await message.bot.edit_message_text(
             chat_id=user_id,

@@ -9,7 +9,7 @@ class User:
     language: str = "en"
     ref_by: Optional[int] = None
     wallet_address: Optional[str] = None
-    verified_kol: bool = False
+    verified_kol: str ="not_submitted"
     commission_percent: float = 30.0
     created_at: Optional[datetime] = None
     updated_at: Optional[datetime] = None

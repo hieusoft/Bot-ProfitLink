@@ -125,8 +125,9 @@ async def join_channel(callback: types.CallbackQuery):
 
     if active_details:
         kb = InlineKeyboardBuilder()
-        kb.button(text="⬅️ Back", callback_data="free_trial")
         kb.button(text="👉 Join Channel", url=invite_link)
+        kb.button(text="↩️ Back", callback_data="free_trial")
+       
         await callback.message.edit_text(
             "✅ You can now join our official Telegram channel:",
             parse_mode="HTML",

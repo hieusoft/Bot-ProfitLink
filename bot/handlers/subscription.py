@@ -124,7 +124,7 @@ async def choose_payment_method(callback: types.CallbackQuery):
     kb = InlineKeyboardBuilder()
     kb.button(text="💳 OxaPay", callback_data=f"pay_sub_{plan_name}_oxapay")
     kb.button(text="🪙 CryptoBot", callback_data=f"pay_sub_{plan_name}_cryptobot")
-    kb.button(text="⬅️ Back", callback_data="subscription_plans")
+    kb.button(text="↩️ Back", callback_data="subscription_plans")
     kb.adjust(2, 1, 1)
 
     await callback.message.edit_text(
@@ -162,7 +162,7 @@ async def oxapay_payment(callback: types.CallbackQuery):
     kb = InlineKeyboardBuilder()
     kb.button(text="🔗 Pay with OxaPay", url=payment_url)
     kb.button(text="✅ Check Payment", callback_data=f"check_sub_{plan_name}_payment")
-    kb.button(text="⬅️ Back", callback_data=f"sub_{plan_name}")
+    kb.button(text="↩️ Back", callback_data=f"sub_{plan_name}")
     kb.adjust(1, 2)
 
     await callback.message.edit_text(
@@ -200,7 +200,7 @@ async def check_subscription_payment(callback: types.CallbackQuery):
         payment_url = f"https://pay.oxapay.com/{last_payment.merchant_id}/{last_payment.track_id}"
         kb = InlineKeyboardBuilder()
         kb.button(text="🔗 Pay Again", url=payment_url)
-        kb.button(text="⬅️ Back", callback_data=f"pay_sub_{plan_name}_oxapay")
+        kb.button(text="↩️ Back", callback_data=f"pay_sub_{plan_name}_oxapay")
         kb.adjust(1, 1)
         await callback.message.edit_text(
             text=f"⏳ Payment for *{plan_name}* plan is still pending.\nPlease complete your payment below:",
@@ -307,8 +307,9 @@ async def join_channel(callback: types.CallbackQuery):
 
     if active_details:
         kb = InlineKeyboardBuilder()
-        kb.button(text="⬅️ Back", callback_data="free_trial")
         kb.button(text="👉 Join Channel", url=invite_link)  # Nút link ẩn
+        kb.button(text="↩️ Back", callback_data="free_trial")
+       
         await callback.message.edit_text(
             "✅ You can now join our official Telegram channel:",
             parse_mode="HTML",

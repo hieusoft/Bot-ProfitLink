@@ -28,16 +28,38 @@ async def start_command(message: types.Message, command: CommandStart):
 
     existing_user = UserService.get_user_by_telegram_id(user.id)
 
+
     if not existing_user:
+       
         ref_code = args.strip() if args else None
+
         if ref_code:
             referrer = UserService.get_user_by_telegram_id(ref_code)
             if referrer:
-                await UserService.register_with_referral(user, ref_code)
+             
+                await UserService.register_with_referral(
+                    user_id=user.id,
+                    username=user.username,
+                    language="en",
+                    verified_kol="not_submitted",
+                    ref_code=ref_code
+                )
             else:
-                await UserService.register_user(user)
+
+                await UserService.register_user(
+                    user_id=user.id,
+                    username=user.username,
+                    language="en",
+                    verified_kol="not_submitted"
+                )
         else:
-            await UserService.register_user(user)
+          
+            await UserService.register_user(
+                user_id=user.id,
+                username=user.username,
+                language="en",
+                verified_kol="not_submitted"
+            )
 
         try:
             SubscriptionService.create_subscription(
@@ -49,6 +71,7 @@ async def start_command(message: types.Message, command: CommandStart):
             )
         except Exception:
             pass
+
 
     translator = Translator(lang="en")
     name = user.full_name or translator.t("start.no_username")

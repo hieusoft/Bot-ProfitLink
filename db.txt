@@ -17,7 +17,7 @@ CREATE TABLE users (
   language VARCHAR(10) DEFAULT 'en',
   ref_by BIGINT NULL,
   wallet_address VARCHAR(100),
-  verified_kol TINYINT(1) DEFAULT 0,
+  verified_kol ENUM('not_submitted', 'under_review', 'approved', 'rejected') DEFAULT 'not_submitted',
   commission_percent DECIMAL(5,2) DEFAULT 30.00, 
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
