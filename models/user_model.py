@@ -11,5 +11,6 @@ class User:
     wallet_address: Optional[str] = None
     verified_kol: str ="not_submitted"
     commission_percent: float = 30.0
+    is_banned: bool = False
     created_at: Optional[datetime] = None
     updated_at: Optional[datetime] = None

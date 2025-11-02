@@ -27,6 +27,16 @@ class SubscriptionService:
         rows = cursor.fetchall()
         conn.close()
         return [Subscription(**row) for row in rows] if rows else []
+    @staticmethod
+    def get_all_subscription_active():
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+        sql = "SELECT * FROM subscriptions WHERE status='active'"
+        cursor.execute(sql)
+        rows = cursor.fetchall()
+        conn.close()
+        return [Subscription(**row) for row in rows] if rows else []
+
 
     
 
@@ -155,4 +165,13 @@ class SubscriptionService:
         """
         cursor.execute(sql, (end_date, status, now, sub_id))
         conn.commit()
+        conn.close()
+    @staticmethod
+    def update_end_date(sub_id: int, new_end_date: datetime):
+        conn = get_connection()
+        cursor = conn.cursor()
+        sql = "UPDATE subscriptions SET end_date = %s WHERE sub_id = %s"
+        cursor.execute(sql, (new_end_date, sub_id))
+        conn.commit()
+        cursor.close()
         conn.close()

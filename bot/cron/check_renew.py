@@ -1,17 +1,20 @@
 from aiogram import Bot, types, F
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 from datetime import datetime, timedelta
-import pytz
+import pytz,asyncio
 from services.subscription_service import SubscriptionService
 from services.subscription_detail_service import SubscriptionDetailService
 from services.payment_service import PaymentService
 from services.plan_service import PlanService
 from services.oxapay_service import OxaPayService
 from models.payment_model import Payment
-
+from telethon import errors
+from telethon.tl.functions.channels import GetParticipantRequest, EditBannedRequest
+from telethon.tl.types import ChatBannedRights,PeerChannel
+from config.telegram_client import get_telegram_client
 tz_vn = pytz.timezone("Asia/Ho_Chi_Minh")
-DISCOUNT = 10  # % discount
-
+DISCOUNT = 10 
+CHANNEL_LIST = "my_chanel.txt"
 class SubscriptionChecker:
     def __init__(self, bot: Bot):
         self.bot = bot
@@ -19,9 +22,9 @@ class SubscriptionChecker:
 
    
     async def check_all_users(self):
-        all_subs = SubscriptionService.get_all_subscription()
+        all_subs = SubscriptionService.get_all_subscription_active()
         now = datetime.now(tz_vn)
-
+       
         for sub in all_subs:
            
             if not sub.end_date:
@@ -31,14 +34,16 @@ class SubscriptionChecker:
             sub_end_aware = sub.end_date.replace(tzinfo=tz_vn) if sub.end_date.tzinfo is None else sub.end_date
 
             if sub_end_aware < now:
+                print("kho")
+                await self.delete_user_channels(sub.user_id)
                 SubscriptionService.update_subscription(
                     sub_id=sub.sub_id,
-                    start_date=None,
-                    end_date=None,
-                    status="pending"
+                    start_date=sub.start_date,
+                    end_date=sub.end_date,
+                    status="expired"
                 )
                 continue
-
+                
             
             last_sub_detail = SubscriptionDetailService.get_last_active_details(sub.sub_id)
             if last_sub_detail and last_sub_detail.plan_id != 1:
@@ -58,7 +63,7 @@ class SubscriptionChecker:
         amount = float(plan.price) * (1 - DISCOUNT / 100)
 
         try:
-            # track_id, merchant_id, expired_at, invoice_date = await self.oxapay.create_invoice_renew(amount, order_id)
+          
             track_id, merchant_id, expired_at, invoice_date =106173704, 15258851,1761927267,1761840867
             payment = Payment(
                 user_id=sub.user_id,
@@ -99,4 +104,48 @@ class SubscriptionChecker:
         except Exception as e:
             print(f"[SubscriptionChecker] Error sending renew message to user {sub.user_id}: {e}")
 
-    
+    async def delete_user_channels(self, user_id: int):
+        try:
+            with open(CHANNEL_LIST, "r", encoding="utf-8") as f:
+                channels = [line.strip() for line in f.readlines() if line.strip()]
+
+            if not channels:
+                return
+
+            async with get_telegram_client() as client:
+                async def remove_from_channel(channel_id):
+                    try:
+                        channel = PeerChannel(int(channel_id))
+                        async for user in client.iter_participants(channel):
+                            if user.id == int(user_id):
+                                kick_rights = ChatBannedRights(until_date=None, view_messages=True)
+                                await client(EditBannedRequest(channel, user.id, kick_rights))
+                                unban_rights = ChatBannedRights(
+                                    until_date=None,
+                                    send_messages=None,
+                                    send_media=None,
+                                    send_stickers=None,
+                                    send_gifs=None,
+                                    send_games=None,
+                                    send_inline=None,
+                                    embed_links=None,
+                                    view_messages=None
+                                )
+                                await client(EditBannedRequest(channel, user.id, unban_rights))
+                                break
+                    except errors.ChatAdminRequiredError:
+                        pass
+                    except Exception:
+                        pass
+
+                semaphore = asyncio.Semaphore(5)
+
+                async def limited_remove(ch):
+                    async with semaphore:
+                        await remove_from_channel(ch)
+
+                await asyncio.gather(*(limited_remove(ch) for ch in channels))
+        except FileNotFoundError:
+            pass
+        except Exception:
+            pass

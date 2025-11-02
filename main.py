@@ -14,6 +14,7 @@ from bot.handlers import (
     account_router,
 )
 from bot.cron.check_renew import SubscriptionChecker
+from bot.utils.send_message import SendMessage
 
 logging.basicConfig(level=logging.INFO)
 
@@ -22,6 +23,7 @@ async def main():
         token=settings.BOT_TOKEN,
         default=DefaultBotProperties(parse_mode=ParseMode.MARKDOWN)
     )
+
     dp = Dispatcher()
     dp.include_routers(
         start_router,
@@ -34,16 +36,19 @@ async def main():
         account_router,
     )
 
- 
     checker = SubscriptionChecker(bot)
+    sender = SendMessage(bot)
 
     async def periodic_check():
         while True:
+         
             await checker.check_all_users()
-            await asyncio.sleep(60)  
+
+            await sender.check_all_users()
+            
+            await asyncio.sleep(30)  
 
     asyncio.create_task(periodic_check())
-
     await dp.start_polling(bot)
 
 if __name__ == "__main__":

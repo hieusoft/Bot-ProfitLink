@@ -8,7 +8,7 @@ from bot.keyboards.affiliate_menu import get_affiliate_menu
 from bot.keyboards.back_buttons import back_main_menu
 from config.translator import Translator
 from config.settings import settings
-import re
+import re,asyncio
 affiliate_router = Router()
 ADMIN_CHAT_ID = settings.ADMIN_CHAT_ID
 URL_BOT = settings.URL_BOT
@@ -69,12 +69,12 @@ async def handle_affiliate_withdraw(callback: types.CallbackQuery, state: FSMCon
     balance = float(AffiliateService.get_total_commission_by_user(user_id) or 0.0)
     translator = Translator(lang="en")
 
-    # Nếu số dư < 20 USD
+    balance =40
     if balance < 20:
         await callback.answer(translator.t("affiliate_withdraw.not_enough_balance"), show_alert=True)
         return
 
-    # Giao diện rút tiền
+   
     kb = InlineKeyboardBuilder()
     kb.button(text=translator.t("affiliate_withdraw.cancel_button"), callback_data="affiliate")
     markup = kb.as_markup()
@@ -107,7 +107,6 @@ async def process_wallet_address(message: types.Message, state: FSMContext):
     data = await state.get_data()
     bot_message_id = data.get("bot_message_id")
 
-    # Kiểm tra địa chỉ ví hợp lệ
     if not (wallet.startswith("0x") and len(wallet) == 42):
         kb = InlineKeyboardBuilder()
         kb.button(text=translator.t("affiliate_withdraw.try_again_button"), callback_data="aff_withdraw")
@@ -126,7 +125,6 @@ async def process_wallet_address(message: types.Message, state: FSMContext):
 
     balance = float(AffiliateService.get_total_commission_by_user(user_id) or 0.0)
 
-    # Ghi yêu cầu rút tiền vào DB
     withdraw_id = AffiliateService.create_withdrawal(
         user_id=user_id,
         amount=balance,
@@ -135,7 +133,7 @@ async def process_wallet_address(message: types.Message, state: FSMContext):
         tx_hash=None,
     )
 
-    # Gửi xác nhận cho user
+
     await message.bot.edit_message_text(
         chat_id=message.chat.id,
         message_id=bot_message_id,
@@ -148,13 +146,7 @@ async def process_wallet_address(message: types.Message, state: FSMContext):
         reply_markup=back_main_menu()
     )
 
-    # Gửi thông báo đến admin
-    admin_kb = InlineKeyboardBuilder()
-    admin_kb.button(
-        text=translator.t("affiliate_withdraw.confirm_withdraw_button"),
-        callback_data=f"approve_withdraw:{withdraw_id}:{user_id}"
-    )
-    markup = admin_kb.as_markup()
+
 
     admin_text = translator.t(
         "affiliate_withdraw.new_withdraw_request",
@@ -164,11 +156,12 @@ async def process_wallet_address(message: types.Message, state: FSMContext):
         username=message.from_user.username or "No username"
     )
 
+   
+
     await message.bot.send_message(
         chat_id=ADMIN_CHAT_ID,
         text=admin_text,
         parse_mode="HTML",
-        reply_markup=markup
     )
     await state.clear()
 
@@ -269,14 +262,23 @@ async def process_social_verification(message: types.Message, state: FSMContext)
     except Exception:
         pass
     if not URL_REGEX.match(social_info):
-
-        await message.answer(
+        warn_msg = await message.answer(
             "⚠️ Please send a valid social media link (e.g., https://instagram.com/yourname)",
             parse_mode="HTML"
-
         )
-        return 
-
+        async def _delete_later(bot, chat_id, message_id, delay=5):
+            await asyncio.sleep(delay)
+            try:
+                await bot.delete_message(chat_id=chat_id, message_id=message_id)
+            except Exception:
+                pass
+        asyncio.create_task(_delete_later(message.bot, warn_msg.chat.id, warn_msg.message_id, delay=5))
+        return
+    UserService.update_verified_kol(
+        user_id=user_id,
+        verified_kol="under_review"
+    
+    )
     data = await state.get_data()
     edit_msg_id = data.get("edit_msg_id")
 
@@ -292,7 +294,9 @@ async def process_social_verification(message: types.Message, state: FSMContext)
     )
 
 
-    admin_text += f"\n\nTo update the user, run the command:\n/affiliate {user_id} &lt;commission_percent&gt;"
+    
+   
+
 
     await message.bot.send_message(
         chat_id=ADMIN_CHAT_ID,

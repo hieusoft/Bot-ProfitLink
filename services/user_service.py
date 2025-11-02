@@ -5,6 +5,17 @@ from datetime import datetime
 
 class UserService:
     @staticmethod
+    def get_all_user():
+        conn = get_connection()
+        cursor = conn.cursor(dictionary=True)
+        sql = "SELECT * FROM users"
+        cursor.execute(sql)
+        rows = cursor.fetchall()
+        cursor.close()
+        conn.close()
+        return [User(**row) for row in rows] if rows else []
+
+    @staticmethod
     def get_user_by_telegram_id(user_id: int):
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
@@ -14,6 +25,32 @@ class UserService:
         cursor.close()
         conn.close()
         return User(**row) if row else None
+    @staticmethod
+    def update_verified_kol(user_id: int, verified_kol: str):
+        conn = get_connection()
+        cursor = conn.cursor()
+
+        sql = """
+            UPDATE users
+            SET verified_kol = %s, updated_at = %s
+            WHERE user_id = %s
+        """
+        now = datetime.now()
+        cursor.execute(sql, (verified_kol, now, user_id))
+        conn.commit()
+
+        cursor.close()
+        conn.close()
+    @staticmethod
+    def update_ban_status(user_id: int, banned: bool):
+        conn = get_connection()
+        cursor = conn.cursor()
+        sql = "UPDATE users SET is_banned = %s, updated_at = NOW() WHERE user_id = %s"
+        cursor.execute(sql, (1 if banned else 0, user_id))
+        conn.commit()
+        cursor.close()
+        conn.close()
+  
     @staticmethod
     async def register_user(user_id: int, username: str, language: str, verified_kol: str = "not_submitted"):
         conn = get_connection()

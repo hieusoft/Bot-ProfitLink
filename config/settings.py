@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 
-# Load file .env (đặt ở gốc dự án)
+
 load_dotenv()
 
 class Settings:
@@ -20,9 +20,11 @@ class Settings:
         self.MAX_PAGE_LENGTH = int(os.getenv("MAX_PAGE_LENGTH",1000))
         self.OXAPAY_API_KEY = os.getenv("OXAPAY_API_KEY", "")
         self.CRYPTOBOT_TOKEN = os.getenv("CRYPTOBOT_TOKEN", "")
-
+        self.ADD_LIST = os.getenv("ADD_LIST", "my_channel.txt")
         self.DEBUG = os.getenv("DEBUG", "False").lower() == "true"
         self.WEBHOOK_URL = os.getenv("WEBHOOK_URL", "")
         self.TIMEZONE = os.getenv("TIMEZONE", "Asia/Ho_Chi_Minh")
-
+        self.API_ID = int(os.getenv("TELEGRAM_API_ID", "123456"))
+        self.API_HASH = os.getenv("TELEGRAM_API_HASH", "your_api_hash_here")
+        self.SESSION_FILE = os.getenv("TELEGRAM_SESSION", "bot_session")
 settings = Settings()

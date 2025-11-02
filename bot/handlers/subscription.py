@@ -303,7 +303,7 @@ async def join_channel(callback: types.CallbackQuery):
         return
 
     sub_id = sub.sub_id
-    active_details = SubscriptionDetailService.get_active_details(sub_id)
+    active_details = SubscriptionService.get_active_subscription(user_id)
 
     if active_details:
         kb = InlineKeyboardBuilder()

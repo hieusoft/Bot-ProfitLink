@@ -50,18 +50,61 @@
         "admin_new_request": "📢 <b>New Social Verification Request</b>\n\n👤 User ID: <code>{user_id}</code>\n🔗 Username: @{username}\n📝 Info: {social_info}\n\n📎 Telegram: <a href='https://t.me/{username}'>@{username}</a>",
         "user_success": "✅ <b>Verification request sent!</b>\n\nOur team will review your social profile and contact you soon."
     },
-    "cashback":{
-        "title":"⚙️ The Cashback feature is currently being updated.\nPlease check back later!"
+    "cashback": {
+        "title": "⚙️ The Cashback feature is currently being updated.\nPlease check back later!"
     },
     "free_trial": {
-    "title": "🎁 3-Day Free Trial",
-    "description": "Try our premium trading signals for *72 hours* completely free!",
-    "activate_cta": "Click below to activate your trial 👇",
-    "not_found": "❌ Free Trial plan not found!",
-    "already_used": "❌ You have already used your Free Trial!",
-    "already_active": "❌ You already have an active subscription!",
-    "activated_title": "✅ Free Trial Activated!",
-    "activated_message": "🎉 You now have *{days} days* of premium access.\nYour trial will expire on *{expire_time} UTC*.\n\nEnjoy premium trading signals and exclusive tools! 🚀",
-    "success_alert": "✅ Free Trial activated successfully!"
-  }
+        "title": "🎁 3-Day Free Trial",
+        "description": "Try our premium trading signals for *72 hours* completely free!",
+        "activate_cta": "Click below to activate your trial 👇",
+        "not_found": "❌ Free Trial plan not found!",
+        "already_used": "❌ You have already used your Free Trial!",
+        "already_active": "❌ You already have an active subscription!",
+        "activated_title": "✅ Free Trial Activated!",
+        "activated_message": "🎉 You now have *{days} days* of premium access.\nYour trial will expire on *{expire_time} UTC*.\n\nEnjoy premium trading signals and exclusive tools! 🚀",
+        "success_alert": "✅ Free Trial activated successfully!",
+        "join_require_plan": "❌ Please register for a plan before joining the channel.",
+        "join_ready": "✅ You can now join our official Telegram channel:",
+        "join_inactive": "⚠️ Your subscription is not active. Please activate or renew it to join the channel."
+    },
+    "qa": {
+        "center_title": "🧠 <b>Hieusoft Crypto Bot — Q&A Center</b>",
+        "center_description": "Welcome to our Help Center!\n\nHere you can find answers to common questions about subscriptions, affiliates, cashback, and technical support.\n\nSelect a topic below to get started 👇",
+        "invalid_category": "❌ Invalid category data.",
+        "no_qna_found": "❌ No Q&A found for category <b>{category}</b>.",
+        "invalid_data": "❌ Invalid data format.",
+        "question_not_found": "❌ Question not found.",
+        "no_pages_found": "❌ No pages found.",
+        "qa_for": "📚 <b>Q&A for {category}</b>",
+        "question_label": "<b>Question:</b> {question}",
+        "answer_label": "<b>Answer:</b> {answer}"
+    },
+    "subscription": {
+        "title": "Premium Subscription Plans",
+        "subtitle": "Unlock your full trading potential with our premium signals and VIP benefits:",
+        "includes": "All plans include:",
+        "include_items": [
+            "Exclusive VIP Signal Channel",
+            "Priority Expert Support",
+            "Real-time Market Insights"
+        ],
+        "choose_plan": "Choose the plan that best fits your goals below!",
+        "plan_title": "{plan} Plan",
+        "order_id": "Order ID:",
+        "amount": "Amount:",
+        "choose_payment": "Choose your payment method below",
+        "pay_oxapay": "Click the button below to pay for *{plan}* plan.\n\nAfter completing the payment, please wait a few minutes and then click 'Check Payment'.",
+        "payment_pending": "Payment for *{plan}* plan is still pending.\nPlease complete your payment below:",
+        "payment_success": "Payment Successful!\n\nYour subscription to the *{plan}* plan is now active.\nEnjoy exclusive access to premium signals and VIP benefits!",
+        "payment_not_found": "No recent payment found!",
+        "plan_not_exist": "Plan does not exist!",
+        "join_channel_active": "You can now join our official Telegram channel:",
+        "join_channel_not_subscribed": "Please register for a plan before joining the channel.",
+        "join_channel_not_active": "Your subscription is not active. Please activate or renew it to join the channel.",
+        "payment_again": "Pay Again",
+        "check_payment": "Check Payment",
+        "back": "Back",
+        "pay_with_oxapay": "Pay with OxaPay",
+        "pay_with_cryptobot": "CryptoBot"
+    }
 }

@@ -19,20 +19,22 @@ class SubscriptionDetailService:
         conn.close()
 
     @staticmethod
-    def get_subscription_detail(detail_id: int):
+    def get_subscription_detail(sub_id: int):
         conn = get_connection()
         cursor = conn.cursor(dictionary=True)
         sql = """
             SELECT * FROM subscription_details
-            WHERE detail_id = %s 
+            WHERE sub_id = %s
         """
-        cursor.execute(sql, (detail_id,))
-        row = cursor.fetchone()
+        cursor.execute(sql, (sub_id,))
+        rows = cursor.fetchall()
+        cursor.close()
         conn.close()
 
-        if row:
-            return SubscriptionDetail(**row)
-        return None
+        if rows:
+            return [SubscriptionDetail(**row) for row in rows]
+        return []
+
     @staticmethod
     def get_latest_subscription_detail(sub_id: int):
         conn = get_connection()
@@ -90,3 +92,12 @@ class SubscriptionDetailService:
         row = cursor.fetchone()
         conn.close()
         return SubscriptionDetail(**row) if row else None
+    @staticmethod
+    def update_end_date(sub_detail_id: int, new_end_date: datetime):
+        conn = get_connection()
+        cursor = conn.cursor()
+        sql = "UPDATE subscription_details SET expired_at = %s WHERE sub_id = %s"
+        cursor.execute(sql, (new_end_date, sub_detail_id))
+        conn.commit()
+        cursor.close()
+        conn.close()

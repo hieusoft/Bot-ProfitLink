@@ -1,7 +1,6 @@
 from aiogram import Router, types, F
-from aiogram.types import FSInputFile
 from datetime import datetime, timedelta
-import os
+from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 from bot.keyboards.free_trial_menu import get_free_trial_menu
 from bot.keyboards.back_buttons import back_main_menu
@@ -9,7 +8,6 @@ from services.plan_service import PlanService
 from services.subscription_service import SubscriptionService
 from services.subscription_detail_service import SubscriptionDetailService
 from config.translator import Translator
-from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 free_trial_router = Router()
 
@@ -18,22 +16,19 @@ free_trial_router = Router()
 async def open_free_trial_menu(callback: types.CallbackQuery):
     bot = callback.message.bot
     chat_id = callback.message.chat.id
-    translator = Translator("en") 
+    translator = Translator("en")
 
-    
     try:
         await bot.delete_message(chat_id, callback.message.message_id)
     except Exception:
         pass
 
-    
     caption_text = (
         f"{translator.t('free_trial.title')}\n\n"
         f"{translator.t('free_trial.description')}\n\n"
         f"{translator.t('free_trial.activate_cta')}"
     )
 
-    
     await callback.message.answer(
         text=caption_text,
         parse_mode="Markdown",
@@ -42,12 +37,14 @@ async def open_free_trial_menu(callback: types.CallbackQuery):
 
     await callback.answer()
 
+
 @free_trial_router.callback_query(F.data == "activate_free_trial")
 async def activate_free_trial(callback: types.CallbackQuery):
     bot = callback.message.bot
     chat_id = callback.message.chat.id
     user_id = callback.from_user.id
-    translator = Translator("en") 
+    translator = Translator("en")
+
     plan = PlanService.get_plan_by_id(1)
     if not plan:
         await callback.answer(translator.t("free_trial.not_found"), show_alert=True)
@@ -91,8 +88,10 @@ async def activate_free_trial(callback: types.CallbackQuery):
         f"{translator.t('free_trial.activated_title')}\n\n"
         f"{translator.t('free_trial.activated_message', days=plan.duration_days, expire_time=end_time.strftime('%Y-%m-%d %H:%M'))}"
     )
+
     kb = InlineKeyboardBuilder()
     kb.button(text="⬅️ Back", callback_data="free_trial")
+
     try:
         await callback.message.edit_text(
             text=success_text,
@@ -103,11 +102,11 @@ async def activate_free_trial(callback: types.CallbackQuery):
         await callback.message.answer(success_text, parse_mode="Markdown", reply_markup=back_main_menu())
 
     await callback.answer(translator.t("free_trial.success_alert"))
-
-from aiogram.utils.keyboard import InlineKeyboardBuilder
+    await callback.answer()
 
 @free_trial_router.callback_query(F.data == "join_channel_trial")
 async def join_channel(callback: types.CallbackQuery):
+    translator = Translator("en")
     user_id = callback.from_user.id
     invite_link = "https://t.me/addlist/yVDMsEMPpa4zNGE1"
 
@@ -115,26 +114,27 @@ async def join_channel(callback: types.CallbackQuery):
 
     if not sub:
         await callback.message.edit_text(
-            "❌ Please register for a plan before joining the channel.",
+            translator.t("free_trial.join_require_plan"),
             parse_mode="HTML"
         )
         return
 
-    sub_id = sub.sub_id
-    active_details = SubscriptionDetailService.get_active_details(sub_id)
+    active_details = SubscriptionService.get_active_subscription(user_id)
 
     if active_details:
         kb = InlineKeyboardBuilder()
         kb.button(text="👉 Join Channel", url=invite_link)
         kb.button(text="↩️ Back", callback_data="free_trial")
-       
+
         await callback.message.edit_text(
-            "✅ You can now join our official Telegram channel:",
+            translator.t("free_trial.join_ready"),
             parse_mode="HTML",
             reply_markup=kb.as_markup()
         )
+        await callback.answer()
     else:
         await callback.answer(
-            "⚠️ Your subscription is not active. Please activate or renew it to join the channel.",
+            translator.t("free_trial.join_inactive"),
             show_alert=True
         )
+        await callback.answer()
