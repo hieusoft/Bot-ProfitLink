@@ -10,6 +10,8 @@ class AffiliateReferral:
     commission_usd: float = 0.0
     status: str = "pending"  
     created_at: Optional[datetime] = None
+    updated_at: Optional[datetime] = None
+
 
 
 @dataclass
@@ -21,3 +23,4 @@ class AffiliateWithdrawal:
     status: str = "pending"  # pending | approved | rejected
     tx_hash: Optional[str] = None
     created_at: Optional[datetime] = None
+    updated_at: Optional[datetime] = None

@@ -14,7 +14,7 @@ class SubscriptionService:
             INSERT INTO subscriptions (user_id, start_date, end_date, status, trial, created_at, updated_at)
             VALUES (%s, %s, %s, %s, %s, %s, %s)
         """
-        now = datetime.now()
+        now = datetime.now(tz_vn)
         cursor.execute(sql, (user_id, start_date, end_date, status, trial, now, now))
         conn.commit()
         conn.close()

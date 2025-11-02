@@ -7,7 +7,7 @@ def get_subscription_menu():
     kb = InlineKeyboardBuilder()
     plans = PlanService.get_all_active_plans()
     now_utc = datetime.now(timezone.utc)
-
+    kb.button(text="🚀 Join Official Channel", callback_data="join_channel")
     for plan in plans:
         display_price = f"${plan.price:.2f}"
 
@@ -31,8 +31,8 @@ def get_subscription_menu():
         kb.button(text=text, callback_data=callback_data)
 
 
+
    
-    kb.button(text="🚀 Join Official Channel", callback_data="join_channel")
     kb.button(text="⬅️ Back", callback_data="back_main")
-    kb.adjust(2, 1,2)
+    kb.adjust(2,2,1)
     return kb.as_markup()

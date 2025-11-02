@@ -12,6 +12,7 @@ from bot.handlers import (
     free_trial_router,
     main_menu_router, 
     account_router,
+    language_router
 )
 from bot.cron.check_renew import SubscriptionChecker
 from bot.utils.send_message import SendMessage
@@ -34,6 +35,7 @@ async def main():
         free_trial_router,
         main_menu_router,  
         account_router,
+        language_router
     )
 
     checker = SubscriptionChecker(bot)

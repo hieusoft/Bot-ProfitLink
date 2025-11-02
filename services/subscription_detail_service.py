@@ -11,10 +11,11 @@ class SubscriptionDetailService:
         conn = get_connection()
         cursor = conn.cursor()
         sql = """
-            INSERT INTO subscription_details (sub_id, plan_id, payment_id, activated_at, expired_at, renewed)
-            VALUES (%s, %s, %s, %s, %s, %s)
+            INSERT INTO subscription_details (sub_id, plan_id, payment_id, activated_at, expired_at, renewed, created_at, updated_at)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
         """
-        cursor.execute(sql, (sub_id, plan_id, payment_id, activated_at, expired_at, renewed))
+        now = datetime.now(tz_vn)
+        cursor.execute(sql, (sub_id, plan_id, payment_id, activated_at, expired_at, renewed,now,now))
         conn.commit()
         conn.close()
 

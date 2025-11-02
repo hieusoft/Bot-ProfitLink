@@ -9,7 +9,8 @@ class Settings:
 
     def __init__(self):
       
-        self.BOT_TOKEN = os.getenv("BOT_TOKEN", "")
+        self.BOT_TOKEN = os.getenv("BOT_TOKEN", "e")
+        print(self.BOT_TOKEN)
         self.URL_BOT = os.getenv("URL_BOT", "")
         self.ADMIN_CHAT_ID = int(os.getenv("ADMIN_CHAT_ID", "0"))
         self.MYSQL_HOST = os.getenv("MYSQL_HOST", "localhost")

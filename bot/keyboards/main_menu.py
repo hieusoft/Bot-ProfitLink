@@ -20,7 +20,7 @@ def get_main_menu():
 
 
    
-    kb.button(text="🌍 Change Language", url="https://t.me/addlist/yVDMsEMPpa4zNGE1")
+    kb.button(text="🌍 Change Language",callback_data="language")
    
 
     kb.adjust(1, 1,1, 2, 2, 1)

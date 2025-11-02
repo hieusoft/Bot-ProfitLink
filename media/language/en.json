@@ -79,32 +79,28 @@
         "question_label": "<b>Question:</b> {question}",
         "answer_label": "<b>Answer:</b> {answer}"
     },
-    "subscription": {
-        "title": "Premium Subscription Plans",
-        "subtitle": "Unlock your full trading potential with our premium signals and VIP benefits:",
-        "includes": "All plans include:",
-        "include_items": [
-            "Exclusive VIP Signal Channel",
-            "Priority Expert Support",
-            "Real-time Market Insights"
-        ],
-        "choose_plan": "Choose the plan that best fits your goals below!",
-        "plan_title": "{plan} Plan",
-        "order_id": "Order ID:",
-        "amount": "Amount:",
-        "choose_payment": "Choose your payment method below",
-        "pay_oxapay": "Click the button below to pay for *{plan}* plan.\n\nAfter completing the payment, please wait a few minutes and then click 'Check Payment'.",
-        "payment_pending": "Payment for *{plan}* plan is still pending.\nPlease complete your payment below:",
-        "payment_success": "Payment Successful!\n\nYour subscription to the *{plan}* plan is now active.\nEnjoy exclusive access to premium signals and VIP benefits!",
-        "payment_not_found": "No recent payment found!",
-        "plan_not_exist": "Plan does not exist!",
-        "join_channel_active": "You can now join our official Telegram channel:",
-        "join_channel_not_subscribed": "Please register for a plan before joining the channel.",
-        "join_channel_not_active": "Your subscription is not active. Please activate or renew it to join the channel.",
-        "payment_again": "Pay Again",
-        "check_payment": "Check Payment",
-        "back": "Back",
-        "pay_with_oxapay": "Pay with OxaPay",
-        "pay_with_cryptobot": "CryptoBot"
+    "plans": {
+        "available_title": "💎 <b>Available Subscription Plans</b>\n\n",
+        "plan_line_separator": "━━━━━━━━━━━━━━━━━━━━━━━\n",
+        "discount_plan": "✨ <b>{plan_name}</b>\n💰 <s>${price_original}</s> ➡️ <b>${price_discounted}</b>\n💸 <b>{sale_percent}% OFF</b> until <i>{sale_end}</i>\n📅 Duration: <code>{duration_days} days</code>\n",
+        "normal_plan": "✨ <b>{plan_name}</b>\n💰 Price: <b>${price}</b>\n📅 Duration: <code>{duration_days} days</code>\n",
+        "premium_intro": "🏆 <b>Premium Subscription Plans</b>\n\nUnlock your full trading potential with our premium signals and VIP benefits:\n\n🚀 <b>All plans include:</b>\n• Exclusive VIP Signal Channel\n• Priority Expert Support\n• Real-time Market Insights\n\n💡 <i>Choose the plan that best fits your goals below!</i> 👇",
+        "plan_not_exist": "❌ Plan does not exist!",
+        "payment_title": "💎 <b>{plan_name} Plan</b>\n🧾 <b>Order ID:</b> <code>{order_id}</code>\n💰 <b>Amount:</b> <b>{amount} USDT</b>\n\n<i>Choose your payment method below 👇</i>",
+        "no_recent_payment": "❌ No recent payment found!",
+        "oxapay_payment_instructions": "🔗 Clickk the button below to pay for *{plan_name}* plan.\n\n⏳ After completing the payment, please wait a few minutes and then click 'Check Payment'.",
+        "subscription_not_found": "❌ Subscription record not found!",
+        "payment_pending": "⏳ Payment for *{plan_name}* plan is still pending.\nPlease complete your payment below:",
+        "payment_confirmed": "✅ *Payment Successful!*\n\n🎉 Your subscription to the *{plan_name}* plan is now active.\nEnjoy exclusive access to premium signals and VIP benefits!",
+        "payment_pending_alert": "⏳ Payment not confirmed yet. Try again in a few minutes.",
+        "payment_confirmed_alert": "✅ Payment confirmed! Subscription activated.",
+        "subscription_inactive": "⚠️ Your subscription is not active. Please activate or renew it to join the channel.",
+        "join_channel_no_subscription": "❌ Please register for a plan before joining the channel.",
+        "join_channel_success": "✅ You can now join our official Telegram channel:"
+    },
+    "join_channel": {
+        "not_registered": "❌ Please register for a plan before joining the channel.",
+        "can_join": "✅ You can now join our official Telegram channel:",
+        "not_active": "⚠️ Your subscription is not active. Please activate or renew it to join the channel."
     }
 }

@@ -99,6 +99,7 @@ CREATE TABLE affiliate_referrals (
   commission_usd DECIMAL(10,2) DEFAULT 0.00,
   status ENUM('pending','approved','paid') DEFAULT 'pending',
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   CONSTRAINT fk_ref_referrer FOREIGN KEY (referrer_id) REFERENCES users(user_id) ON DELETE CASCADE,
   CONSTRAINT fk_ref_referred FOREIGN KEY (referred_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
@@ -117,6 +118,7 @@ CREATE TABLE affiliate_withdrawals (
   tx_hash VARCHAR(255),
   approved_at DATETIME NULL,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   CONSTRAINT fk_withdraw_user FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 CREATE INDEX idx_withdraw_user_id ON affiliate_withdrawals(user_id);
@@ -130,6 +132,7 @@ CREATE TABLE system_logs (
   action VARCHAR(255),
   details TEXT,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   CONSTRAINT fk_log_user FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE SET NULL
 );
 CREATE INDEX idx_log_user_id ON system_logs(user_id);
@@ -149,6 +152,8 @@ CREATE TABLE subscription_details (
   activated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   expired_at DATETIME NULL,
   renewed BOOLEAN DEFAULT FALSE,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   CONSTRAINT fk_detail_sub FOREIGN KEY (sub_id) REFERENCES subscriptions(sub_id) ON DELETE CASCADE,
   CONSTRAINT fk_detail_plan FOREIGN KEY (plan_id) REFERENCES subscription_plans(plan_id) ON DELETE CASCADE,
   CONSTRAINT fk_detail_payment FOREIGN KEY (payment_id) REFERENCES payments(payment_id) ON DELETE SET NULL

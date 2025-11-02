@@ -35,3 +35,5 @@ class SubscriptionDetail:
     activated_at: Optional[datetime] = None
     expired_at: Optional[datetime] = None
     renewed: bool = False
+    created_at: Optional[datetime] = None
+    updated_at: Optional[datetime] = None
