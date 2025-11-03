@@ -19,6 +19,7 @@ URL_REGEX = re.compile(
     r'(\/\S*)?$',        # phần path (tùy chọn)
     re.IGNORECASE
 )
+user_langs = {}
 class WithdrawState(StatesGroup):
     waiting_for_wallet = State()
 class VerifyState(StatesGroup):
@@ -29,14 +30,20 @@ async def open_affiliate_menu(callback: types.CallbackQuery):
     bot = callback.bot
     chat_id = callback.message.chat.id
     user_id = callback.from_user.id
-    balance = float(AffiliateService.get_total_commission_by_user(user_id) or 0.0)
+    balance = float(AffiliateService.get_affiliate_balance(user_id) or 0.0)
     balance_text = f"{balance:,.2f}"
     affiliate_link = f"{URL_BOT}?start={user_id}"
     active_referrals = AffiliateService.get_referrals_by_referrer_active(user_id) or []
     pending_referrals = AffiliateService.get_referrals_by_referrer_pending(user_id) or []
     active_count = len(active_referrals)
     pending_count = len(pending_referrals)
-    translator = Translator(lang="en")
+    if user_id not in user_langs:
+        user_db = UserService.get_user_by_telegram_id(user_id)
+        lang = user_db.language if user_db and hasattr(user_db, "language") else "en"
+        user_langs[user_id] = lang
+    else:
+        lang = user_langs[user_id]
+    translator = Translator(lang)
     try:
         await bot.delete_message(chat_id=chat_id, message_id=callback.message.message_id)
     except Exception:
@@ -58,7 +65,7 @@ async def open_affiliate_menu(callback: types.CallbackQuery):
         text=message_html,
         parse_mode="HTML",
         disable_web_page_preview=True,
-        reply_markup=get_affiliate_menu()
+        reply_markup=get_affiliate_menu(lang)
     )
 
     await callback.answer()
@@ -66,17 +73,16 @@ async def open_affiliate_menu(callback: types.CallbackQuery):
 @affiliate_router.callback_query(F.data == "aff_withdraw")
 async def handle_affiliate_withdraw(callback: types.CallbackQuery, state: FSMContext):
     user_id = callback.from_user.id
-    balance = float(AffiliateService.get_total_commission_by_user(user_id) or 0.0)
-    translator = Translator(lang="en")
-
-    balance =40
+    balance = float(AffiliateService.get_affiliate_balance(user_id) or 0.0)
+    lang = user_langs.get(user_id, "en")
+    translator = Translator(lang)    
     if balance < 20:
         await callback.answer(translator.t("affiliate_withdraw.not_enough_balance"), show_alert=True)
         return
 
    
     kb = InlineKeyboardBuilder()
-    kb.button(text=translator.t("affiliate_withdraw.cancel_button"), callback_data="affiliate")
+    kb.button(text=translator.t("button.cancel_button"), callback_data="affiliate")
     markup = kb.as_markup()
 
     msg = await callback.message.edit_text(
@@ -96,8 +102,18 @@ async def handle_affiliate_withdraw(callback: types.CallbackQuery, state: FSMCon
 @affiliate_router.message(WithdrawState.waiting_for_wallet)
 async def process_wallet_address(message: types.Message, state: FSMContext):
     user_id = message.from_user.id
-    wallet = message.text.strip()
-    translator = Translator(lang="en")
+    text = message.text.strip()
+    parts = text.split("|")
+
+   
+    if len(parts) != 2:
+        await message.answer("⚠️ Vui lòng nhập đúng định dạng: <số tiền>|<địa chỉ ví>")
+        return
+    balace =float(AffiliateService.get_affiliate_balance(user_id))
+    amount = float(parts[0].strip())
+    wallet = parts[1].strip()
+    lang = user_langs.get(user_id, "en")
+    translator = Translator(lang)
 
     try:
         await message.delete()
@@ -107,10 +123,10 @@ async def process_wallet_address(message: types.Message, state: FSMContext):
     data = await state.get_data()
     bot_message_id = data.get("bot_message_id")
 
-    if not (wallet.startswith("0x") and len(wallet) == 42):
+    if not (wallet.startswith("0x") and len(wallet) == 42) or amount>balace or amount<=0:
         kb = InlineKeyboardBuilder()
-        kb.button(text=translator.t("affiliate_withdraw.try_again_button"), callback_data="aff_withdraw")
-        kb.button(text=translator.t("affiliate_withdraw.back_button"), callback_data="affiliate")
+        kb.button(text=translator.t("button.try_again_button"), callback_data="aff_withdraw")
+        kb.button(text=translator.t("button.back_button"), callback_data="affiliate")
         markup = kb.as_markup()
 
         await message.bot.edit_message_text(
@@ -123,11 +139,9 @@ async def process_wallet_address(message: types.Message, state: FSMContext):
         await state.clear()
         return
 
-    balance = float(AffiliateService.get_total_commission_by_user(user_id) or 0.0)
-
     withdraw_id = AffiliateService.create_withdrawal(
         user_id=user_id,
-        amount=balance,
+        amount=amount,
         wallet_address=wallet,
         status="pending",
         tx_hash=None,
@@ -139,11 +153,11 @@ async def process_wallet_address(message: types.Message, state: FSMContext):
         message_id=bot_message_id,
         text=translator.t(
             "affiliate_withdraw.withdraw_success",
-            balance=f"{balance:,.2f}",
+            balance=f"{amount:,.2f}",
             wallet=wallet
         ),
         parse_mode="HTML",
-        reply_markup=back_main_menu()
+        reply_markup=back_main_menu(lang)
     )
 
 
@@ -151,7 +165,7 @@ async def process_wallet_address(message: types.Message, state: FSMContext):
     admin_text = translator.t(
         "affiliate_withdraw.new_withdraw_request",
         user_id=user_id,
-        balance=f"{balance:,.2f}",
+        balance=f"{amount:,.2f}",
         wallet=wallet,
         username=message.from_user.username or "No username"
     )
@@ -165,74 +179,34 @@ async def process_wallet_address(message: types.Message, state: FSMContext):
     )
     await state.clear()
 
-
-@affiliate_router.callback_query(F.data.startswith("approve_withdraw"))
-async def approve_withdrawal(callback: types.CallbackQuery):
-    translator = Translator(lang="en")
-
-    if callback.from_user.id != ADMIN_CHAT_ID:
-        await callback.answer(translator.t("affiliate_withdraw.user_not_authorized"), show_alert=True)
-        return
-
-    try:
-        _, withdraw_id, user_id = callback.data.split(":")
-        withdraw_id = int(withdraw_id)
-        user_id = int(user_id)
-    except:
-        await callback.answer(translator.t("affiliate_withdraw.invalid_data_format"), show_alert=True)
-        return
-
-    AffiliateService.update_withdraw_status(withdraw_id, "approved")
-    AffiliateService.reset_user_commission(user_id)
-
-    await callback.message.edit_text(
-        translator.t(
-            "affiliate_withdraw.withdraw_approved",
-            withdraw_id=withdraw_id,
-            user_id=user_id
-        ),
-        parse_mode="HTML"
-    )
-
-    try:
-        await callback.bot.send_message(
-            chat_id=user_id,
-            text=translator.t("affiliate_withdraw.withdraw_approved_user"),
-            parse_mode="HTML"
-        )
-    except:
-        pass
-
-    await callback.answer(translator.t("affiliate_withdraw.withdraw_approved_alert"))
-
-
 @affiliate_router.callback_query(F.data == "aff_verify")
 async def handle_affiliate_verify(callback: types.CallbackQuery, state: FSMContext):
     user_id = callback.from_user.id
     user = UserService.get_user_by_telegram_id(user_id)
-
+    lang = user_langs.get(user_id, "en")
+    translator = Translator(lang)
     if user and user.verified_kol == "under_review":
         await callback.answer(
-            "You have already submitted verification. Please wait for our review and approval.",
+            translator.t("affiliate_verify.alert_under_review"),
             show_alert=True
         )
         return
 
     elif user.verified_kol == "approved":
         await callback.answer(
-            "Your verification has been approved! 🎉",
+            translator.t("affiliate_verify.alert_approved"),
             show_alert=True
         )
         return
     elif user.verified_kol == "rejected":
         await callback.answer(
-            "Your verification request was rejected. Please try again.",
+            translator.t("affiliate_verify.alert_rejected"),
             show_alert=True
         )
         return
     translator = Translator(lang="en")
     kb = InlineKeyboardBuilder()
-    kb.button(text=translator.t("affiliate_verify.cancel_button"), callback_data="affiliate")
+    kb.button(text=translator.t("button.cancel_button"), callback_data="affiliate")
     markup = kb.as_markup()
 
 
@@ -251,9 +225,11 @@ async def handle_affiliate_verify(callback: types.CallbackQuery, state: FSMConte
 
 @affiliate_router.message(VerifyState.waiting_for_social_link)
 async def process_social_verification(message: types.Message, state: FSMContext):
-    translator = Translator(lang="en")
-
+    
     user_id = message.from_user.id
+    lang = user_langs.get(user_id, "en")
+    translator = Translator(lang)
+
     username = message.from_user.username or "No username"
     social_info = message.text.strip()
 
@@ -263,7 +239,7 @@ async def process_social_verification(message: types.Message, state: FSMContext)
         pass
     if not URL_REGEX.match(social_info):
         warn_msg = await message.answer(
-            "⚠️ Please send a valid social media link (e.g., https://instagram.com/yourname)",
+           translator.t("affiliate_verify.alert_social_warning"),
             parse_mode="HTML"
         )
         async def _delete_later(bot, chat_id, message_id, delay=5):
@@ -309,14 +285,14 @@ async def process_social_verification(message: types.Message, state: FSMContext)
             message_id=edit_msg_id,
             text=translator.t("affiliate_verify.user_success"),
             parse_mode="HTML",
-            reply_markup=back_main_menu()
+            reply_markup=back_main_menu(lang)
         )
     except Exception:
         await message.bot.send_message(
             chat_id=user_id,
             text=translator.t("affiliate_verify.user_success"),
             parse_mode="HTML",
-            reply_markup=back_main_menu()
+            reply_markup=back_main_menu(lang)
         )
 
     await state.clear()

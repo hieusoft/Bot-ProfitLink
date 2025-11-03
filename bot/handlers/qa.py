@@ -2,6 +2,7 @@ from aiogram import Router, types, F
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 from bot.keyboards.qa_menu import get_qa_menu
 from services.qna_service import QnAService
+from services.user_service import UserService
 from aiogram.fsm.context import FSMContext
 import html
 from config.settings import settings
@@ -10,7 +11,7 @@ from config.translator import Translator
 qa_router = Router()
 
 MAX_PAGE_LENGTH = settings.MAX_PAGE_LENGTH
-
+user_langs = {}
 
 def split_text(text: str, max_len: int = MAX_PAGE_LENGTH):
     words = text.split()
@@ -32,10 +33,14 @@ def split_text(text: str, max_len: int = MAX_PAGE_LENGTH):
 
 @qa_router.callback_query(F.data == "qa")
 async def open_qa_menu(callback: types.CallbackQuery):
+    user_id = callback.from_user.id
     bot = callback.message.bot
     chat_id = callback.message.chat.id
-    translator = Translator("en")
-
+    user = UserService.get_user_by_telegram_id(user_id)
+    lang = user.language if user and hasattr(user, "language") else "en"
+    user_langs[user_id] = lang  
+    translator = Translator(lang)
+    
     try:
         await bot.delete_message(chat_id, callback.message.message_id)
     except Exception:
@@ -48,14 +53,16 @@ async def open_qa_menu(callback: types.CallbackQuery):
             f"{translator.t('qa.center_description')}"
         ),
         parse_mode="HTML",
-        reply_markup=get_qa_menu()
+        reply_markup=get_qa_menu(lang)
     )
     await callback.answer()
 
 
 @qa_router.callback_query(F.data.startswith("qa_category"))
 async def handle_category_qa(callback: types.CallbackQuery, state: FSMContext):
-    translator = Translator("en")
+    user_id = callback.from_user.id
+    lang = user_langs.get(user_id, "en")
+    translator = Translator(lang)
 
     parts = callback.data.split("_", 3)
     if len(parts) < 4:
@@ -85,7 +92,7 @@ async def handle_category_qa(callback: types.CallbackQuery, state: FSMContext):
             callback_data=f"qa_show_{category_id}_{category_slug}_{qa.qna_id}"
         )
 
-    kb.button(text="↩️ Back", callback_data="qa")
+    kb.button(text=f"{translator.t('button.back_button')}", callback_data="qa")
     kb.adjust(5)
 
     await callback.message.edit_text(
@@ -98,7 +105,9 @@ async def handle_category_qa(callback: types.CallbackQuery, state: FSMContext):
 
 @qa_router.callback_query(F.data.startswith("qa_show_"))
 async def handle_show_answer(callback: types.CallbackQuery, state: FSMContext):
-    translator = Translator("en")
+    user_id = callback.from_user.id
+    lang = user_langs.get(user_id, "en")
+    translator = Translator(lang)
 
     parts = callback.data.split("_", 4)
     if len(parts) < 5:
@@ -125,8 +134,8 @@ async def handle_show_answer(callback: types.CallbackQuery, state: FSMContext):
 
     kb = InlineKeyboardBuilder()
     if len(pages) > 1:
-        kb.button(text="➡️ Next", callback_data="qa_page_1")
-    kb.button(text="↩️ Back", callback_data=f"qa_category_{category_id}_{category_slug}")
+        kb.button(text=f"{translator.t('button.next_button')}", callback_data="qa_page_1")
+    kb.button(text=f"{translator.t('button.back_button')}", callback_data=f"qa_category_{category_id}_{category_slug}")
     kb.adjust(1, 1)
 
     await callback.message.edit_text(
@@ -141,7 +150,9 @@ async def handle_show_answer(callback: types.CallbackQuery, state: FSMContext):
 
 @qa_router.callback_query(F.data.startswith("qa_page_"))
 async def handle_qa_page(callback: types.CallbackQuery, state: FSMContext):
-    translator = Translator("en")
+    user_id = callback.from_user.id
+    lang = user_langs.get(user_id, "en")
+    translator = Translator(lang)
 
     data = await state.get_data()
     pages = data.get('qa_pages')
@@ -156,10 +167,10 @@ async def handle_qa_page(callback: types.CallbackQuery, state: FSMContext):
 
     kb = InlineKeyboardBuilder()
     if current_page > 0:
-        kb.button(text="⬅️ Previous", callback_data=f"qa_page_{current_page-1}")
+        kb.button(text=f"{translator.t('button.pre_button')}", callback_data=f"qa_page_{current_page-1}")
     if current_page < len(pages) - 1:
-        kb.button(text="➡️ Next", callback_data=f"qa_page_{current_page+1}")
-    kb.button(text="↩️ Back", callback_data=f"qa_category_{category_id}_{category_slug}")
+        kb.button(text=f"{translator.t('button.next_button')}", callback_data=f"qa_page_{current_page+1}")
+    kb.button(text=f"{translator.t('button.back_button')}", callback_data=f"qa_category_{category_id}_{category_slug}")
 
     if current_page == len(pages) - 1:
         kb.adjust(1)

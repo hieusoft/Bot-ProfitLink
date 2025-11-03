@@ -34,8 +34,19 @@ class SubscriptionChecker:
             sub_end_aware = sub.end_date.replace(tzinfo=tz_vn) if sub.end_date.tzinfo is None else sub.end_date
 
             if sub_end_aware < now:
-                print("kho")
+              
                 await self.delete_user_channels(sub.user_id)
+                text = (
+                    "⚠️ *Your subscription has expired!* ⚠️\n\n"
+                    "Please renew your plan to continue enjoying premium features and signals. 💎\n\n"
+                    "_The HieuSoft Team_ ⚡"
+                )
+
+                await self.bot.send_message(
+                    chat_id=sub.user_id,
+                    text=text,
+                    parse_mode="Markdown"
+                )
                 SubscriptionService.update_subscription(
                     sub_id=sub.sub_id,
                     start_date=sub.start_date,
@@ -64,7 +75,7 @@ class SubscriptionChecker:
 
         try:
           
-            track_id, merchant_id, expired_at, invoice_date =106173704, 15258851,1761927267,1761840867
+            track_id, merchant_id, expired_at, invoice_date =await self.oxapay.create_invoice_renew(amount, order_id)
             payment = Payment(
                 user_id=sub.user_id,
                 plan_id=plan.plan_id,

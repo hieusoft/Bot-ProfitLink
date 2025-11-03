@@ -8,15 +8,25 @@ from services.plan_service import PlanService
 from services.subscription_service import SubscriptionService
 from services.subscription_detail_service import SubscriptionDetailService
 from config.translator import Translator
+from services.user_service import UserService
 
 free_trial_router = Router()
+
+# ✅ Lưu lang của user theo ID
+user_langs = {}
 
 
 @free_trial_router.callback_query(F.data == "free_trial")
 async def open_free_trial_menu(callback: types.CallbackQuery):
     bot = callback.message.bot
+    user_id = callback.from_user.id
     chat_id = callback.message.chat.id
-    translator = Translator("en")
+
+    user = UserService.get_user_by_telegram_id(user_id)
+    lang = user.language if user and hasattr(user, "language") else "en"
+    user_langs[user_id] = lang  
+
+    translator = Translator(lang)
 
     try:
         await bot.delete_message(chat_id, callback.message.message_id)
@@ -32,7 +42,7 @@ async def open_free_trial_menu(callback: types.CallbackQuery):
     await callback.message.answer(
         text=caption_text,
         parse_mode="Markdown",
-        reply_markup=get_free_trial_menu(),
+        reply_markup=get_free_trial_menu(lang),
     )
 
     await callback.answer()
@@ -43,7 +53,9 @@ async def activate_free_trial(callback: types.CallbackQuery):
     bot = callback.message.bot
     chat_id = callback.message.chat.id
     user_id = callback.from_user.id
-    translator = Translator("en")
+
+    lang = user_langs.get(user_id, "en")
+    translator = Translator(lang)
 
     plan = PlanService.get_plan_by_id(1)
     if not plan:
@@ -90,7 +102,7 @@ async def activate_free_trial(callback: types.CallbackQuery):
     )
 
     kb = InlineKeyboardBuilder()
-    kb.button(text="⬅️ Back", callback_data="free_trial")
+    kb.button(text=f"{translator.t('button.back_button')}", callback_data="free_trial")
 
     try:
         await callback.message.edit_text(
@@ -99,15 +111,18 @@ async def activate_free_trial(callback: types.CallbackQuery):
             reply_markup=kb.as_markup(),
         )
     except Exception:
-        await callback.message.answer(success_text, parse_mode="Markdown", reply_markup=back_main_menu())
+        await callback.message.answer(success_text, parse_mode="Markdown", reply_markup=back_main_menu(lang))
 
     await callback.answer(translator.t("free_trial.success_alert"))
     await callback.answer()
 
+
 @free_trial_router.callback_query(F.data == "join_channel_trial")
 async def join_channel(callback: types.CallbackQuery):
-    translator = Translator("en")
     user_id = callback.from_user.id
+    lang = user_langs.get(user_id, "en")
+    translator = Translator(lang)
+
     invite_link = "https://t.me/addlist/yVDMsEMPpa4zNGE1"
 
     sub = SubscriptionService.get_subscription_by_user_id(user_id)
@@ -123,8 +138,8 @@ async def join_channel(callback: types.CallbackQuery):
 
     if active_details:
         kb = InlineKeyboardBuilder()
-        kb.button(text="👉 Join Channel", url=invite_link)
-        kb.button(text="↩️ Back", callback_data="free_trial")
+        kb.button(text=f"{translator.t('button.join_channel')}", url=invite_link)
+        kb.button(text=f"{translator.t('button.back_button')}", callback_data="free_trial")
 
         await callback.message.edit_text(
             translator.t("free_trial.join_ready"),

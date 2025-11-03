@@ -1,7 +1,12 @@
 {
     "start": {
         "welcome": "👋 Welcome back, {name}!\n\n📊 *Your Crypto Companion*\nPlease choose an option below 👇",
-        "no_username": "Trader"
+        "no_username": "Trader",
+        "intro": "💎 *Welcome to Hieusoft Crypto Bot!*\n\nEmpower your trading journey with real-time premium signals, lifetime affiliate rewards, and cashback from every trade — all in one smart bot. 🚀\n\nChoose your next action below to start earning 👇"
+    },
+    "language": {
+        "title": "🌐 Please choose your language:",
+        "changed": "✅ Your language has been updated!"
     },
     "account": {
         "title": "💼 <b><u>MY ACCOUNT</u></b>",
@@ -29,11 +34,8 @@
     },
     "affiliate_withdraw": {
         "not_enough_balance": "❌ Minimum balance required for withdrawal is $20.",
-        "confirm_withdraw": "💰 You are about to withdraw your affiliate commission.\nAvailable balance: <b>${balance}</b>\n\n👉 Please enter your <b>BEP-20 (BSC)</b> wallet address to receive the funds.",
-        "cancel_button": "⬅️ Cancel",
-        "invalid_wallet": "⚠️ Invalid wallet address.\n\nPlease provide a valid <b>BEP-20 (BSC)</b> address.",
-        "try_again_button": "🔁 Try Again",
-        "back_button": "⬅️ Back",
+        "confirm_withdraw": "💰 You are about to withdraw your affiliate commission.\nAvailable balance: <b>${balance}</b>\n\n👉 Please enter the <b>amount</b> you wish to withdraw and your <b>BEP-20 (BSC)</b> wallet address to receive the funds.\n\n🧾 Example: \n\n<code>20|0x7dB8a12F3dA9bC3eDfE8.......</code>",
+        "invalid_wallet": "⚠️ Invalid wallet address or insufficient balance.\n\nPlease provide a valid <b>BEP-20 (BSC)</b> address and make sure you have enough funds.",
         "withdraw_success": "✅ <b>Withdrawal request received!</b>\n\n💵 Amount: <b>${balance}</b>\n🏦 Wallet: <code>{wallet}</code>\n\nYour request will be reviewed and processed by the admin soon.",
         "new_withdraw_request": "📩 <b>New Affiliate Withdrawal Request</b>\n\n👤 User ID: <code>{user_id}</code>\n💰 Amount: ${balance}\n🏦 Wallet: <code>{wallet}</code>\n\n🔗 Telegram: @{username}",
         "confirm_withdraw_button": "✅ Confirm Withdrawal",
@@ -48,7 +50,11 @@
         "instruction": "Please send a link or short description related to your <b>social media</b>.\nFor example:\n- TikTok: https://www.tiktok.com/@yourname\n- Facebook page or group\n- YouTube channel\n- Or just a brief text describing your social profile.\n\n<i>Send your link or text below 👇</i>",
         "cancel_button": "⬅️ Cancel",
         "admin_new_request": "📢 <b>New Social Verification Request</b>\n\n👤 User ID: <code>{user_id}</code>\n🔗 Username: @{username}\n📝 Info: {social_info}\n\n📎 Telegram: <a href='https://t.me/{username}'>@{username}</a>",
-        "user_success": "✅ <b>Verification request sent!</b>\n\nOur team will review your social profile and contact you soon."
+        "user_success": "✅ <b>Verification request sent!</b>\n\nOur team will review your social profile and contact you soon.",
+        "alert_under_review": "You have already submitted verification. Please wait for our review and approval.",
+        "alert_approved": "Your verification has been approved! 🎉",
+        "alert_rejected": "Your verification request was rejected. Please try again.",
+        "alert_social_warning": "⚠️ Please send a valid social media link (e.g., https://instagram.com/yourname)"
     },
     "cashback": {
         "title": "⚙️ The Cashback feature is currently being updated.\nPlease check back later!"
@@ -102,5 +108,29 @@
         "not_registered": "❌ Please register for a plan before joining the channel.",
         "can_join": "✅ You can now join our official Telegram channel:",
         "not_active": "⚠️ Your subscription is not active. Please activate or renew it to join the channel."
+    },
+    "button": {
+        "cancel_button": "⬅️ Cancel",
+        "try_again_button": "🔁 Try Again",
+        "back_button": "↩️ Back",
+        "join_channel": "👉 Join Channel",
+        "next_button": "➡️ Next",
+        "pre_button": "⬅️ Previous",
+        "withdraw_button": "💵 Withdraw",
+        "verify_kol": "🧾 Verify as KOL/KOC",
+        "activate_free_trial": "✅ Activate Free Trial",
+        "join_official_channel": "🚀 Join Official Channel",
+        "start_free_trial": "🎯 Start Free Trial (3 Days)",
+        "premium_plan": "💎 Premium Plans",
+        "cashback_trading_fee": "💰 Cashback Trading Fee",
+        "my_account": "👤 My Account",
+        "affiliate_center": "🤝 Affiliate Center",
+        "help_q/a": "🧠 Help / Q&A",
+        "support_team": "🧑‍💼 Support Team",
+        "change_language": "🌍 Change Language",
+        "oxa_pay": "💳 OxaPay",
+        "affiliate_balance": "💰 Affiliate Balance",
+        "pay_with_oxapay": "🔗 Pay with OxaPay",
+        "check_payment": "✅ Check Payment"
     }
 }

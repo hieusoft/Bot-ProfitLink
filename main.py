@@ -16,15 +16,12 @@ from bot.handlers import (
 )
 from bot.cron.check_renew import SubscriptionChecker
 from bot.utils.send_message import SendMessage
-
 logging.basicConfig(level=logging.INFO)
-
 async def main():
     bot = Bot(
         token=settings.BOT_TOKEN,
         default=DefaultBotProperties(parse_mode=ParseMode.MARKDOWN)
     )
-
     dp = Dispatcher()
     dp.include_routers(
         start_router,
@@ -37,20 +34,24 @@ async def main():
         account_router,
         language_router
     )
-
     checker = SubscriptionChecker(bot)
     sender = SendMessage(bot)
-
-    async def periodic_check():
+    async def checker_task():
         while True:
-         
-            await checker.check_all_users()
-
-            await sender.check_all_users()
-            
-            await asyncio.sleep(30)  
-
-    asyncio.create_task(periodic_check())
+            try:
+                await checker.check_all_users()
+            except Exception as e:
+                logging.error(f"Error in checker_task: {e}")
+            await asyncio.sleep(30 * 60)  
+    async def sender_task():
+        while True:
+            try:
+                await sender.check_all_users()
+            except Exception as e:
+                logging.error(f"Error in sender_task: {e}")
+            await asyncio.sleep(5 * 60)  
+    asyncio.create_task(checker_task())
+    asyncio.create_task(sender_task())
     await dp.start_polling(bot)
 
 if __name__ == "__main__":

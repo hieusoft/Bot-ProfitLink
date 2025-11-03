@@ -22,5 +22,6 @@ class AffiliateWithdrawal:
     wallet_address: Optional[str] = None
     status: str = "pending"  # pending | approved | rejected
     tx_hash: Optional[str] = None
+    approved_at:Optional[datetime] = None
     created_at: Optional[datetime] = None
     updated_at: Optional[datetime] = None

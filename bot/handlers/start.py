@@ -78,7 +78,8 @@ async def start_command(message: types.Message, command: CommandStart):
     caption = translator.t("start.welcome", name=name)
 
     banner_path = os.path.join("media", "assets", "banner.jpg")
-
+    user = UserService.get_user_by_telegram_id(user_id=user.id)
+    
     if os.path.exists(banner_path):
         photo = FSInputFile(banner_path)
         await bot.send_photo(
@@ -86,12 +87,12 @@ async def start_command(message: types.Message, command: CommandStart):
             photo=photo,
             caption=caption,
             parse_mode="Markdown",
-            reply_markup=get_main_menu()
+            reply_markup=get_main_menu(user.language)
         )
     else:
         await bot.send_message(
             chat_id=chat_id,
             text=caption,
             parse_mode="Markdown",
-            reply_markup=get_main_menu()
+            reply_markup=get_main_menu(user.language)
         )
