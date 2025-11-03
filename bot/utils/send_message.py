@@ -68,11 +68,17 @@ class SendMessage:
 
                 text = None
                 if withdraw.status == "approved":
-                    text = translator.t(
-                        "notify.withdraw_paid",
-                        amount=f"{withdraw.amount}",
-                        txid=txid
-                    )
+                    if txid == "No TXID available":
+                        text = translator.t(
+                            "notify.withdraw_user_paid_no_txid",
+                            amount=f"{withdraw.amount}"
+                        )
+                    else:
+                        text = translator.t(
+                            "notify.withdraw_user_paid",
+                            amount=f"{withdraw.amount}",
+                            txid=txid
+                        )
                 elif withdraw.status == "pending":
                     text = translator.t("notify.withdraw_pending")
                 elif withdraw.status == "rejected":

@@ -9,7 +9,8 @@ from services.subscription_service import SubscriptionService
 from services.subscription_detail_service import SubscriptionDetailService
 from config.translator import Translator
 from services.user_service import UserService
-
+from config.settings import settings
+ADD_LIST = settings.ADD_LIST
 free_trial_router = Router()
 
 # ✅ Lưu lang của user theo ID
@@ -131,7 +132,7 @@ async def join_channel(callback: types.CallbackQuery):
     lang = user_langs.get(user_id, "en")
     translator = Translator(lang)
 
-    invite_link = "https://t.me/addlist/yVDMsEMPpa4zNGE1"
+    invite_link = ADD_LIST
 
     sub = SubscriptionService.get_subscription_by_user_id(user_id)
 

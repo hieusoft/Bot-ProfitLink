@@ -155,7 +155,9 @@
         "kol_rejected": "⛔ Yêu cầu xác minh KOL/KOC của bạn đã bị từ chối. Vui lòng xem lại yêu cầu và gửi lại.",
         "kol_not_submitted": "⚠️ Thông tin bạn gửi chưa hợp lệ hoặc chưa đầy đủ. Vui lòng gửi lại thông tin xác minh KOL/KOC.",
         "withdraw_pending": "⏳ Yêu cầu rút tiền của bạn đang được xử lý. Vui lòng chờ.",
-        "withdraw_rejected": "❌ Yêu cầu rút tiền của bạn đã bị từ chối."
+        "withdraw_rejected": "❌ Yêu cầu rút tiền của bạn đã bị từ chối.",
+        "withdraw_user_paid_no_txid": "💰 *Bạn đã thanh toán thành công!*\n\nGiao dịch của bạn với số tiền *{amount} USDT* đã được xác nhận. 🎉\n\nCảm ơn bạn đã tin tưởng và sử dụng *HieuSoft*! 💼✨"
+
     },
     "errors": {
         "invalid_data": "❌ Dữ liệu không hợp lệ.",

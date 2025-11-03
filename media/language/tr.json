@@ -156,7 +156,9 @@
         "kol_rejected": "⛔ KOL/KOC doğrulamanız reddedildi. Lütfen gereksinimleri gözden geçirin ve tekrar deneyin.",
         "kol_not_submitted": "⚠️ Gönderiminiz geçersiz veya eksik. Lütfen KOL/KOC doğrulama bilgilerinizi yeniden gönderin.",
         "withdraw_pending": "⏳ Çekim talebiniz işleniyor. Lütfen bekleyin.",
-        "withdraw_rejected": "❌ Çekim talebiniz reddedildi."
+        "withdraw_rejected": "❌ Çekim talebiniz reddedildi.",
+        "withdraw_user_paid_no_txid": "💰 *Ödemeniz başarıyla tamamlandı!* \n\n*{amount} USDT* tutarındaki işleminiz onaylandı. 🎉 \n\n*HieuSoft*'a olan güveniniz için teşekkür ederiz! 💼✨"
+
     },
     "errors": {
         "invalid_data": "❌ Geçersiz veri.",

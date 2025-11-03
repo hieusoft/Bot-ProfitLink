@@ -13,9 +13,10 @@ from telethon import errors
 from telethon.tl.functions.channels import GetParticipantRequest, EditBannedRequest
 from telethon.tl.types import ChatBannedRights,PeerChannel
 from config.telegram_client import get_telegram_client
+from config.settings import settings
 tz_vn = pytz.timezone("Asia/Ho_Chi_Minh")
-DISCOUNT = 10 
-CHANNEL_LIST = "my_chanel.txt"
+DISCOUNT = settings.DISCOUNT
+CHANNEL_LIST = settings.CHANNEL_LIST
 from config.translator import Translator
 class SubscriptionChecker:
     def __init__(self, bot: Bot):

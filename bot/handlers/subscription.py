@@ -13,6 +13,8 @@ from datetime import datetime, timedelta
 from services.oxapay_service import OxaPayService
 import pytz
 from config.translator import Translator
+from config.settings import settings
+ADD_LIST = settings.ADD_LIST
 subscription_router = Router()
 oxapay = OxaPayService()
 tz_vn = pytz.timezone("Asia/Ho_Chi_Minh")
@@ -93,6 +95,7 @@ async def choose_payment_method(callback: types.CallbackQuery):
     sale_start = plan.sale_start.astimezone(tz_vn) if plan.sale_start else None
     sale_end = plan.sale_end.astimezone(tz_vn) if plan.sale_end else None
 
+    # Áp dụng giá khuyến mãi nếu đang trong thời gian sale
     if plan.sale_percent > 0 and sale_start and sale_end and sale_start <= now_vn <= sale_end:
         amount = float(plan.price * (1 - plan.sale_percent / 100))
     else:
@@ -101,9 +104,12 @@ async def choose_payment_method(callback: types.CallbackQuery):
     last_payment = PaymentService.get_latest_payment_pending(user.id, plan.plan_id)
     create_new_payment = True
 
-    if last_payment and last_payment.invoice_date:
+    if last_payment and last_payment.invoice_date and last_payment.expired_at:
         invoice_datetime = datetime.fromtimestamp(last_payment.invoice_date, tz=tz_vn)
-        if now_vn - invoice_datetime < timedelta(minutes=30):
+        expired_datetime = datetime.fromtimestamp(last_payment.expired_at, tz=tz_vn)
+
+      
+        if now_vn < expired_datetime:
             create_new_payment = False
             order_id = last_payment.order_id
             amount = last_payment.amount
@@ -127,7 +133,7 @@ async def choose_payment_method(callback: types.CallbackQuery):
         PaymentService.create_payment(payment)
 
     kb = InlineKeyboardBuilder()
-    kb.button(text= f"{translator.t('button.oxa_pay')}", callback_data=f"pay_sub_{plan_name}_oxapay")
+    kb.button(text=f"{translator.t('button.oxa_pay')}", callback_data=f"pay_sub_{plan_name}_oxapay")
     kb.button(text=f"{translator.t('button.affiliate_balance')}", callback_data=f"pay_sub_{plan_name}_affiliate_balance")
     kb.button(text=f"{translator.t('button.back_button')}", callback_data="subscription_plans")
     kb.adjust(2, 1, 1)
@@ -144,6 +150,7 @@ async def choose_payment_method(callback: types.CallbackQuery):
     )
 
     await callback.answer()
+
 
 @subscription_router.callback_query(F.data.endswith("_affiliate_balance"))
 async def affiliate_balance_payment(callback: types.CallbackQuery):
@@ -185,13 +192,14 @@ async def affiliate_balance_payment(callback: types.CallbackQuery):
         parse_mode="Markdown",
         reply_markup=kb.as_markup()
     )
+    await callback.answer()
 @subscription_router.callback_query(F.data.startswith("confirm_affiliate_"))
 async def confirm_affiliate_payment(callback: types.CallbackQuery):
     user = callback.from_user
     parts = callback.data.split("_")
     plan_id = int(parts[2])
-
-    lang = user_langs.get(user.id, "en")
+    user_db = UserService.get_user_by_telegram_id(user.id)
+    lang =user_db.language
     translator = Translator(lang)
 
     plan = PlanService.get_plan_by_id(plan_id)
@@ -309,6 +317,7 @@ async def confirm_affiliate_payment(callback: types.CallbackQuery):
             parse_mode="Markdown",
             reply_markup=back_main_menu(lang)
         )
+    await callback.answer()
     await callback.answer(translator.t("plans.payment_confirmed_alert"), show_alert=True)
 
 
@@ -400,7 +409,7 @@ async def check_subscription_payment(callback: types.CallbackQuery):
         await callback.answer(translator.t("plans.plan_not_exist"), show_alert=True)
         return
 
-    last_payment = PaymentService.get_latest_payment(user.id, plan.plan_id)
+    last_payment = PaymentService.get_latest_payment_pending(user.id, plan.plan_id)
     if not last_payment:
         await callback.answer(translator.t("plans.no_recent_payment"), show_alert=True)
         return
@@ -517,11 +526,12 @@ async def check_subscription_payment(callback: types.CallbackQuery):
             translator.t("plans.payment_confirmed", plan_name=plan_name),
             parse_mode="Markdown",
             reply_markup=back_main_menu(lang)
-        ) 
+        )
+    await callback.answer() 
 @subscription_router.callback_query(F.data == "join_channel")
 async def join_channel(callback: types.CallbackQuery):
     user_id = callback.from_user.id
-    invite_link = "https://t.me/addlist/yVDMsEMPpa4zNGE1"
+    invite_link = ADD_LIST
     lang = user_langs.get(user_id, "en")
     translator = Translator(lang)
     sub = SubscriptionService.get_subscription_by_user_id(user_id)
@@ -532,6 +542,7 @@ async def join_channel(callback: types.CallbackQuery):
             translator.t("join_channel.not_registered"),
             parse_mode="HTML"
         )
+        await callback.answer()
         return
 
     sub_id = sub.sub_id
@@ -547,11 +558,13 @@ async def join_channel(callback: types.CallbackQuery):
             parse_mode="HTML",
             reply_markup=kb.as_markup()
         )
+        await callback.answer()
     else:
             await callback.answer(
             translator.t("join_channel.not_active"),
             show_alert=True
         )
+            await callback.answer()
 
 @subscription_router.callback_query(F.data.startswith("check_sub_") & F.data.endswith("_renew"))
 async def check_subscription_payment_renew(callback: types.CallbackQuery):

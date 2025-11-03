@@ -42,7 +42,7 @@ async def main():
                 await checker.check_all_users()
             except Exception as e:
                 logging.error(f"Error in checker_task: {e}")
-            await asyncio.sleep(30 * 60)  
+            await asyncio.sleep(24 * 60 * 60)  
     async def sender_task():
         while True:
             try:

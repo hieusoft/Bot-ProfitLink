@@ -27,4 +27,7 @@ class Settings:
         self.API_ID = int(os.getenv("TELEGRAM_API_ID", "123456"))
         self.API_HASH = os.getenv("TELEGRAM_API_HASH", "your_api_hash_here")
         self.SESSION_FILE = os.getenv("TELEGRAM_SESSION", "bot_session")
+        self.DISCOUNT=int(os.getenv("DISCOUNT", 10))
+        self.CHANNEL_LIST=os.getenv("CHANNEL_LIST", "")
+CHANNEL_LIST = "my_chanel.txt"
 settings = Settings()

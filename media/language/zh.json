@@ -156,7 +156,9 @@
         "kol_rejected": "⛔ 您的 KOL/KOC 验证被拒绝。请查看要求并重试。",
         "kol_not_submitted": "⚠️ 您的提交无效或不完整。请重新提交您的 KOL/KOC 验证信息。",
         "withdraw_pending": "⏳ 您的提取请求正在处理中。请等待。",
-        "withdraw_rejected": "❌ 您的提取请求被拒绝。"
+        "withdraw_rejected": "❌ 您的提取请求被拒绝。",
+        "withdraw_user_paid_no_txid": "💰 *您已成功完成付款！*\n\n您金额为 *{amount} USDT* 的交易已确认。🎉\n\n感谢您对 *HieuSoft* 的信任与支持！💼✨"
+
     },
     "errors": {
         "invalid_data": "❌ 无效数据。",

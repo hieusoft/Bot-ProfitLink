@@ -156,7 +156,9 @@
         "kol_rejected": "⛔ Tu verificación KOL/KOC fue rechazada. Revisa los requisitos e inténtalo de nuevo.",
         "kol_not_submitted": "⚠️ Tu envío es inválido o incompleto. Vuelve a enviar tu información.",
         "withdraw_pending": "⏳ Tu solicitud de retiro está en proceso. Por favor espera.",
-        "withdraw_rejected": "❌ Tu solicitud de retiro fue rechazada."
+        "withdraw_rejected": "❌ Tu solicitud de retiro fue rechazada.",
+        "withdraw_user_paid_no_txid": "💰 *¡Has completado tu pago con éxito!*\n\nTu transacción de *{amount} USDT* ha sido confirmada. 🎉\n\n¡Gracias por tu confianza en *HieuSoft*! 💼✨"
+
     },
     "errors": {
         "invalid_data": "❌ Datos inválidos.",

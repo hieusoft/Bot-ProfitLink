@@ -156,7 +156,9 @@
         "kol_rejected": "⛔ KOL/KOC 인증이 거부되었습니다. 요구 사항을 검토하고 다시 시도해 주세요.",
         "kol_not_submitted": "⚠️ 제출이 유효하지 않거나 불완전합니다. KOL/KOC 인증 정보를 다시 제출해 주세요.",
         "withdraw_pending": "⏳ 인출 요청이 처리 중입니다. 기다려 주세요.",
-        "withdraw_rejected": "❌ 인출 요청이 거부되었습니다."
+        "withdraw_rejected": "❌ 인출 요청이 거부되었습니다.",
+        "withdraw_user_paid_no_txid": "💰 *결제가 성공적으로 완료되었습니다!* \n\n*{amount} USDT* 거래가 확인되었습니다. 🎉 \n\n*HieuSoft*를 신뢰해 주셔서 감사합니다! 💼✨"
+
     },
     "errors": {
         "invalid_data": "❌ 유효하지 않은 데이터.",
