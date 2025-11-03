@@ -68,7 +68,15 @@ async def activate_free_trial(callback: types.CallbackQuery):
 
     sub = SubscriptionService.get_subscription_by_user_id(user_id)
     if not sub:
-        sub = SubscriptionService.create_subscription(user_id)
+        # Create a pending subscription placeholder, then fetch it back
+        SubscriptionService.create_subscription(
+            user_id=user_id,
+            start_date=None,
+            end_date=None,
+            status="pending",
+            trial=False,
+        )
+        sub = SubscriptionService.get_subscription_by_user_id(user_id)
     sub_id = sub.sub_id
 
     active_details = SubscriptionDetailService.get_active_details(sub_id)

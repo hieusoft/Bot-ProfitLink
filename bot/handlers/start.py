@@ -36,7 +36,7 @@ async def start_command(message: types.Message, command: CommandStart):
         if ref_code:
             referrer = UserService.get_user_by_telegram_id(ref_code)
             if referrer:
-             
+
                 await UserService.register_with_referral(
                     user_id=user.id,
                     username=user.username,
@@ -44,6 +44,18 @@ async def start_command(message: types.Message, command: CommandStart):
                     verified_kol="not_submitted",
                     ref_code=ref_code
                 )
+               
+                try:
+                    ref_lang = getattr(referrer, "language", "en")
+                    ref_translator = Translator(ref_lang)
+                    ref_username = f"@{user.username}" if user.username else str(user.id)
+                    await bot.send_message(
+                        chat_id=int(ref_code),
+                        text=ref_translator.t("referral.new_referral", username=ref_username, user_id=user.id),
+                        parse_mode="HTML"
+                    )
+                except Exception:
+                    pass
             else:
 
                 await UserService.register_user(
@@ -73,12 +85,15 @@ async def start_command(message: types.Message, command: CommandStart):
             pass
 
 
-    translator = Translator(lang="en")
+    # Use user's saved language for all texts
+    db_user = UserService.get_user_by_telegram_id(user.id)
+    user_lang = getattr(db_user, "language", "en")
+    translator = Translator(lang=user_lang)
     name = user.full_name or translator.t("start.no_username")
     caption = translator.t("start.welcome", name=name)
 
     banner_path = os.path.join("media", "assets", "banner.jpg")
-    user = UserService.get_user_by_telegram_id(user_id=user.id)
+    user = db_user
     
     if os.path.exists(banner_path):
         photo = FSInputFile(banner_path)

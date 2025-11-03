@@ -28,7 +28,7 @@ async def main():
         affiliate_router,
         subscription_router,
         cashback_router,
-        qa_router,
+        qa_router,  
         free_trial_router,
         main_menu_router,  
         account_router,

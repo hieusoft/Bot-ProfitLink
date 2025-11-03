@@ -1,0 +1,165 @@
+{
+    "start": {
+        "welcome": "👋 欢迎回来，{name}！\n\n📊 *您的加密货币伙伴*\n请在下方选择一个选项 👇",
+        "no_username": "交易者",
+        "intro": "💎 *欢迎来到 Hieusoft Crypto Bot！*\n\n用实时高级信号、终身联盟奖励以及每笔交易的现金返还来赋能您的交易之旅——全部在一个智能机器人中。🚀\n\n选择下方下一步开始赚钱 👇"
+    },
+    "language": {
+        "title": "🌐 请选择您的语言：",
+        "changed": "✅ 您的语言已更新！"
+    },
+    "account": {
+        "title": "💼 <b><u>我的账户</u></b>",
+        "user": "👤 <b>用户：</b> <i>{name}</i>",
+        "subscription_title": "💎 <b>订阅信息</b>",
+        "plan": "• <b>方案：</b> <code>{plan}</code>",
+        "status_active": "• <b>状态：</b> <i>活跃</i>",
+        "remaining": "• <b>剩余：</b> <code>{days} 天</code>",
+        "expires": "• <b>到期：</b> <code>{date}</code>",
+        "affiliate": "🔗 <b>您的联盟链接：</b>\n<code>{link}</code>",
+        "footer_active": "🚀 <i>感谢您成为高级会员！</i>",
+        "status_inactive": "⚠️ <b>状态：</b> <i>无活跃订阅</i>",
+        "subscribe_hint": "💎 <i>前往订阅方案开始您的旅程！</i>",
+        "footer_inactive": "🌟 <i>不要错过高级信号和 VIP 功能！</i>"
+    },
+    "affiliate_menu": {
+        "title": "🤝 联盟菜单",
+        "subtitle": "管理您的推荐计划",
+        "total_commission": "🏦 <b>总佣金：</b> ${balance_text} USD",
+        "referral_stats": "📊 <b>推荐统计</b>",
+        "active": "✅ 活跃： <b>{active_count}</b>",
+        "pending": "⏳ 待处理： <b>{pending_count}</b>",
+        "referral_link": "🔗 <b>您的推荐链接：</b>\n<a href=\"{affiliate_link}\">{affiliate_link}</a>",
+        "footer": "<i>使用下方按钮提取资金或验证为 KOL/KOC。</i>"
+    },
+    "affiliate_withdraw": {
+        "not_enough_balance": "❌ 提取最低余额为 $20。",
+        "confirm_withdraw": "💰 您即将提取您的联盟佣金。\n可用余额： <b>${balance}</b>\n\n👉 请填写您希望提取的 <b>金额</b> 以及接收资金的 <b>BEP-20 (BSC)</b> 钱包地址。\n\n🧾 示例： \n\n<code>20|0x7dB8a12F3dA9bC3eDfE8.......</code>",
+        "invalid_wallet": "⚠️ 无效钱包地址或余额不足。\n\n请提供有效的 <b>BEP-20 (BSC)</b> 地址并确保您有足够的资金。",
+        "invalid_format": "⚠️ 请使用正确格式：<amount>|<wallet address>",
+        "withdraw_success": "✅ <b>提取请求已收到！</b>\n\n💵 金额： <b>${balance}</b>\n🏦 钱包： <code>{wallet}</code>\n\n您的请求将很快由管理员审核并处理。",
+        "new_withdraw_request": "📩 <b>新的联盟提取请求</b>\n\n👤 用户 ID： <code>{user_id}</code>\n💰 金额： ${balance}\n🏦 钱包： <code>{wallet}</code>\n\n🔗 Telegram： @{username}",
+        "confirm_withdraw_button": "✅ 确认提取",
+        "withdraw_approved": "✅ 提取 <b>#{withdraw_id}</b> 已 <b>批准</b>。\n用户 <code>{user_id}</code> 余额已重置为 $0。",
+        "user_not_authorized": "⛔ 您没有权限。",
+        "invalid_data_format": "⚠️ 无效数据格式。",
+        "withdraw_approved_user": "🎉 您的提取已获批准并处理！您的联盟余额现为 $0。",
+        "withdraw_approved_alert": "提取已批准 ✅"
+    },
+    "affiliate_verify": {
+        "title": "🌟 <b>社交验证</b>",
+        "instruction": "请发送与您的 <b>社交媒体</b> 相关的链接或简短描述。\n例如：\n- TikTok: https://www.tiktok.com/@yourname\n- Facebook 页面或群组\n- YouTube 频道\n- 或简要描述您的社交资料。\n\n<i>请在下方发送链接或文本 👇</i>",
+        "cancel_button": "⬅️ 取消",
+        "admin_new_request": "📢 <b>新的社交验证请求</b>\n\n👤 用户 ID： <code>{user_id}</code>\n🔗 用户名： @{username}\n📝 信息： {social_info}\n\n📎 Telegram： <a href='https://t.me/{username}'>@{username}</a>",
+        "user_success": "✅ <b>验证请求已发送！</b>\n\n我们的团队将审核您的社交资料并尽快联系您。",
+        "alert_under_review": "您已提交验证。请等待我们的审核和批准。",
+        "alert_approved": "您的验证已获批准！🎉",
+        "alert_rejected": "您的验证请求被拒绝。请重新尝试。",
+        "alert_social_warning": "⚠️ 请发送有效的社交媒体链接（例如：https://instagram.com/yourname）"
+    },
+    "cashback": {
+        "title": "⚙️ 现金返还功能正在更新中。\n请稍后再次查看！"
+    },
+    "free_trial": {
+        "title": "🎁 3 天免费试用",
+        "description": "完全免费试用我们的高级交易信号 *72 小时*！",
+        "activate_cta": "点击下方激活您的试用 👇",
+        "not_found": "❌ 未找到免费试用方案！",
+        "already_used": "❌ 您已使用过免费试用！",
+        "already_active": "❌ 您已有活跃订阅！",
+        "activated_title": "✅ 免费试用已激活！",
+        "activated_message": "🎉 您现在拥有 *{days} 天* 的高级访问权限。\n您的试用将于 *{expire_time} UTC* 到期。\n\n享受高级交易信号和专属工具！🚀",
+        "success_alert": "✅ 免费试用成功激活！",
+        "join_require_plan": "❌ 请先注册一个方案再加入频道。",
+        "join_ready": "✅ 您现在可以加入我们的官方 Telegram 频道：",
+        "join_inactive": "⚠️ 您的订阅未激活。请激活或续订以加入频道。"
+    },
+    "qa": {
+        "center_title": "🧠 <b>Hieusoft Crypto Bot — 问答中心</b>",
+        "center_description": "欢迎来到我们的帮助中心！\n\n在这里您可以找到关于订阅、联盟、现金返还和技术支持的常见问题解答。\n\n选择下方主题开始 👇",
+        "invalid_category": "❌ 无效的类别数据。",
+        "no_qna_found": "❌ 未找到 <b>{category}</b> 类别的问答。",
+        "invalid_data": "❌ 无效数据格式。",
+        "question_not_found": "❌ 未找到问题。",
+        "no_pages_found": "❌ 未找到页面。",
+        "qa_for": "📚 <b>{category} 的问答</b>",
+        "question_label": "<b>问题：</b> {question}",
+        "answer_label": "<b>答案：</b> {answer}"
+    },
+    "plans": {
+        "available_title": "💎 <b>可用订阅方案</b>\n\n",
+        "plan_line_separator": "━━━━━━━━━━━━━━━━━━━━━━━\n",
+        "discount_plan": "✨ <b>{plan_name}</b>\n💰 <s>${price_original}</s> ➡️ <b>${price_discounted}</b>\n💸 <b>{sale_percent}% 优惠</b> 至 <i>{sale_end}</i>\n📅 持续时间： <code>{duration_days} 天</code>\n",
+        "normal_plan": "✨ <b>{plan_name}</b>\n💰 价格： <b>${price}</b>\n📅 持续时间： <code>{duration_days} 天</code>\n",
+        "premium_intro": "🏆 <b>高级订阅方案</b>\n\n用我们的高级信号和 VIP 福利释放您的全部交易潜力：\n\n🚀 <b>所有方案均包含：</b>\n• 专属 VIP 信号频道\n• 优先专家支持\n• 实时市场洞察\n\n💡 <i>在下方选择最适合您目标的方案！</i> 👇",
+        "plan_not_exist": "❌ 方案不存在！",
+        "payment_title": "💎 <b>{plan_name} 方案</b>\n🧾 <b>订单 ID：</b> <code>{order_id}</code>\n💰 <b>金额：</b> <b>{amount} USDT</b>\n\n<i>在下方选择您的支付方式 👇</i>",
+        "no_recent_payment": "❌ 未找到最近支付！",
+        "oxapay_payment_instructions": "🔗 点击下方按钮支付 *{plan_name}* 方案。\n\n⏳ 完成支付后，请等待几分钟，然后点击“检查支付”。",
+        "subscription_not_found": "❌ 未找到订阅记录！",
+        "payment_pending": "⏳ *{plan_name}* 方案的支付仍在待处理。\n请在下方完成支付：",
+        "payment_confirmed": "✅ *支付成功！*\n\n🎉 您对 *{plan_name}* 方案的订阅现已激活。\n享受高级信号和 VIP 福利的专属访问！",
+        "payment_pending_alert": "⏳ 支付尚未确认。请几分钟后重试。",
+        "payment_confirmed_alert": "✅ 支付已确认！订阅已激活。",
+        "subscription_inactive": "⚠️ 您的订阅未激活。请激活或续订以加入频道。",
+        "join_channel_no_subscription": "❌ 请先注册一个方案再加入频道。",
+        "join_channel_success": "✅ 您现在可以加入我们的官方 Telegram 频道：",
+        "payment_already_processed": "✅ 此支付已确认并处理。"
+    },
+    "join_channel": {
+        "not_registered": "❌ 请先注册一个方案再加入频道。",
+        "can_join": "✅ 您现在可以加入我们的官方 Telegram 频道：",
+        "not_active": "⚠️ 您的订阅未激活。请激活或续订以加入频道。"
+    },
+    "referral": {
+        "new_referral": "🎉 <b>新的推荐注册！</b>\n\n用户 <code>{username}</code> (ID: <code>{user_id}</code>) 使用您的推荐链接注册。"
+    },
+    "button": {
+        "cancel_button": "⬅️ 取消",
+        "try_again_button": "🔁 重试",
+        "back_button": "↩️ 返回",
+        "join_channel": "👉 加入频道",
+        "next_button": "➡️ 下一个",
+        "pre_button": "⬅️ 上一个",
+        "withdraw_button": "💵 提取",
+        "verify_kol": "🧾 验证为 KOL/KOC",
+        "activate_free_trial": "✅ 激活免费试用",
+        "join_official_channel": "🚀 加入官方频道",
+        "start_free_trial": "🎯 开始免费试用 (3 天)",
+        "premium_plan": "💎 高级方案",
+        "cashback_trading_fee": "💰 交易手续费返现",
+        "my_account": "👤 我的账户",
+        "affiliate_center": "🤝 联盟中心",
+        "help_q/a": "🧠 帮助 / 问答",
+        "support_team": "🧑‍💼 支持团队",
+        "change_language": "🌍 更改语言",
+        "oxa_pay": "💳 OxaPay",
+        "affiliate_balance": "💰 联盟余额",
+        "pay_with_oxapay": "🔗 使用 OxaPay 支付",
+        "check_payment": "✅ 检查支付"
+    },
+    "affiliate_payment": {
+        "order_summary": "🧾 *订单摘要*\n\n📦 *方案：* {plan_name}\n💰 *价格：* {price} USDT\n💸 *您的余额：* {balance} USDT\n🆔 *订单 ID：* `{order_id}`\n\n您想使用您的联盟余额确认此购买吗？",
+        "confirm_button": "✅ 确认购买",
+        "balance_changed": "⚠️ 您的余额已更改。您不再有足够的资金购买此方案。"
+    },
+    "affiliate": {
+        "commission_notify": "🎉 恭喜！您的推荐人 `{referral}` 成功续订 **{plan_name}** 方案，您获得 **{percent}% 佣金**。\n\n💰 获得佣金： **${earned}**\n🏦 总佣金余额： **${total}**"
+    },
+    "renew": {
+        "expired_notice": "⚠️ *您的订阅已到期！* ⚠️\n\n请续订您的方案以继续享受高级功能和信号。💎\n\n_The HieuSoft Team_ ⚡",
+        "about_to_expire": "⏳ 您的订阅将在 {days} 天后到期！\n现在续订 *{plan_name}* 方案并获得 {discount}% 折扣！🎁"
+    },
+    "notify": {
+        "kol_welcome": "🌟 *欢迎加入，我们的新 KOL/KOC 合作伙伴！* 🌟\n\n您当前的佣金率为 *{percent}%* 💰\n\n我们很高兴您加入我们不断壮大的创作者和品牌大使社区。\n请关注即将推出的活动和独家奖励！💼✨\n\n_The HieuSoft Team_ ⚡",
+        "withdraw_paid": "💸 *支付成功！*\n\n您好，合作伙伴，您的提取请求已成功处理。🎉\n🔹 *金额：* {amount}\n🔹 *TXID：* `{txid}`\n\n感谢您成为 *HieuSoft Affiliate Program* 的一员！💼\n\n_The HieuSoft Team_ ⚡",
+        "kol_rejected": "⛔ 您的 KOL/KOC 验证被拒绝。请查看要求并重试。",
+        "kol_not_submitted": "⚠️ 您的提交无效或不完整。请重新提交您的 KOL/KOC 验证信息。",
+        "withdraw_pending": "⏳ 您的提取请求正在处理中。请等待。",
+        "withdraw_rejected": "❌ 您的提取请求被拒绝。"
+    },
+    "errors": {
+        "invalid_data": "❌ 无效数据。",
+        "not_enough_affiliate_balance": "⚠️ 您的联盟余额不足以购买此方案。"
+    }
+}

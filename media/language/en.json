@@ -36,6 +36,7 @@
         "not_enough_balance": "❌ Minimum balance required for withdrawal is $20.",
         "confirm_withdraw": "💰 You are about to withdraw your affiliate commission.\nAvailable balance: <b>${balance}</b>\n\n👉 Please enter the <b>amount</b> you wish to withdraw and your <b>BEP-20 (BSC)</b> wallet address to receive the funds.\n\n🧾 Example: \n\n<code>20|0x7dB8a12F3dA9bC3eDfE8.......</code>",
         "invalid_wallet": "⚠️ Invalid wallet address or insufficient balance.\n\nPlease provide a valid <b>BEP-20 (BSC)</b> address and make sure you have enough funds.",
+        "invalid_format": "⚠️ Please use the correct format: <amount>|<wallet address>",
         "withdraw_success": "✅ <b>Withdrawal request received!</b>\n\n💵 Amount: <b>${balance}</b>\n🏦 Wallet: <code>{wallet}</code>\n\nYour request will be reviewed and processed by the admin soon.",
         "new_withdraw_request": "📩 <b>New Affiliate Withdrawal Request</b>\n\n👤 User ID: <code>{user_id}</code>\n💰 Amount: ${balance}\n🏦 Wallet: <code>{wallet}</code>\n\n🔗 Telegram: @{username}",
         "confirm_withdraw_button": "✅ Confirm Withdrawal",
@@ -102,12 +103,16 @@
         "payment_confirmed_alert": "✅ Payment confirmed! Subscription activated.",
         "subscription_inactive": "⚠️ Your subscription is not active. Please activate or renew it to join the channel.",
         "join_channel_no_subscription": "❌ Please register for a plan before joining the channel.",
-        "join_channel_success": "✅ You can now join our official Telegram channel:"
+        "join_channel_success": "✅ You can now join our official Telegram channel:",
+        "payment_already_processed":"✅ This payment has already been confirmed and processed."
     },
     "join_channel": {
         "not_registered": "❌ Please register for a plan before joining the channel.",
         "can_join": "✅ You can now join our official Telegram channel:",
         "not_active": "⚠️ Your subscription is not active. Please activate or renew it to join the channel."
+    },
+    "referral": {
+        "new_referral": "🎉 <b>New Referral Registered!</b>\n\nUser <code>{username}</code> (ID: <code>{user_id}</code>) has registered using your referral link."
     },
     "button": {
         "cancel_button": "⬅️ Cancel",
@@ -132,5 +137,29 @@
         "affiliate_balance": "💰 Affiliate Balance",
         "pay_with_oxapay": "🔗 Pay with OxaPay",
         "check_payment": "✅ Check Payment"
+    },
+    "affiliate_payment": {
+        "order_summary": "🧾 *Order Summary*\n\n📦 *Plan:* {plan_name}\n💰 *Price:* {price} USDT\n💸 *Your Balance:* {balance} USDT\n🆔 *Order ID:* `{order_id}`\n\nDo you want to confirm this purchase using your affiliate balance?",
+        "confirm_button": "✅ Confirm Purchase",
+        "balance_changed": "⚠️ Your balance has changed. You no longer have enough funds."
+    },
+    "affiliate": {
+        "commission_notify": "🎉 Congratulations! You’ve just earned a **{percent}% commission** from your referral `{referral}` who has successfully renewed their **{plan_name}** plan.\n\n💰 Commission earned: **${earned}**\n🏦 Total commission balance: **${total}**"
+    },
+    "renew": {
+        "expired_notice": "⚠️ *Your subscription has expired!* ⚠️\n\nPlease renew your plan to continue enjoying premium features and signals. 💎\n\n_The HieuSoft Team_ ⚡",
+        "about_to_expire": "⏳ Your subscription is about to expire in {days} days!\nRenew now for *{plan_name}* plan and get a {discount}% discount! 🎁"
+    },
+    "notify": {
+        "kol_welcome": "🌟 *Welcome aboard, our new KOL/KOC Partner!* 🌟\n\nYour current commission rate is *{percent}%* 💰\n\nWe’re thrilled to have you join our growing community of creators and brand ambassadors.\nStay tuned for upcoming campaigns and exclusive rewards! 💼✨\n\n_The HieuSoft Team_ ⚡",
+        "withdraw_paid": "💸 *Payment Successful!*\n\nHello partner, your withdrawal request has been successfully processed. 🎉\n🔹 *Amount:* {amount}\n🔹 *TXID:* `{txid}`\n\nThank you for being part of the *HieuSoft Affiliate Program*! 💼\n\n_The HieuSoft Team_ ⚡",
+        "kol_rejected": "⛔ Your KOL/KOC verification was rejected. Please review the requirements and try again.",
+        "kol_not_submitted": "⚠️ Your submission was invalid or incomplete. Please resubmit your KOL/KOC verification information.",
+        "withdraw_pending": "⏳ Your withdrawal request is being processed. Please wait.",
+        "withdraw_rejected": "❌ Your withdrawal request was rejected."
+    },
+    "errors": {
+        "invalid_data": "❌ Invalid data.",
+        "not_enough_affiliate_balance": "⚠️ You don't have enough affiliate balance to purchase this plan."
     }
 }

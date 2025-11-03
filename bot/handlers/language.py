@@ -31,7 +31,6 @@ async def open_language_menu(callback: types.CallbackQuery):
     await callback.answer()
 
 
-# ✅ Hàm xử lý khi người dùng chọn ngôn ngữ
 @language_router.callback_query(F.data.startswith("lang_"))
 async def change_language(callback: types.CallbackQuery):
     user_id = callback.from_user.id

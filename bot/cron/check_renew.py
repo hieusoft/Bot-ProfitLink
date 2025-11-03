@@ -7,6 +7,7 @@ from services.subscription_detail_service import SubscriptionDetailService
 from services.payment_service import PaymentService
 from services.plan_service import PlanService
 from services.oxapay_service import OxaPayService
+from services.user_service import UserService
 from models.payment_model import Payment
 from telethon import errors
 from telethon.tl.functions.channels import GetParticipantRequest, EditBannedRequest
@@ -15,11 +16,12 @@ from config.telegram_client import get_telegram_client
 tz_vn = pytz.timezone("Asia/Ho_Chi_Minh")
 DISCOUNT = 10 
 CHANNEL_LIST = "my_chanel.txt"
+from config.translator import Translator
 class SubscriptionChecker:
     def __init__(self, bot: Bot):
         self.bot = bot
         self.oxapay = OxaPayService()
-
+        
    
     async def check_all_users(self):
         all_subs = SubscriptionService.get_all_subscription_active()
@@ -36,11 +38,9 @@ class SubscriptionChecker:
             if sub_end_aware < now:
               
                 await self.delete_user_channels(sub.user_id)
-                text = (
-                    "⚠️ *Your subscription has expired!* ⚠️\n\n"
-                    "Please renew your plan to continue enjoying premium features and signals. 💎\n\n"
-                    "_The HieuSoft Team_ ⚡"
-                )
+                user = UserService.get_user_by_telegram_id(sub.user_id)
+                translator = Translator(getattr(user, "language", "en"))
+                text = translator.t("renew.expired_notice")
 
                 await self.bot.send_message(
                     chat_id=sub.user_id,
@@ -68,14 +68,30 @@ class SubscriptionChecker:
         plan = PlanService.get_plan_by_id(sub_detail.plan_id)
         if not plan:
             return
-
+        user = UserService.get_user_by_telegram_id(sub.user_id)
+        translator = Translator(user.language)
         timestamp = datetime.now(tz_vn).strftime("%Y%m%d%H%M%S")
         order_id = f"{sub.user_id}_{timestamp}_{plan.name.upper()}_RENEW"
         amount = float(plan.price) * (1 - DISCOUNT / 100)
 
-        try:
-          
-            track_id, merchant_id, expired_at, invoice_date =await self.oxapay.create_invoice_renew(amount, order_id)
+        last_payment = PaymentService.get_latest_payment_renew(sub.user_id, plan.plan_id)
+        now_vn = datetime.now(tz_vn)
+        create_new_payment = True  #
+
+        merchant_id = track_id = None 
+
+        if last_payment and last_payment.invoice_date and last_payment.expired_at:
+            invoice_datetime = datetime.fromtimestamp(last_payment.invoice_date, tz=tz_vn)
+            expired_datetime = datetime.fromtimestamp(last_payment.expired_at, tz=tz_vn)
+            if now_vn < expired_datetime and "RENEW" in last_payment.order_id:
+                create_new_payment = False
+                order_id = last_payment.order_id
+                amount = last_payment.amount
+                merchant_id = last_payment.merchant_id
+                track_id = last_payment.track_id
+        if create_new_payment:
+            track_id, merchant_id, expired_at, invoice_date = await self.oxapay.create_invoice_renew(amount, order_id)
+
             payment = Payment(
                 user_id=sub.user_id,
                 plan_id=plan.plan_id,
@@ -90,30 +106,36 @@ class SubscriptionChecker:
                 invoice_date=invoice_date,
                 completed_at=None
             )
+
             PaymentService.create_payment(payment)
-            payment_url = f"https://pay.oxapay.com/{merchant_id}/{track_id}"
-            kb = InlineKeyboardBuilder()
-            kb.button(text="🔗 Pay with OxaPay", url=payment_url)
-            kb.button(
-                text="✅ Check Payment",
-                callback_data=f"check_sub_{plan.name}_renew",
-            )
-            kb.adjust(1, 2)
 
-            text = (
-                f"⏳ Your subscription is about to expire in {remaining_time.days} days!\n"
-                f"Renew now for *{plan.name}* plan and get a {DISCOUNT}% discount! 🎁"
-            )
+        payment_url = f"https://pay.oxapay.com/{merchant_id}/{track_id}"
+        kb = InlineKeyboardBuilder()
+        kb.button(text=f"{translator.t('button.oxapay')}", url=payment_url)
+       
+        kb.button(text=f"{translator.t('button.affiliate_balance')}", callback_data=f"pay_sub_{plan.name}_affiliate_balance_renew")
+        kb.button(
+            text=f"{translator.t('button.check_payment')}",
+            callback_data=f"check_sub_{plan.name}_renew",
+        )
+        
+        kb.adjust(2, 1)
 
-            await self.bot.send_message(
-                chat_id=sub.user_id,
-                text=text,
-                reply_markup=kb.as_markup(),
-                parse_mode="Markdown"
-            )
+        text = translator.t(
+            "renew.about_to_expire",
+            days=remaining_time.days,
+            plan_name=plan.name,
+            discount=DISCOUNT,
+        )
 
-        except Exception as e:
-            print(f"[SubscriptionChecker] Error sending renew message to user {sub.user_id}: {e}")
+        await self.bot.send_message(
+            chat_id=sub.user_id,
+            text=text,
+            reply_markup=kb.as_markup(),
+            parse_mode="Markdown"
+        )
+      
+
 
     async def delete_user_channels(self, user_id: int):
         try:

@@ -37,12 +37,9 @@ async def open_affiliate_menu(callback: types.CallbackQuery):
     pending_referrals = AffiliateService.get_referrals_by_referrer_pending(user_id) or []
     active_count = len(active_referrals)
     pending_count = len(pending_referrals)
-    if user_id not in user_langs:
-        user_db = UserService.get_user_by_telegram_id(user_id)
-        lang = user_db.language if user_db and hasattr(user_db, "language") else "en"
-        user_langs[user_id] = lang
-    else:
-        lang = user_langs[user_id]
+    user = UserService.get_user_by_telegram_id(user_id)
+    lang = user.language if user and hasattr(user, "language") else "en"
+    user_langs[user_id] = lang
     translator = Translator(lang)
     try:
         await bot.delete_message(chat_id=chat_id, message_id=callback.message.message_id)
@@ -74,8 +71,9 @@ async def open_affiliate_menu(callback: types.CallbackQuery):
 async def handle_affiliate_withdraw(callback: types.CallbackQuery, state: FSMContext):
     user_id = callback.from_user.id
     balance = float(AffiliateService.get_affiliate_balance(user_id) or 0.0)
-    lang = user_langs.get(user_id, "en")
-    translator = Translator(lang)    
+    user_db = UserService.get_user_by_telegram_id(user_id)
+    lang = user_db.language 
+    translator = Translator(lang)
     if balance < 20:
         await callback.answer(translator.t("affiliate_withdraw.not_enough_balance"), show_alert=True)
         return
@@ -104,16 +102,16 @@ async def process_wallet_address(message: types.Message, state: FSMContext):
     user_id = message.from_user.id
     text = message.text.strip()
     parts = text.split("|")
-
+    lang = user_langs.get(user_id, "en")
+    translator = Translator(lang)
    
     if len(parts) != 2:
-        await message.answer("⚠️ Vui lòng nhập đúng định dạng: <số tiền>|<địa chỉ ví>")
+        await message.answer(translator.t("affiliate_withdraw.invalid_format"))
         return
     balace =float(AffiliateService.get_affiliate_balance(user_id))
     amount = float(parts[0].strip())
     wallet = parts[1].strip()
-    lang = user_langs.get(user_id, "en")
-    translator = Translator(lang)
+
 
     try:
         await message.delete()
@@ -183,7 +181,11 @@ async def process_wallet_address(message: types.Message, state: FSMContext):
 async def handle_affiliate_verify(callback: types.CallbackQuery, state: FSMContext):
     user_id = callback.from_user.id
     user = UserService.get_user_by_telegram_id(user_id)
-    lang = user_langs.get(user_id, "en")
+    if user_id not in user_langs:
+        lang = user.language if user and hasattr(user, "language") else "en"
+        user_langs[user_id] = lang
+    else:
+        lang = user_langs[user_id]
     translator = Translator(lang)
     if user and user.verified_kol == "under_review":
         await callback.answer(
@@ -204,7 +206,7 @@ async def handle_affiliate_verify(callback: types.CallbackQuery, state: FSMConte
             show_alert=True
         )
         return
-    translator = Translator(lang="en")
+
     kb = InlineKeyboardBuilder()
     kb.button(text=translator.t("button.cancel_button"), callback_data="affiliate")
     markup = kb.as_markup()

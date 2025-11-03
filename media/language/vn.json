@@ -34,8 +34,9 @@
     },
     "affiliate_withdraw": {
         "not_enough_balance": "❌ Số dư tối thiểu để rút là $20.",
-        "confirm_withdraw": "💰 Bạn sắp rút hoa hồng tiếp thị liên kết.\nSố dư khả dụng: <b>${balance}</b>\n\n👉 Vui lòng nhập địa chỉ ví <b>BEP-20 (BSC)</b> để nhận tiền.",
+        "confirm_withdraw": "💰 Bạn sắp rút hoa hồng tiếp thị liên kết.\nSố dư khả dụng: <b>${balance}</b>\n\n👉 Vui lòng nhập <b>số tiền</b> bạn muốn rút và <b>địa chỉ ví BEP-20 (BSC)</b> để nhận tiền.\n\n🧾 Ví dụ: \n\n<code>20|0x7dB8a12F3dA9bC3eDfE8.......</code>",
         "invalid_wallet": "⚠️ Địa chỉ ví không hợp lệ.\n\nVui lòng cung cấp địa chỉ <b>BEP-20 (BSC)</b> hợp lệ.",
+        "invalid_format": "⚠️ Vui lòng nhập đúng định dạng: <số tiền>|<địa chỉ ví>",
         "withdraw_success": "✅ <b>Yêu cầu rút tiền đã được gửi!</b>\n\n💵 Số tiền: <b>${balance}</b>\n🏦 Ví: <code>{wallet}</code>\n\nYêu cầu của bạn sẽ được admin xem xét và xử lý sớm.",
         "new_withdraw_request": "📩 <b>Yêu cầu rút tiền tiếp thị liên kết mới</b>\n\n👤 ID người dùng: <code>{user_id}</code>\n💰 Số tiền: ${balance}\n🏦 Ví: <code>{wallet}</code>\n\n🔗 Telegram: @{username}",
         "confirm_withdraw_button": "✅ Xác nhận rút tiền",
@@ -109,6 +110,9 @@
         "can_join": "✅ Bạn có thể tham gia kênh Telegram chính thức của chúng tôi:",
         "not_active": "⚠️ Gói đăng ký của bạn không hoạt động. Vui lòng kích hoạt hoặc gia hạn để tham gia kênh."
     },
+    "referral": {
+        "new_referral": "🎉 <b>Đã có người đăng ký qua link của bạn!</b>\n\nNgười dùng <code>{username}</code> (ID: <code>{user_id}</code>) vừa đăng ký dưới bạn."
+    },
     "button": {
         "cancel_button": "⬅️ Hủy",
         "try_again_button": "🔁 Thử lại",
@@ -132,5 +136,29 @@
         "affiliate_balance": "💰 Số dư hoa hồng",
         "pay_with_oxapay": "🔗 Thanh toán bằng OxaPay",
         "check_payment": "✅ Kiểm tra thanh toán"
+    },
+    "affiliate_payment": {
+        "order_summary": "🧾 *Tóm tắt đơn hàng*\n\n📦 *Gói:* {plan_name}\n💰 *Giá:* {price} USDT\n💸 *Số dư của bạn:* {balance} USDT\n🆔 *Mã đơn hàng:* `{order_id}`\n\nBạn có muốn xác nhận mua bằng số dư hoa hồng không?",
+        "confirm_button": "✅ Xác nhận mua",
+        "balance_changed": "⚠️ Số dư của bạn đã thay đổi. Bạn không còn đủ tiền."
+    },
+    "affiliate": {
+        "commission_notify": "🎉 Chúc mừng! Bạn vừa nhận **{percent}% hoa hồng** từ lượt giới thiệu `{referral}` đã gia hạn gói **{plan_name}**.\n\n💰 Hoa hồng nhận được: **${earned}**\n🏦 Tổng số dư hoa hồng: **${total}**"
+    },
+    "renew": {
+        "expired_notice": "⚠️ *Gói của bạn đã hết hạn!* ⚠️\n\nVui lòng gia hạn để tiếp tục sử dụng các tính năng cao cấp và tín hiệu VIP. 💎\n\n_Đội ngũ HieuSoft_ ⚡",
+        "about_to_expire": "⏳ Gói của bạn sẽ hết hạn trong {days} ngày nữa!\nGia hạn ngay gói *{plan_name}* và nhận ưu đãi {discount}%! 🎁"
+    },
+    "notify": {
+        "kol_welcome": "🌟 *Chào mừng Đối tác KOL/KOC mới!* 🌟\n\nTỷ lệ hoa hồng hiện tại của bạn là *{percent}%* 💰\n\nRất vui khi có bạn đồng hành cùng cộng đồng nhà sáng tạo của chúng tôi.\nHãy đón chờ các chiến dịch và phần thưởng hấp dẫn! 💼✨\n\n_Đội ngũ HieuSoft_ ⚡",
+        "withdraw_paid": "💸 *Thanh toán thành công!*\n\nYêu cầu rút tiền của bạn đã được xử lý. 🎉\n🔹 *Số tiền:* {amount}\n🔹 *TXID:* `{txid}`\n\nCảm ơn bạn đã đồng hành cùng *Chương trình Affiliate của HieuSoft*! 💼\n\n_Đội ngũ HieuSoft_ ⚡",
+        "kol_rejected": "⛔ Yêu cầu xác minh KOL/KOC của bạn đã bị từ chối. Vui lòng xem lại yêu cầu và gửi lại.",
+        "kol_not_submitted": "⚠️ Thông tin bạn gửi chưa hợp lệ hoặc chưa đầy đủ. Vui lòng gửi lại thông tin xác minh KOL/KOC.",
+        "withdraw_pending": "⏳ Yêu cầu rút tiền của bạn đang được xử lý. Vui lòng chờ.",
+        "withdraw_rejected": "❌ Yêu cầu rút tiền của bạn đã bị từ chối."
+    },
+    "errors": {
+        "invalid_data": "❌ Dữ liệu không hợp lệ.",
+        "not_enough_affiliate_balance": "⚠️ Bạn không đủ số dư hoa hồng để mua gói này."
     }
 }

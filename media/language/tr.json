@@ -1,0 +1,165 @@
+{
+    "start": {
+        "welcome": "👋 Tekrar hoş geldiniz, {name}!\n\n📊 *Kripto Arkadaşınız*\nLütfen aşağıdan bir seçenek belirleyin 👇",
+        "no_username": "Tüccar",
+        "intro": "💎 *Hieusoft Crypto Bot'a Hoş Geldiniz!*\n\nGerçek zamanlı premium sinyaller, ömür boyu bağlılık ödülleri ve her işlemden nakit iadesi ile ticaret yolculuğunuzu güçlendirin — hepsi tek bir akıllı botta. 🚀\n\nKazançlara başlamak için aşağıdaki adımı seçin 👇"
+    },
+    "language": {
+        "title": "🌐 Lütfen dilinizi seçin:",
+        "changed": "✅ Diliniz güncellendi!"
+    },
+    "account": {
+        "title": "💼 <b><u>HESABIM</u></b>",
+        "user": "👤 <b>Kullanıcı:</b> <i>{name}</i>",
+        "subscription_title": "💎 <b>Abonelik Bilgileri</b>",
+        "plan": "• <b>Plan:</b> <code>{plan}</code>",
+        "status_active": "• <b>Durum:</b> <i>Aktif</i>",
+        "remaining": "• <b>Kalan:</b> <code>{days} gün</code>",
+        "expires": "• <b>Son Kullanma:</b> <code>{date}</code>",
+        "affiliate": "🔗 <b>Bağlantı Linkiniz:</b>\n<code>{link}</code>",
+        "footer_active": "🚀 <i>Premium üye olduğunuz için teşekkürler!</i>",
+        "status_inactive": "⚠️ <b>Durum:</b> <i>Aktif abonelik yok</i>",
+        "subscribe_hint": "💎 <i>Yolculuğa başlamak için Abonelik Planları'na gidin!</i>",
+        "footer_inactive": "🌟 <i>Premium sinyaller ve VIP özellikleri kaçırmayın!</i>"
+    },
+    "affiliate_menu": {
+        "title": "🤝 Bağlantı Menüsü",
+        "subtitle": "Yönlendirme programınızı yönetin",
+        "total_commission": "🏦 <b>Toplam Komisyon:</b> ${balance_text} USD",
+        "referral_stats": "📊 <b>Yönlendirme İstatistikleri</b>",
+        "active": "✅ Aktif: <b>{active_count}</b>",
+        "pending": "⏳ Beklemede: <b>{pending_count}</b>",
+        "referral_link": "🔗 <b>Yönlendirme Linkiniz:</b>\n<a href=\"{affiliate_link}\">{affiliate_link}</a>",
+        "footer": "<i>Para çekmek veya KOL/KOC olarak doğrulanmak için aşağıdaki düğmeleri kullanın.</i>"
+    },
+    "affiliate_withdraw": {
+        "not_enough_balance": "❌ Çekim için minimum bakiye $20'dır.",
+        "confirm_withdraw": "💰 Bağlantı komisyonunuzu çekmek üzeresiniz.\nMevcut bakiye: <b>${balance}</b>\n\n👉 Çekmek istediğiniz <b>miktarı</b> ve fonları almak için <b>BEP-20 (BSC)</b> cüzdan adresinizi girin.\n\n🧾 Örnek: \n\n<code>20|0x7dB8a12F3dA9bC3eDfE8.......</code>",
+        "invalid_wallet": "⚠️ Geçersiz cüzdan adresi veya yetersiz bakiye.\n\nLütfen geçerli bir <b>BEP-20 (BSC)</b> adres sağlayın ve yeterli fonunuz olduğundan emin olun.",
+        "invalid_format": "⚠️ Lütfen doğru formatı kullanın: <amount>|<wallet address>",
+        "withdraw_success": "✅ <b>Çekim talebi alındı!</b>\n\n💵 Miktar: <b>${balance}</b>\n🏦 Cüzdan: <code>{wallet}</code>\n\nTalebiniz yakında yönetici tarafından incelenecek ve işlenecek.",
+        "new_withdraw_request": "📩 <b>Yeni Bağlantı Çekim Talebi</b>\n\n👤 Kullanıcı ID: <code>{user_id}</code>\n💰 Miktar: ${balance}\n🏦 Cüzdan: <code>{wallet}</code>\n\n🔗 Telegram: @{username}",
+        "confirm_withdraw_button": "✅ Çekimi Onayla",
+        "withdraw_approved": "✅ Çekim <b>#{withdraw_id}</b> <b>onaylandı</b>.\nKullanıcı <code>{user_id}</code> bakiyesi $0'a sıfırlandı.",
+        "user_not_authorized": "⛔ Yetkiniz yok.",
+        "invalid_data_format": "⚠️ Geçersiz veri formatı.",
+        "withdraw_approved_user": "🎉 Çekiminiz onaylandı ve işlendi! Bağlantı bakiyeniz şimdi $0.",
+        "withdraw_approved_alert": "Çekim onaylandı ✅"
+    },
+    "affiliate_verify": {
+        "title": "🌟 <b>Sosyal Doğrulama</b>",
+        "instruction": "Lütfen <b>sosyal medya</b>nızla ilgili bir link veya kısa açıklama gönderin.\nÖrneğin:\n- TikTok: https://www.tiktok.com/@yourname\n- Facebook sayfası veya grubu\n- YouTube kanalı\n- Veya sosyal profilinizin kısa açıklaması.\n\n<i>Link veya metni aşağıya gönderin 👇</i>",
+        "cancel_button": "⬅️ İptal",
+        "admin_new_request": "📢 <b>Yeni Sosyal Doğrulama Talebi</b>\n\n👤 Kullanıcı ID: <code>{user_id}</code>\n🔗 Kullanıcı Adı: @{username}\n📝 Bilgi: {social_info}\n\n📎 Telegram: <a href='https://t.me/{username}'>@{username}</a>",
+        "user_success": "✅ <b>Doğrulama talebi gönderildi!</b>\n\nEkibimiz sosyal profilinizi inceleyecek ve yakında sizinle iletişime geçecek.",
+        "alert_under_review": "Zaten doğrulama gönderdiniz. Lütfen inceleme ve onayımızı bekleyin.",
+        "alert_approved": "Doğrulamanız onaylandı! 🎉",
+        "alert_rejected": "Doğrulama talebiniz reddedildi. Lütfen tekrar deneyin.",
+        "alert_social_warning": "⚠️ Lütfen geçerli bir sosyal medya linki gönderin (ör: https://instagram.com/yourname)"
+    },
+    "cashback": {
+        "title": "⚙️ Nakit iade özelliği şu anda güncelleniyor.\nLütfen daha sonra tekrar kontrol edin!"
+    },
+    "free_trial": {
+        "title": "🎁 3 Günlük Ücretsiz Deneme",
+        "description": "Premium ticaret sinyallerimizi *72 saat* boyunca tamamen ücretsiz deneyin!",
+        "activate_cta": "Denemenizi etkinleştirmek için aşağıya tıklayın 👇",
+        "not_found": "❌ Ücretsiz Deneme planı bulunamadı!",
+        "already_used": "❌ Ücretsiz Denemenizi zaten kullandınız!",
+        "already_active": "❌ Zaten aktif bir aboneliğiniz var!",
+        "activated_title": "✅ Ücretsiz Deneme Etkinleştirildi!",
+        "activated_message": "🎉 Artık *{days} gün* premium erişiminiz var.\nDenemeniz *{expire_time} UTC*'de sona erecek.\n\nPremium ticaret sinyalleri ve özel araçların keyfini çıkarın! 🚀",
+        "success_alert": "✅ Ücretsiz Deneme başarıyla etkinleştirildi!",
+        "join_require_plan": "❌ Kanala katılmadan önce lütfen bir plana kaydolun.",
+        "join_ready": "✅ Artık resmi Telegram kanalımıza katılabilirsiniz:",
+        "join_inactive": "⚠️ Aboneliğiniz aktif değil. Kanala katılmak için lütfen etkinleştirin veya yenileyin."
+    },
+    "qa": {
+        "center_title": "🧠 <b>Hieusoft Crypto Bot — Soru-Cevap Merkezi</b>",
+        "center_description": "Yardım Merkezimize hoş geldiniz!\n\nBurada abonelikler, bağlantılar, nakit iade ve teknik destek hakkında yaygın soruların yanıtlarını bulabilirsiniz.\n\nBaşlamak için aşağıdan bir konu seçin 👇",
+        "invalid_category": "❌ Geçersiz kategori verisi.",
+        "no_qna_found": "❌ <b>{category}</b> kategorisi için Soru-Cevap bulunamadı.",
+        "invalid_data": "❌ Geçersiz veri formatı.",
+        "question_not_found": "❌ Soru bulunamadı.",
+        "no_pages_found": "❌ Sayfa bulunamadı.",
+        "qa_for": "📚 <b>{category} için Soru-Cevap</b>",
+        "question_label": "<b>Soru:</b> {question}",
+        "answer_label": "<b>Cevap:</b> {answer}"
+    },
+    "plans": {
+        "available_title": "💎 <b>Mevcut Abonelik Planları</b>\n\n",
+        "plan_line_separator": "━━━━━━━━━━━━━━━━━━━━━━━\n",
+        "discount_plan": "✨ <b>{plan_name}</b>\n💰 <s>${price_original}</s> ➡️ <b>${price_discounted}</b>\n💸 <b>{sale_percent}% İNDİRİM</b> <i>{sale_end}</i> tarihine kadar\n📅 Süre: <code>{duration_days} gün</code>\n",
+        "normal_plan": "✨ <b>{plan_name}</b>\n💰 Fiyat: <b>${price}</b>\n📅 Süre: <code>{duration_days} gün</code>\n",
+        "premium_intro": "🏆 <b>Premium Abonelik Planları</b>\n\nPremium sinyallerimiz ve VIP avantajlarımızla tam ticaret potansiyelinizi ortaya çıkarın:\n\n🚀 <b>Tüm planlar şunları içerir:</b>\n• Özel VIP Sinyal Kanalı\n• Öncelikli Uzman Destek\n• Gerçek Zamanlı Piyasa Analizleri\n\n💡 <i>Aşağıdan hedeflerinize en uygun planı seçin!</i> 👇",
+        "plan_not_exist": "❌ Plan mevcut değil!",
+        "payment_title": "💎 <b>{plan_name} Planı</b>\n🧾 <b>Sipariş ID:</b> <code>{order_id}</code>\n💰 <b>Tutar:</b> <b>{amount} USDT</b>\n\n<i>Aşağıdan ödeme yönteminizi seçin 👇</i>",
+        "no_recent_payment": "❌ Son ödeme bulunamadı!",
+        "oxapay_payment_instructions": "🔗 *{plan_name}* planı için ödeme yapmak için aşağıdaki düğmeye tıklayın.\n\n⏳ Ödemeyi tamamladıktan sonra lütfen birkaç dakika bekleyin ve ardından 'Ödemeyi Kontrol Et'e tıklayın.",
+        "subscription_not_found": "❌ Abonelik kaydı bulunamadı!",
+        "payment_pending": "⏳ *{plan_name}* planı için ödeme hala beklemede.\nLütfen aşağıdan ödemenizi tamamlayın:",
+        "payment_confirmed": "✅ *Ödeme Başarılı!*\n\n🎉 *{plan_name}* planı aboneliğiniz artık aktif.\nPremium sinyaller ve VIP avantajlara özel erişimin tadını çıkarın!",
+        "payment_pending_alert": "⏳ Ödeme henüz onaylanmadı. Birkaç dakika içinde tekrar deneyin.",
+        "payment_confirmed_alert": "✅ Ödeme onaylandı! Abonelik etkinleştirildi.",
+        "subscription_inactive": "⚠️ Aboneliğiniz aktif değil. Kanala katılmak için lütfen etkinleştirin veya yenileyin.",
+        "join_channel_no_subscription": "❌ Kanala katılmadan önce lütfen bir plana kaydolun.",
+        "join_channel_success": "✅ Artık resmi Telegram kanalımıza katılabilirsiniz:",
+        "payment_already_processed": "✅ Bu ödeme zaten onaylandı ve işlendi."
+    },
+    "join_channel": {
+        "not_registered": "❌ Kanala katılmadan önce lütfen bir plana kaydolun.",
+        "can_join": "✅ Artık resmi Telegram kanalımıza katılabilirsiniz:",
+        "not_active": "⚠️ Aboneliğiniz aktif değil. Kanala katılmak için lütfen etkinleştirin veya yenileyin."
+    },
+    "referral": {
+        "new_referral": "🎉 <b>Yeni Yönlendirme Kaydı!</b>\n\nKullanıcı <code>{username}</code> (ID: <code>{user_id}</code>) yönlendirme linkinizi kullanarak kayıt oldu."
+    },
+    "button": {
+        "cancel_button": "⬅️ İptal",
+        "try_again_button": "🔁 Tekrar Dene",
+        "back_button": "↩️ Geri",
+        "join_channel": "👉 Kanala Katıl",
+        "next_button": "➡️ Sonraki",
+        "pre_button": "⬅️ Önceki",
+        "withdraw_button": "💵 Çek",
+        "verify_kol": "🧾 KOL/KOC olarak Doğrula",
+        "activate_free_trial": "✅ Ücretsiz Denemeyi Etkinleştir",
+        "join_official_channel": "🚀 Resmi Kanala Katıl",
+        "start_free_trial": "🎯 Ücretsiz Deneme Başlat (3 Gün)",
+        "premium_plan": "💎 Premium Planlar",
+        "cashback_trading_fee": "💰 Ticaret Ücreti Nakit İadesi",
+        "my_account": "👤 Hesabım",
+        "affiliate_center": "🤝 Bağlantı Merkezi",
+        "help_q/a": "🧠 Yardım / Soru-Cevap",
+        "support_team": "🧑‍💼 Destek Ekibi",
+        "change_language": "🌍 Dil Değiştir",
+        "oxa_pay": "💳 OxaPay",
+        "affiliate_balance": "💰 Bağlantı Bakiyesi",
+        "pay_with_oxapay": "🔗 OxaPay ile Öde",
+        "check_payment": "✅ Ödemeyi Kontrol Et"
+    },
+    "affiliate_payment": {
+        "order_summary": "🧾 *Sipariş Özeti*\n\n📦 *Plan:* {plan_name}\n💰 *Fiyat:* {price} USDT\n💸 *Bakiyeniz:* {balance} USDT\n🆔 *Sipariş ID:* `{order_id}`\n\nBağlantı bakiyenizi kullanarak bu satın alımı onaylamak istiyor musunuz?",
+        "confirm_button": "✅ Satın Alımı Onayla",
+        "balance_changed": "⚠️ Bakiyeniz değişti. Artık bu planı satın almak için yeterli fonunuz yok."
+    },
+    "affiliate": {
+        "commission_notify": "🎉 Tebrikler! Yönlendirdiğiniz `{referral}` **{plan_name}** planını başarıyla yenileyerek **{percent}% komisyon** kazandınız.\n\n💰 Kazanılan komisyon: **${earned}**\n🏦 Toplam komisyon bakiyesi: **${total}**"
+    },
+    "renew": {
+        "expired_notice": "⚠️ *Aboneliğiniz sona erdi!* ⚠️\n\nPremium özellikler ve sinyallere devam etmek için lütfen planınızı yenileyin. 💎\n\n_The HieuSoft Team_ ⚡",
+        "about_to_expire": "⏳ Aboneliğiniz {days} gün içinde sona erecek!\nŞimdi *{plan_name}* planını yenileyin ve {discount}% indirim kazanın! 🎁"
+    },
+    "notify": {
+        "kol_welcome": "🌟 *Yeni KOL/KOC Partnerimize Hoş Geldiniz!* 🌟\n\nMevcut komisyon oranınız *{percent}%* 💰\n\nBüyüyen yaratıcılar ve marka elçileri topluluğumuza katıldığınız için heyecanlıyız.\nYaklaşan kampanyalar ve özel ödüller için takipte kalın! 💼✨\n\n_The HieuSoft Team_ ⚡",
+        "withdraw_paid": "💸 *Ödeme Başarılı!*\n\nMerhaba partner, çekim talebiniz başarıyla işlendi. 🎉\n🔹 *Miktar:* {amount}\n🔹 *TXID:* `{txid}`\n\n*HieuSoft Affiliate Program*'ın bir parçası olduğunuz için teşekkürler! 💼\n\n_The HieuSoft Team_ ⚡",
+        "kol_rejected": "⛔ KOL/KOC doğrulamanız reddedildi. Lütfen gereksinimleri gözden geçirin ve tekrar deneyin.",
+        "kol_not_submitted": "⚠️ Gönderiminiz geçersiz veya eksik. Lütfen KOL/KOC doğrulama bilgilerinizi yeniden gönderin.",
+        "withdraw_pending": "⏳ Çekim talebiniz işleniyor. Lütfen bekleyin.",
+        "withdraw_rejected": "❌ Çekim talebiniz reddedildi."
+    },
+    "errors": {
+        "invalid_data": "❌ Geçersiz veri.",
+        "not_enough_affiliate_balance": "⚠️ Bu planı satın almak için yeterli bağlantı bakiyeniz yok."
+    }
+}

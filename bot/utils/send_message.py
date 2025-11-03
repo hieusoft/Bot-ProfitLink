@@ -3,6 +3,7 @@ from services.user_service import UserService
 from services.affiliate_service import AffiliateService
 from datetime import datetime, timedelta
 import pytz
+from config.translator import Translator
 
 tz_vn = pytz.timezone("Asia/Ho_Chi_Minh")
 
@@ -14,7 +15,6 @@ class SendMessage:
         all_users = UserService.get_all_user()
         now = datetime.now(tz_vn)
 
-        # 🔹 Notify new approved KOL/KOC partners
         for user in all_users:
             if isinstance(user.updated_at, str):
                 try:
@@ -27,15 +27,25 @@ class SendMessage:
                 updated_at = user.updated_at.astimezone(tz_vn)
            
             diff = now - updated_at
-            if diff <= timedelta(minutes=5) and user.verified_kol == "approved":
-                text = (
-                    f"🌟 *Welcome aboard, our new KOL/KOC Partner!* 🌟\n\n"
-                    f"Your current commission rate is *{user.commission_percent}%* 💰\n\n"
-                    "We’re thrilled to have you join our growing community of creators and brand ambassadors.\n"
-                    "Stay tuned for upcoming campaigns and exclusive rewards! 💼✨\n\n"
-                    "_The HieuSoft Team_ ⚡"
-                )
-                await self.send(user.user_id, text)
+            if diff <= timedelta(minutes=5):
+                translator = Translator(getattr(user, "language", "en"))
+                text = None
+
+                if user.verified_kol == "approved":
+                    text = translator.t(
+                        "notify.kol_welcome",
+                        percent=f"{user.commission_percent}"
+                    )
+                elif user.verified_kol == "rejected":
+                    text = translator.t("notify.kol_rejected")
+                elif (
+                    user.verified_kol == "not_submitted"
+                    and (now - user.created_at.replace(tzinfo=tz_vn)) >= timedelta(minutes=5)
+                ):
+                    text = translator.t("notify.kol_not_submitted")
+
+                if text:
+                    await self.send(user.user_id, text)
 
 
         all_affiliate_withdraws = AffiliateService.get_all_withdraw()
@@ -51,19 +61,25 @@ class SendMessage:
                 updated_at = withdraw.updated_at.astimezone(tz_vn)
 
             diff = now - updated_at
-            if diff <= timedelta(minutes=5) and withdraw.status == "approved":
+            if diff <= timedelta(minutes=5) :
+                user = UserService.get_user_by_telegram_id(withdraw.user_id)
+                translator = Translator(getattr(user, "language", "en"))
                 txid = withdraw.tx_hash or "No TXID available"
 
-                text = (
-                    "💸 *Payment Successful!*\n\n"
-                    "Hello partner, your withdrawal request has been successfully processed. 🎉\n"
-                    f"🔹 *Amount:* {withdraw.amount}\n"
-                    f"🔹 *TXID:* `{txid}`\n\n"
-                    "Thank you for being part of the *HieuSoft Affiliate Program*! 💼\n\n"
-                    "_The HieuSoft Team_ ⚡"
-                )
+                text = None
+                if withdraw.status == "approved":
+                    text = translator.t(
+                        "notify.withdraw_paid",
+                        amount=f"{withdraw.amount}",
+                        txid=txid
+                    )
+                elif withdraw.status == "pending":
+                    text = translator.t("notify.withdraw_pending")
+                elif withdraw.status == "rejected":
+                    text = translator.t("notify.withdraw_rejected")
 
-                await self.send(withdraw.user_id, text)
+                if text:
+                    await self.send(withdraw.user_id, text)
 
     async def send(self, user_id: int, text: str):
         try:

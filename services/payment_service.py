@@ -67,18 +67,45 @@ class PaymentService:
 
     @staticmethod
     def get_latest_payment(user_id: int, plan_id: int) -> Payment | None:
-        """Lấy payment mới nhất của user cho 1 plan cụ thể"""
+        """Lấy payment mới nhất của user cho 1 plan cụ thể (KHÔNG chứa 'RENEW' trong order_id)"""
         conn = get_connection()
         try:
             cursor = conn.cursor(dictionary=True)
             sql = """
                 SELECT * 
                 FROM payments 
-                WHERE user_id = %s AND plan_id = %s
+                WHERE user_id = %s 
+                AND plan_id = %s 
+                AND (order_id NOT LIKE %s OR order_id IS NULL)
                 ORDER BY created_at DESC
                 LIMIT 1
             """
-            cursor.execute(sql, (user_id, plan_id))
+            cursor.execute(sql, (user_id, plan_id, '%RENEW%'))
+            row = cursor.fetchone()
+            cursor.close()
+            if row:
+                return Payment(**row)
+            return None
+        finally:
+            conn.close()
+
+    @staticmethod
+    def get_latest_payment_renew(user_id: int, plan_id: int) -> Payment | None:
+        """Lấy payment mới nhất của user cho 1 plan cụ thể (chỉ lấy các order có 'RENEW' trong order_id)"""
+        conn = get_connection()
+        try:
+            cursor = conn.cursor(dictionary=True)
+            sql = """
+                SELECT * 
+                FROM payments 
+                WHERE user_id = %s 
+                AND plan_id = %s 
+                AND order_id LIKE %s
+                AND status = 'pending'
+                ORDER BY created_at DESC
+                LIMIT 1
+            """
+            cursor.execute(sql, (user_id, plan_id, '%RENEW%'))
             row = cursor.fetchone()
             cursor.close()
             if row:
@@ -112,16 +139,16 @@ class PaymentService:
             sql = """
                 SELECT * 
                 FROM payments 
-                WHERE user_id = %s AND plan_id = %s AND status = 'pending'
+                WHERE user_id = %s AND plan_id = %s AND status = 'pending' AND (order_id NOT LIKE %s OR order_id IS NULL)
                 ORDER BY created_at DESC
                 LIMIT 1
             """
-            cursor.execute(sql, (user_id, plan_id))
+            cursor.execute(sql, (user_id, plan_id, '%RENEW%'))
             row = cursor.fetchone()
             cursor.close()
 
             if row:
-                # Đảm bảo có trường status, mặc định 'pending'
+                
                 if 'status' not in row or row['status'] is None:
                     row['status'] = "pending"
                 return Payment(**row)

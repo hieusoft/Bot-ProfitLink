@@ -114,16 +114,25 @@ class UserService:
     @staticmethod
     def update_language(user_id: int, language: str):
         conn = get_connection()
-        cursor = conn.cursor()
+        cursor = conn.cursor(dictionary=True)
+
+        cursor.execute("SELECT updated_at FROM users WHERE user_id = %s", (user_id,))
+        row = cursor.fetchone()
+        if not row:
+            cursor.close()
+            conn.close()
+            return
+
+        current_updated_at = row["updated_at"]
+
+       
         sql = """
             UPDATE users
             SET language = %s, updated_at = %s
             WHERE user_id = %s
         """
-        now = datetime.now()
-        cursor.execute(sql, (language, now, user_id))
+        cursor.execute(sql, (language, current_updated_at, user_id))
         conn.commit()
 
         cursor.close()
         conn.close()
-        
