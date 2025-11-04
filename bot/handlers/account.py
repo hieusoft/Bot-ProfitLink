@@ -12,7 +12,6 @@ tz_vn = pytz.timezone("Asia/Ho_Chi_Minh")
 account_router = Router()
 URL_BOT = settings.URL_BOT
 
-# Lưu ngôn ngữ user
 user_langs = {}
 
 
@@ -21,15 +20,10 @@ async def my_account_info(callback: types.CallbackQuery):
     bot = callback.message.bot
     chat_id = callback.message.chat.id
     user_id = callback.from_user.id
+    user = UserService.get_user_by_telegram_id(user_id)
+    lang = getattr(user, "language", "en") if user else "en"
+    user_langs[user_id] = lang 
 
-    # 🔹 Lấy ngôn ngữ từ DB (lưu cache 1 lần)
-    if user_id not in user_langs:
-        user_db = UserService.get_user_by_telegram_id(user_id)
-        lang = user_db.language if user_db and hasattr(user_db, "language") else "en"
-        user_langs[user_id] = lang
-    else:
-        lang = user_langs[user_id]
-    
     translator = Translator(lang)
 
     try:
@@ -40,12 +34,22 @@ async def my_account_info(callback: types.CallbackQuery):
     sub = SubscriptionService.get_active_subscription(user_id)
     affiliate_link = f"{URL_BOT}?start={user_id}"
 
-    # 🔹 Nếu có gói đăng ký
     if sub:
         last_detail = SubscriptionDetailService.get_latest_subscription_detail(sub.sub_id)
         plan_name = getattr(last_detail, "plan_name", "Unknown Plan")
-        remaining_days = (sub.end_date - datetime.utcnow()).days
-        end_date_str = sub.end_date.strftime("%d/%m/%Y")
+
+        now_vn = datetime.now(tz_vn).replace(tzinfo=None)
+
+      
+        end_date = (
+            datetime.strptime(sub.end_date, "%Y-%m-%d %H:%M:%S")
+            if isinstance(sub.end_date, str)
+            else sub.end_date
+        )
+
+        # ✅ Đảm bảo so sánh cùng kiểu naive
+        remaining_days = (end_date - now_vn).days
+        end_date_str = end_date.strftime("%d/%m/%Y")
 
         text = (
             f"{translator.t('account.title')}\n"
@@ -59,7 +63,7 @@ async def my_account_info(callback: types.CallbackQuery):
             f"{translator.t('account.footer_active')}"
         )
     else:
-        # 🔹 Nếu chưa có gói
+       
         text = (
             f"{translator.t('account.title')}\n"
             f"{translator.t('account.user', name=callback.from_user.full_name)}\n\n"

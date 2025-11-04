@@ -1,11 +1,23 @@
 import json
 import os
+import sys
 
 class Translator:
     def __init__(self, lang="en"):
-        base_dir = os.path.dirname(os.path.abspath(__file__))
-        locale_path = os.path.join(base_dir, "..", "media", "language", f"{lang}.json")
+        
+        if getattr(sys, 'frozen', False):
+           
+            base_dir = sys._MEIPASS
+        else:
+       
+            base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+    
+        locale_path = os.path.join(base_dir, "media", "language", f"{lang}.json")
+  
         locale_path = os.path.normpath(locale_path)
+
+    
         with open(locale_path, "r", encoding="utf-8") as f:
             self.translations = json.load(f)
 

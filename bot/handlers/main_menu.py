@@ -17,7 +17,7 @@ async def handle_back_main(callback: types.CallbackQuery):
 
     # 🔹 Xác định ngôn ngữ người dùng (ưu tiên DB)
     lang = getattr(user, "language", "en") if user else "en"
-    user_langs[user_id] = lang  # Lưu cache tạm (nếu muốn dùng lại sau)
+    user_langs[user_id] = lang  
 
     translator = Translator(lang=lang)
 

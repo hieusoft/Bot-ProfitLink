@@ -10,10 +10,13 @@ from services.subscription_detail_service import SubscriptionDetailService
 from config.translator import Translator
 from services.user_service import UserService
 from config.settings import settings
-ADD_LIST = settings.ADD_LIST
+import json
+import pytz
+
+tz_vn = pytz.timezone("Asia/Ho_Chi_Minh")
 free_trial_router = Router()
 
-# ✅ Lưu lang của user theo ID
+
 user_langs = {}
 
 
@@ -85,7 +88,7 @@ async def activate_free_trial(callback: types.CallbackQuery):
         await callback.answer(translator.t("free_trial.already_active"), show_alert=True)
         return
 
-    start_time = datetime.utcnow()
+    start_time = datetime.now(tz_vn)
     end_time = start_time + timedelta(days=plan.duration_days)
 
     SubscriptionService.update_subscription_trial(
@@ -107,7 +110,7 @@ async def activate_free_trial(callback: types.CallbackQuery):
 
     success_text = (
         f"{translator.t('free_trial.activated_title')}\n\n"
-        f"{translator.t('free_trial.activated_message', days=plan.duration_days, expire_time=end_time.strftime('%Y-%m-%d %H:%M'))}"
+        f"{translator.t('free_trial.activated_message', days=plan.duration_days, expire_time=end_time.strftime('%Y-%m-%d'))}"
     )
 
     kb = InlineKeyboardBuilder()
@@ -132,7 +135,6 @@ async def join_channel(callback: types.CallbackQuery):
     lang = user_langs.get(user_id, "en")
     translator = Translator(lang)
 
-    invite_link = ADD_LIST
 
     sub = SubscriptionService.get_subscription_by_user_id(user_id)
 
@@ -147,8 +149,23 @@ async def join_channel(callback: types.CallbackQuery):
 
     if active_details:
         kb = InlineKeyboardBuilder()
-        kb.button(text=f"{translator.t('button.join_channel')}", url=invite_link)
-        kb.button(text=f"{translator.t('button.back_button')}", callback_data="free_trial")
+        ADD_LIST = json.loads(settings.ADD_LIST)
+
+     
+      
+        for i, link in enumerate(ADD_LIST, start=1):
+            kb.button(
+                text=f"{translator.t('button.join_channel')} {i}",
+                url=link
+            )
+
+        kb.button(
+            text=f"{translator.t('button.back_button')}",
+            callback_data="free_trial"
+        )
+
+       
+        kb.adjust(1)
 
         await callback.message.edit_text(
             translator.t("free_trial.join_ready"),
@@ -156,9 +173,10 @@ async def join_channel(callback: types.CallbackQuery):
             reply_markup=kb.as_markup()
         )
         await callback.answer()
+
     else:
         await callback.answer(
             translator.t("free_trial.join_inactive"),
             show_alert=True
         )
-        await callback.answer()
+

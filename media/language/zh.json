@@ -1,4 +1,6 @@
 {
+    "language_name": "🇨🇳 Chinese",
+
     "start": {
         "welcome": "👋 欢迎回来，{name}！\n\n📊 *您的加密货币伙伴*\n请在下方选择一个选项 👇",
         "no_username": "交易者",
@@ -33,6 +35,7 @@
         "footer": "<i>使用下方按钮提取资金或验证为 KOL/KOC。</i>"
     },
     "affiliate_withdraw": {
+        "insufficient_balance": "⚠️ 您的余额不足，无法提现。",
         "not_enough_balance": "❌ 提取最低余额为 $20。",
         "confirm_withdraw": "💰 您即将提取您的联盟佣金。\n可用余额： <b>${balance}</b>\n\n👉 请填写您希望提取的 <b>金额</b> 以及接收资金的 <b>BEP-20 (BSC)</b> 钱包地址。\n\n🧾 示例： \n\n<code>20|0x7dB8a12F3dA9bC3eDfE8.......</code>",
         "invalid_wallet": "⚠️ 无效钱包地址或余额不足。\n\n请提供有效的 <b>BEP-20 (BSC)</b> 地址并确保您有足够的资金。",
@@ -68,7 +71,7 @@
         "already_used": "❌ 您已使用过免费试用！",
         "already_active": "❌ 您已有活跃订阅！",
         "activated_title": "✅ 免费试用已激活！",
-        "activated_message": "🎉 您现在拥有 *{days} 天* 的高级访问权限。\n您的试用将于 *{expire_time} UTC* 到期。\n\n享受高级交易信号和专属工具！🚀",
+        "activated_message": "🎉 您现在拥有 *{days} 天* 的高级访问权限。\n您的试用将于 *{expire_time} * 到期。\n\n享受高级交易信号和专属工具！🚀",
         "success_alert": "✅ 免费试用成功激活！",
         "join_require_plan": "❌ 请先注册一个方案再加入频道。",
         "join_ready": "✅ 您现在可以加入我们的官方 Telegram 频道：",

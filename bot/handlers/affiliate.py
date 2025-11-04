@@ -38,8 +38,9 @@ async def open_affiliate_menu(callback: types.CallbackQuery):
     active_count = len(active_referrals)
     pending_count = len(pending_referrals)
     user = UserService.get_user_by_telegram_id(user_id)
-    lang = user.language if user and hasattr(user, "language") else "en"
-    user_langs[user_id] = lang
+    lang = getattr(user, "language", "en") if user else "en"
+    user_langs[user_id] = lang 
+     
     translator = Translator(lang)
     try:
         await bot.delete_message(chat_id=chat_id, message_id=callback.message.message_id)
@@ -97,6 +98,10 @@ async def handle_affiliate_withdraw(callback: types.CallbackQuery, state: FSMCon
     await callback.answer()
 
 
+import asyncio
+from aiogram import types
+from aiogram.utils.keyboard import InlineKeyboardBuilder
+
 @affiliate_router.message(WithdrawState.waiting_for_wallet)
 async def process_wallet_address(message: types.Message, state: FSMContext):
     user_id = message.from_user.id
@@ -104,15 +109,45 @@ async def process_wallet_address(message: types.Message, state: FSMContext):
     parts = text.split("|")
     lang = user_langs.get(user_id, "en")
     translator = Translator(lang)
-   
+
+    # ⚠️ Kiểm tra định dạng
     if len(parts) != 2:
-        await message.answer(translator.t("affiliate_withdraw.invalid_format"))
+        msg = await message.answer(translator.t("affiliate_withdraw.invalid_format"))
+        await asyncio.sleep(3)
+        try:
+            await msg.delete()
+            await message.delete()
+        except:
+            pass
         return
-    balace =float(AffiliateService.get_affiliate_balance(user_id))
+
+    balance = float(AffiliateService.get_affiliate_balance(user_id))
     amount = float(parts[0].strip())
     wallet = parts[1].strip()
 
+    # ⚠️ Số tiền rút tối thiểu
+    if amount < 20:
+        msg = await message.answer(translator.t("affiliate_withdraw.not_enough_balance"))
+        await asyncio.sleep(3)
+        try:
+            await msg.delete()
+            await message.delete()
+        except:
+            pass
+        return
 
+    # ⚠️ Không đủ số dư
+    if amount > balance:
+        msg = await message.answer(translator.t("affiliate_withdraw.insufficient_balance"))
+        await asyncio.sleep(3)
+        try:
+            await msg.delete()
+            await message.delete()
+        except:
+            pass
+        return
+
+    # ✅ Xoá tin nhắn người dùng sau khi hợp lệ
     try:
         await message.delete()
     except Exception:
@@ -121,7 +156,8 @@ async def process_wallet_address(message: types.Message, state: FSMContext):
     data = await state.get_data()
     bot_message_id = data.get("bot_message_id")
 
-    if not (wallet.startswith("0x") and len(wallet) == 42) or amount>balace or amount<=0:
+    # ⚠️ Ví không hợp lệ
+    if not (wallet.startswith("0x") and len(wallet) == 42):
         kb = InlineKeyboardBuilder()
         kb.button(text=translator.t("button.try_again_button"), callback_data="aff_withdraw")
         kb.button(text=translator.t("button.back_button"), callback_data="affiliate")
@@ -134,9 +170,18 @@ async def process_wallet_address(message: types.Message, state: FSMContext):
             parse_mode="HTML",
             reply_markup=markup
         )
+
+        # 🕒 Sau vài giây xoá thông báo lỗi ví
+        await asyncio.sleep(3)
+        try:
+            await message.bot.delete_message(chat_id=message.chat.id, message_id=bot_message_id)
+        except:
+            pass
+
         await state.clear()
         return
 
+    # ✅ Tạo lệnh rút tiền
     withdraw_id = AffiliateService.create_withdrawal(
         user_id=user_id,
         amount=amount,
@@ -145,7 +190,7 @@ async def process_wallet_address(message: types.Message, state: FSMContext):
         tx_hash=None,
     )
 
-
+    # ✅ Thông báo thành công cho user
     await message.bot.edit_message_text(
         chat_id=message.chat.id,
         message_id=bot_message_id,
@@ -158,8 +203,7 @@ async def process_wallet_address(message: types.Message, state: FSMContext):
         reply_markup=back_main_menu(lang)
     )
 
-
-
+    # ✅ Gửi thông báo cho admin
     admin_text = translator.t(
         "affiliate_withdraw.new_withdraw_request",
         user_id=user_id,
@@ -168,13 +212,12 @@ async def process_wallet_address(message: types.Message, state: FSMContext):
         username=message.from_user.username or "No username"
     )
 
-   
-
     await message.bot.send_message(
         chat_id=ADMIN_CHAT_ID,
         text=admin_text,
         parse_mode="HTML",
     )
+
     await state.clear()
 
 @affiliate_router.callback_query(F.data == "aff_verify")

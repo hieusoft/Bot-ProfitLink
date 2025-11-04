@@ -1,6 +1,8 @@
 from datetime import datetime
 from config.connection import get_connection
 from models.payment_model import Payment
+import pytz 
+tz_vn = pytz.timezone("Asia/Ho_Chi_Minh")
 
 class PaymentService:
 

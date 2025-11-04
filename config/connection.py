@@ -14,7 +14,8 @@ dbconfig = {
 try:
     connection_pool = pooling.MySQLConnectionPool(
         pool_name="telegram_pool",
-        pool_size=5,
+        pool_size=settings.MAX_CONNECTION
+,
         **dbconfig
     )
 except Exception as e:

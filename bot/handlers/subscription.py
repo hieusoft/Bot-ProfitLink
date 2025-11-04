@@ -11,10 +11,10 @@ from services.affiliate_service import AffiliateService
 from models.payment_model import Payment
 from datetime import datetime, timedelta
 from services.oxapay_service import OxaPayService
-import pytz
+import pytz,json
 from config.translator import Translator
 from config.settings import settings
-ADD_LIST = settings.ADD_LIST
+
 subscription_router = Router()
 oxapay = OxaPayService()
 tz_vn = pytz.timezone("Asia/Ho_Chi_Minh")
@@ -531,40 +531,54 @@ async def check_subscription_payment(callback: types.CallbackQuery):
 @subscription_router.callback_query(F.data == "join_channel")
 async def join_channel(callback: types.CallbackQuery):
     user_id = callback.from_user.id
-    invite_link = ADD_LIST
     lang = user_langs.get(user_id, "en")
     translator = Translator(lang)
+
+
     sub = SubscriptionService.get_subscription_by_user_id(user_id)
-  
 
     if not sub:
         await callback.message.edit_text(
-            translator.t("join_channel.not_registered"),
+            translator.t("free_trial.join_require_plan"),
             parse_mode="HTML"
         )
-        await callback.answer()
         return
 
-    sub_id = sub.sub_id
     active_details = SubscriptionService.get_active_subscription(user_id)
 
     if active_details:
         kb = InlineKeyboardBuilder()
-        kb.button(text=f"{translator.t('button.join_channel')}", url=invite_link)  # Nút link ẩn
-        kb.button(text=f"{translator.t('button.back_button')}", callback_data="subscription_plans")
+        ADD_LIST = json.loads(settings.ADD_LIST)
+
+     
+      
+        for i, link in enumerate(ADD_LIST, start=1):
+            kb.button(
+                text=f"{translator.t('button.join_channel')} {i}",
+                url=link
+            )
+
+        kb.button(
+            text=f"{translator.t('button.back_button')}",
+            callback_data="subscription_plans"
+        )
+
        
+        kb.adjust(1)
+
         await callback.message.edit_text(
-            translator.t("join_channel.can_join"),
+            translator.t("free_trial.join_ready"),
             parse_mode="HTML",
             reply_markup=kb.as_markup()
         )
         await callback.answer()
+
     else:
-            await callback.answer(
-            translator.t("join_channel.not_active"),
+        await callback.answer(
+            translator.t("free_trial.join_inactive"),
             show_alert=True
         )
-            await callback.answer()
+
 
 @subscription_router.callback_query(F.data.startswith("check_sub_") & F.data.endswith("_renew"))
 async def check_subscription_payment_renew(callback: types.CallbackQuery):

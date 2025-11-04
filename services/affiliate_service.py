@@ -2,6 +2,8 @@ from typing import List, Optional
 from datetime import datetime
 from config.connection import get_connection
 from models.affiliates_model import AffiliateReferral, AffiliateWithdrawal
+import pytz 
+tz_vn = pytz.timezone("Asia/Ho_Chi_Minh")
 
 
 class AffiliateService:
@@ -13,7 +15,7 @@ class AffiliateService:
             INSERT INTO affiliate_referrals (referrer_id, referred_id, commission_usd, status, created_at)
             VALUES (%s, %s, %s, %s, %s)
         """
-        now = datetime.now()
+        now = datetime.now(tz_vn)
         cursor.execute(sql, (referrer_id, referred_id, commission_usd, status, now))
         referral_id = cursor.lastrowid
         conn.commit()
@@ -56,7 +58,7 @@ class AffiliateService:
             INSERT INTO affiliate_withdrawals (user_id, amount, wallet_address, status, tx_hash, created_at)
             VALUES (%s, %s, %s, %s, %s, %s)
         """
-        now = datetime.now()
+        now = datetime.now(tz_vn)
         cursor.execute(sql, (user_id, amount, wallet_address, status, tx_hash, now))
         withdrawal_id = cursor.lastrowid
         conn.commit()
@@ -141,7 +143,7 @@ class AffiliateService:
             SET status = %s
             WHERE withdraw_id = %s
         """
-        now = datetime.now()
+        now = datetime.now(tz_vn)
         cursor.execute(sql, (status, withdraw_id))
         conn.commit()
         conn.close()

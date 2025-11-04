@@ -20,7 +20,7 @@ class Settings:
         self.MAX_PAGE_LENGTH = int(os.getenv("MAX_PAGE_LENGTH",1000))
         self.OXAPAY_API_KEY = os.getenv("OXAPAY_API_KEY", "")
         self.CRYPTOBOT_TOKEN = os.getenv("CRYPTOBOT_TOKEN", "")
-        self.ADD_LIST = os.getenv("ADD_LIST", "my_channel.txt")
+        self.ADD_LIST = os.getenv("ADD_LIST", "")
         self.DEBUG = os.getenv("DEBUG", "False").lower() == "true"
         self.WEBHOOK_URL = os.getenv("WEBHOOK_URL", "")
         self.TIMEZONE = os.getenv("TIMEZONE", "Asia/Ho_Chi_Minh")
@@ -28,6 +28,8 @@ class Settings:
         self.API_HASH = os.getenv("TELEGRAM_API_HASH", "your_api_hash_here")
         self.SESSION_FILE = os.getenv("TELEGRAM_SESSION", "bot_session")
         self.DISCOUNT=int(os.getenv("DISCOUNT", 10))
+        self.MAX_CONNECTION =int(os.getenv("MAX_CONNECTION", 20))
         self.CHANNEL_LIST=os.getenv("CHANNEL_LIST", "")
-CHANNEL_LIST = "my_chanel.txt"
+        self.URL_SUPPORT=os.getenv("URL_SUPPORT", "")
+
 settings = Settings()

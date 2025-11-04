@@ -1,4 +1,5 @@
 {
+     "language_name": "🇻🇳 Vietnamese",
     "start": {
         "welcome": "👋 Chào mừng trở lại, {name}!\n\n📊 *Trợ lý Crypto của bạn*\nVui lòng chọn một tùy chọn bên dưới 👇",
         "no_username": "Nhà giao dịch",
@@ -33,6 +34,7 @@
         "footer": "<i>Sử dụng các nút bên dưới để rút tiền hoặc xác minh với tư cách KOL/KOC.</i>"
     },
     "affiliate_withdraw": {
+        "insufficient_balance": "⚠️ Bạn không có đủ số dư để rút tiền.",
         "not_enough_balance": "❌ Số dư tối thiểu để rút là $20.",
         "confirm_withdraw": "💰 Bạn sắp rút hoa hồng tiếp thị liên kết.\nSố dư khả dụng: <b>${balance}</b>\n\n👉 Vui lòng nhập <b>số tiền</b> bạn muốn rút và <b>địa chỉ ví BEP-20 (BSC)</b> để nhận tiền.\n\n🧾 Ví dụ: \n\n<code>20|0x7dB8a12F3dA9bC3eDfE8.......</code>",
         "invalid_wallet": "⚠️ Địa chỉ ví không hợp lệ.\n\nVui lòng cung cấp địa chỉ <b>BEP-20 (BSC)</b> hợp lệ.",
@@ -68,7 +70,7 @@
         "already_used": "❌ Bạn đã sử dụng bản dùng thử miễn phí rồi!",
         "already_active": "❌ Bạn đã có gói đăng ký đang hoạt động!",
         "activated_title": "✅ Đã kích hoạt bản dùng thử miễn phí!",
-        "activated_message": "🎉 Bạn có *{days} ngày* truy cập cao cấp.\nBản dùng thử sẽ hết hạn vào *{expire_time} UTC*.\n\nChúc bạn giao dịch hiệu quả với các tín hiệu cao cấp! 🚀",
+        "activated_message": "🎉 Bạn có *{days} ngày* truy cập cao cấp.\nBản dùng thử sẽ hết hạn vào *{expire_time} *.\n\nChúc bạn giao dịch hiệu quả với các tín hiệu cao cấp! 🚀",
         "success_alert": "✅ Đã kích hoạt dùng thử miễn phí thành công!",
         "join_require_plan": "❌ Vui lòng đăng ký gói trước khi tham gia kênh.",
         "join_ready": "✅ Bạn có thể tham gia kênh Telegram chính thức của chúng tôi:",

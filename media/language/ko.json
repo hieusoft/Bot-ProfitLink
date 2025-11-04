@@ -1,4 +1,5 @@
 {
+    "language_name": "🇰🇷 Korean",
     "start": {
         "welcome": "👋 다시 오신 것을 환영합니다, {name}!\n\n📊 *당신의 크립토 동반자*\n아래 옵션 중 하나를 선택해 주세요 👇",
         "no_username": "트레이더",
@@ -33,6 +34,7 @@
         "footer": "<i>자금을 인출하거나 KOL/KOC로 인증하려면 아래 버튼을 사용하세요.</i>"
     },
     "affiliate_withdraw": {
+        "insufficient_balance_ko": "⚠️ 잔액이 부족하여 출금할 수 없습니다.",
         "not_enough_balance": "❌ 인출을 위한 최소 잔액은 $20입니다.",
         "confirm_withdraw": "💰 제휴 수수료를 인출하려고 합니다.\n사용 가능한 잔액: <b>${balance}</b>\n\n👉 인출하고자 하는 <b>금액</b>과 자금을 받을 <b>BEP-20 (BSC)</b> 지갑 주소를 입력해 주세요.\n\n🧾 예시: \n\n<code>20|0x7dB8a12F3dA9bC3eDfE8.......</code>",
         "invalid_wallet": "⚠️ 유효하지 않은 지갑 주소 또는 잔액 부족.\n\n유효한 <b>BEP-20 (BSC)</b> 주소를 제공하고 충분한 자금이 있는지 확인해 주세요.",
@@ -68,7 +70,7 @@
         "already_used": "❌ 이미 무료 체험을 사용하셨습니다!",
         "already_active": "❌ 이미 활성 구독이 있습니다!",
         "activated_title": "✅ 무료 체험 활성화!",
-        "activated_message": "🎉 이제 *{days} 일* 동안 프리미엄 액세스 권한이 부여되었습니다.\n체험은 *{expire_time} UTC*에 만료됩니다.\n\n프리미엄 트레이딩 시그널과 독점 도구를 즐기세요! 🚀",
+        "activated_message": "🎉 이제 *{days} 일* 동안 프리미엄 액세스 권한이 부여되었습니다.\n체험은 *{expire_time} *에 만료됩니다.\n\n프리미엄 트레이딩 시그널과 독점 도구를 즐기세요! 🚀",
         "success_alert": "✅ 무료 체험 성공적으로 활성화!",
         "join_require_plan": "❌ 채널에 가입하기 전에 플랜에 등록해 주세요.",
         "join_ready": "✅ 이제 공식 텔레그램 채널에 가입할 수 있습니다:",
@@ -158,7 +160,6 @@
         "withdraw_pending": "⏳ 인출 요청이 처리 중입니다. 기다려 주세요.",
         "withdraw_rejected": "❌ 인출 요청이 거부되었습니다.",
         "withdraw_user_paid_no_txid": "💰 *결제가 성공적으로 완료되었습니다!* \n\n*{amount} USDT* 거래가 확인되었습니다. 🎉 \n\n*HieuSoft*를 신뢰해 주셔서 감사합니다! 💼✨"
-
     },
     "errors": {
         "invalid_data": "❌ 유효하지 않은 데이터.",

@@ -1,6 +1,8 @@
 from config.connection import get_connection
 from models.user_model import User
 from datetime import datetime
+import pytz 
+tz_vn = pytz.timezone("Asia/Ho_Chi_Minh")
 
 
 class UserService:
@@ -35,7 +37,7 @@ class UserService:
             SET verified_kol = %s, updated_at = %s
             WHERE user_id = %s
         """
-        now = datetime.now()
+        now = datetime.now(tz_vn)
         cursor.execute(sql, (verified_kol, now, user_id))
         conn.commit()
 
@@ -60,7 +62,7 @@ class UserService:
             INSERT INTO users (user_id, username, language, verified_kol, created_at, updated_at)
             VALUES (%s, %s, %s, %s, %s, %s)
         """
-        now = datetime.now()
+        now = datetime.now(tz_vn)
         cursor.execute(sql, (user_id, username, language, verified_kol, now, now))
         conn.commit()
 
@@ -83,7 +85,7 @@ class UserService:
             cursor.execute("SELECT user_id FROM users WHERE user_id = %s", (ref_code,))
             referrer = cursor.fetchone()
 
-        now = datetime.now()
+        now = datetime.now(tz_vn)
 
         if not referrer:        
             cursor.execute("""

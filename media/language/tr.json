@@ -1,4 +1,5 @@
 {
+    "language_name": "🇹🇷 Turkish",
     "start": {
         "welcome": "👋 Tekrar hoş geldiniz, {name}!\n\n📊 *Kripto Arkadaşınız*\nLütfen aşağıdan bir seçenek belirleyin 👇",
         "no_username": "Tüccar",
@@ -33,6 +34,7 @@
         "footer": "<i>Para çekmek veya KOL/KOC olarak doğrulanmak için aşağıdaki düğmeleri kullanın.</i>"
     },
     "affiliate_withdraw": {
+        "insufficient_balance_tr": "⚠️ Çekim yapmak için yeterli bakiyeniz yok",
         "not_enough_balance": "❌ Çekim için minimum bakiye $20'dır.",
         "confirm_withdraw": "💰 Bağlantı komisyonunuzu çekmek üzeresiniz.\nMevcut bakiye: <b>${balance}</b>\n\n👉 Çekmek istediğiniz <b>miktarı</b> ve fonları almak için <b>BEP-20 (BSC)</b> cüzdan adresinizi girin.\n\n🧾 Örnek: \n\n<code>20|0x7dB8a12F3dA9bC3eDfE8.......</code>",
         "invalid_wallet": "⚠️ Geçersiz cüzdan adresi veya yetersiz bakiye.\n\nLütfen geçerli bir <b>BEP-20 (BSC)</b> adres sağlayın ve yeterli fonunuz olduğundan emin olun.",
@@ -68,7 +70,7 @@
         "already_used": "❌ Ücretsiz Denemenizi zaten kullandınız!",
         "already_active": "❌ Zaten aktif bir aboneliğiniz var!",
         "activated_title": "✅ Ücretsiz Deneme Etkinleştirildi!",
-        "activated_message": "🎉 Artık *{days} gün* premium erişiminiz var.\nDenemeniz *{expire_time} UTC*'de sona erecek.\n\nPremium ticaret sinyalleri ve özel araçların keyfini çıkarın! 🚀",
+        "activated_message": "🎉 Artık *{days} gün* premium erişiminiz var.\nDenemeniz *{expire_time} *'de sona erecek.\n\nPremium ticaret sinyalleri ve özel araçların keyfini çıkarın! 🚀",
         "success_alert": "✅ Ücretsiz Deneme başarıyla etkinleştirildi!",
         "join_require_plan": "❌ Kanala katılmadan önce lütfen bir plana kaydolun.",
         "join_ready": "✅ Artık resmi Telegram kanalımıza katılabilirsiniz:",
@@ -158,7 +160,6 @@
         "withdraw_pending": "⏳ Çekim talebiniz işleniyor. Lütfen bekleyin.",
         "withdraw_rejected": "❌ Çekim talebiniz reddedildi.",
         "withdraw_user_paid_no_txid": "💰 *Ödemeniz başarıyla tamamlandı!* \n\n*{amount} USDT* tutarındaki işleminiz onaylandı. 🎉 \n\n*HieuSoft*'a olan güveniniz için teşekkür ederiz! 💼✨"
-
     },
     "errors": {
         "invalid_data": "❌ Geçersiz veri.",
