@@ -7,13 +7,16 @@ class Translator:
         
         if getattr(sys, 'frozen', False):
            
-            base_dir = sys._MEIPASS
+            exe_dir = os.path.dirname(sys.executable)
+
+            locale_path  = os.path.join(exe_dir, "media", "language", f"{lang}.json")
+
         else:
        
             base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
     
-        locale_path = os.path.join(base_dir, "media", "language", f"{lang}.json")
+            locale_path = os.path.join(base_dir, "media", "language", f"{lang}.json")
   
         locale_path = os.path.normpath(locale_path)
 

@@ -222,6 +222,21 @@ async def confirm_affiliate_payment(callback: types.CallbackQuery):
         wallet_address="",
         status="approved",
         tx_hash="")
+   
+
+    sub = SubscriptionService.get_subscription_by_user_id(user.id)
+    if not sub:
+        await callback.answer(translator.t("plans.subscription_not_found"), show_alert=True)
+        return
+    active_details = SubscriptionDetailService.get_active_details(sub.sub_id)
+    duration = timedelta(days=plan.duration_days)
+    now_vn = datetime.now(tz_vn)
+    
+    PaymentService.update_payment_status(
+        track_id=last_payment.track_id,
+        status="success",
+        completed_at=now_vn
+    )
     referred = UserService.get_user_by_telegram_id(user.id)
 
     if referred.ref_by:
@@ -238,7 +253,7 @@ async def confirm_affiliate_payment(callback: types.CallbackQuery):
             commission_usd=commission_amount,
             status="approved",
         )
-        # Use referrer's language for notification
+       
         ref_lang = getattr(referrer, "language", "en")
         ref_translator = Translator(ref_lang)
         text = ref_translator.t(
@@ -255,21 +270,6 @@ async def confirm_affiliate_payment(callback: types.CallbackQuery):
             text=text,
             parse_mode="Markdown"
         )
-
-    sub = SubscriptionService.get_subscription_by_user_id(user.id)
-    if not sub:
-        await callback.answer(translator.t("plans.subscription_not_found"), show_alert=True)
-        return
-    active_details = SubscriptionDetailService.get_active_details(sub.sub_id)
-    duration = timedelta(days=plan.duration_days)
-    now_vn = datetime.now(tz_vn)
-    
-    PaymentService.update_payment_status(
-        track_id=last_payment.track_id,
-        status="success",
-        completed_at=now_vn
-    )
-
     if active_details:
         earliest_start = min(d.activated_at for d in active_details)
         latest_end = max(d.expired_at for d in active_details)
@@ -429,6 +429,21 @@ async def check_subscription_payment(callback: types.CallbackQuery):
         await callback.answer(translator.t("plans.payment_pending_alert"), show_alert=True)
         return
 
+  
+
+    sub = SubscriptionService.get_subscription_by_user_id(user.id)
+    if not sub:
+        await callback.answer(translator.t("plans.subscription_not_found"), show_alert=True)
+        return
+
+    active_details = SubscriptionDetailService.get_active_details(sub.sub_id)
+    duration = timedelta(days=plan.duration_days)
+
+    PaymentService.update_payment_status(
+        track_id=last_payment.track_id,
+        status="success",
+        completed_at=now_vn
+    )
     referred = UserService.get_user_by_telegram_id(user.id)
 
     if referred.ref_by:
@@ -445,7 +460,7 @@ async def check_subscription_payment(callback: types.CallbackQuery):
             commission_usd=commission_amount,
             status="approved",
         )
-        # Use referrer's language for notification
+     
         ref_lang = getattr(referrer, "language", "en")
         ref_translator = Translator(ref_lang)
         text = ref_translator.t(
@@ -462,21 +477,6 @@ async def check_subscription_payment(callback: types.CallbackQuery):
             text=text,
             parse_mode="Markdown"
         )
-
-    sub = SubscriptionService.get_subscription_by_user_id(user.id)
-    if not sub:
-        await callback.answer(translator.t("plans.subscription_not_found"), show_alert=True)
-        return
-
-    active_details = SubscriptionDetailService.get_active_details(sub.sub_id)
-    duration = timedelta(days=plan.duration_days)
-
-    PaymentService.update_payment_status(
-        track_id=last_payment.track_id,
-        status="success",
-        completed_at=now_vn
-    )
-
     if active_details:
         earliest_start = min(d.activated_at for d in active_details)
         latest_end = max(d.expired_at for d in active_details)
@@ -622,6 +622,21 @@ async def check_subscription_payment_renew(callback: types.CallbackQuery):
         await callback.answer(translator.t("plans.payment_pending_alert"), show_alert=True)
         return
 
+    
+
+    sub = SubscriptionService.get_subscription_by_user_id(user.id)
+    if not sub:
+        await callback.answer(translator.t("plans.subscription_not_found"), show_alert=True)
+        return
+
+    active_details = SubscriptionDetailService.get_active_details(sub.sub_id)
+    duration = timedelta(days=plan.duration_days)
+
+    PaymentService.update_payment_status(
+        track_id=last_payment.track_id,
+        status="success",
+        completed_at=now_vn
+    )
     referred = UserService.get_user_by_telegram_id(user.id)
 
     if referred.ref_by:
@@ -655,21 +670,6 @@ async def check_subscription_payment_renew(callback: types.CallbackQuery):
             text=text,
             parse_mode="Markdown"
         )
-
-    sub = SubscriptionService.get_subscription_by_user_id(user.id)
-    if not sub:
-        await callback.answer(translator.t("plans.subscription_not_found"), show_alert=True)
-        return
-
-    active_details = SubscriptionDetailService.get_active_details(sub.sub_id)
-    duration = timedelta(days=plan.duration_days)
-
-    PaymentService.update_payment_status(
-        track_id=last_payment.track_id,
-        status="success",
-        completed_at=now_vn
-    )
-
     if active_details:
         earliest_start = min(d.activated_at for d in active_details)
         latest_end = max(d.expired_at for d in active_details)
@@ -775,6 +775,21 @@ async def confirm_affiliate_payment_renew(callback: types.CallbackQuery):
         wallet_address="",
         status="approved",
         tx_hash="")
+    
+
+    sub = SubscriptionService.get_subscription_by_user_id(user.id)
+    if not sub:
+        await callback.answer(translator.t("plans.subscription_not_found"), show_alert=True)
+        return
+    active_details = SubscriptionDetailService.get_active_details(sub.sub_id)
+    duration = timedelta(days=plan.duration_days)
+    now_vn = datetime.now(tz_vn)
+    
+    PaymentService.update_payment_status(
+        track_id=last_payment.track_id,
+        status="success",
+        completed_at=now_vn
+    )
     referred = UserService.get_user_by_telegram_id(user.id)
 
     if referred.ref_by:
@@ -808,21 +823,6 @@ async def confirm_affiliate_payment_renew(callback: types.CallbackQuery):
             text=text,
             parse_mode="Markdown"
         )
-
-    sub = SubscriptionService.get_subscription_by_user_id(user.id)
-    if not sub:
-        await callback.answer(translator.t("plans.subscription_not_found"), show_alert=True)
-        return
-    active_details = SubscriptionDetailService.get_active_details(sub.sub_id)
-    duration = timedelta(days=plan.duration_days)
-    now_vn = datetime.now(tz_vn)
-    
-    PaymentService.update_payment_status(
-        track_id=last_payment.track_id,
-        status="success",
-        completed_at=now_vn
-    )
-
     if active_details:
         earliest_start = min(d.activated_at for d in active_details)
         latest_end = max(d.expired_at for d in active_details)

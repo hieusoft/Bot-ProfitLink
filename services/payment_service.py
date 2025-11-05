@@ -1,7 +1,7 @@
 from datetime import datetime
 from config.connection import get_connection
 from models.payment_model import Payment
-import pytz 
+import pytz ,time
 tz_vn = pytz.timezone("Asia/Ho_Chi_Minh")
 
 class PaymentService:
@@ -54,11 +54,17 @@ class PaymentService:
 
     @staticmethod
     def update_payment_status(track_id: str, status: str, completed_at: datetime = None) -> bool:
-       
         conn = get_connection()
         try:
             cursor = conn.cursor()
             sql = "UPDATE payments SET status=%s, completed_at=%s, updated_at=NOW() WHERE track_id=%s"
+            
+            # ✅ Convert datetime -> UNIX timestamp (int)
+            if completed_at:
+                completed_at = int(time.mktime(completed_at.timetuple()))
+            else:
+                completed_at = int(time.time())
+
             cursor.execute(sql, (status, completed_at, track_id))
             conn.commit()
             rowcount = cursor.rowcount
