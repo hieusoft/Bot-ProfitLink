@@ -28,17 +28,17 @@ class UserService:
         conn.close()
         return User(**row) if row else None
     @staticmethod
-    def update_verified_kol(user_id: int, verified_kol: str):
+    def update_verified_kol(user_id: int, verified_kol: str,link:str):
         conn = get_connection()
         cursor = conn.cursor()
 
         sql = """
             UPDATE users
-            SET verified_kol = %s, updated_at = %s
+            SET verified_kol = %s, updated_at = %s,link = %s
             WHERE user_id = %s
         """
         now = datetime.now(tz_vn)
-        cursor.execute(sql, (verified_kol, now, user_id))
+        cursor.execute(sql, (verified_kol, now, link,user_id))
         conn.commit()
 
         cursor.close()

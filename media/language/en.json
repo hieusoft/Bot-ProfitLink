@@ -30,7 +30,7 @@
         "referral_stats": "📊 <b>Referral Stats</b>",
         "active": "✅ Active: <b>{active_count}</b>",
         "pending": "⏳ Pending: <b>{pending_count}</b>",
-        "referral_link": "🔗 <b>Your Referral Link:</b>\n<a href=\"{affiliate_link}\">{affiliate_link}</a>",
+        "referral_link": "🔗 <b>Your Referral Link:</b>\n<code>{affiliate_link}</code>",
         "footer": "<i>Use the buttons below to withdraw funds or verify as a KOL/KOC.</i>"
     },
     "affiliate_withdraw": {

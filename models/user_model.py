@@ -10,6 +10,7 @@ class User:
     ref_by: Optional[int] = None
     wallet_address: Optional[str] = None
     verified_kol: str ="not_submitted"
+    link: Optional[str] = None
     commission_percent: float = 30.0
     is_banned: bool = False
     created_at: Optional[datetime] = None

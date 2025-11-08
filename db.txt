@@ -11,7 +11,7 @@ USE telegram_bot_system;
 -- =====================================
 -- 1. USERS
 -- =====================================
-CREATE TABLE users (
+CREATE TABLE users ( 
   user_id BIGINT PRIMARY KEY,
   username VARCHAR(255),
   language VARCHAR(10) DEFAULT 'en',
@@ -20,6 +20,7 @@ CREATE TABLE users (
   verified_kol ENUM('not_submitted', 'under_review', 'approved', 'rejected') DEFAULT 'not_submitted',
   commission_percent DECIMAL(5,2) DEFAULT 30.00,
   is_banned TINYINT(1) DEFAULT 0, 
+  link VARCHAR(255) NULL, 
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   CONSTRAINT fk_users_ref_by FOREIGN KEY (ref_by)

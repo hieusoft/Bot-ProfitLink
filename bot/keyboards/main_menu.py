@@ -1,5 +1,6 @@
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 from config.translator import Translator
+from config.settings import settings
 def get_main_menu(lang:str):
     kb = InlineKeyboardBuilder()
     translator = Translator(lang)
@@ -11,7 +12,7 @@ def get_main_menu(lang:str):
     kb.button(text=f"{translator.t('button.help_q/a')}", callback_data="qa")
     kb.button(
         text=f"{translator.t('button.support_team')}",
-        url="https://t.me/hieusoft"
+        url=settings.URL_SUPPORT
     )
     kb.button(text=f"{translator.t('button.change_language')}",callback_data="language")
     kb.adjust(1, 1,1, 2, 2, 1)

@@ -7,7 +7,7 @@ from aiogram.fsm.context import FSMContext
 import html
 from config.settings import settings
 from config.translator import Translator
-
+from deep_translator import GoogleTranslator
 qa_router = Router()
 
 MAX_PAGE_LENGTH = settings.MAX_PAGE_LENGTH
@@ -57,7 +57,6 @@ async def open_qa_menu(callback: types.CallbackQuery):
     )
     await callback.answer()
 
-
 @qa_router.callback_query(F.data.startswith("qa_category"))
 async def handle_category_qa(callback: types.CallbackQuery, state: FSMContext):
     user_id = callback.from_user.id
@@ -81,10 +80,20 @@ async def handle_category_qa(callback: types.CallbackQuery, state: FSMContext):
         await callback.answer()
         return
 
-    text = f"{translator.t('qa.qa_for', category=html.escape(category_slug))}\n\n"
-    for i, qa in enumerate(qas, start=1):
-        text += f"{i}. {html.escape(qa.question)}\n"
 
+    text = f"{translator.t('qa.qa_for', category=html.escape(category_slug))}\n\n"
+
+    for i, qa in enumerate(qas, start=1):
+        try:
+            target_lang = normalize_lang(lang)
+            translated_question = GoogleTranslator(source='auto', target=target_lang).translate(qa.question)
+
+        except Exception as e:
+            print(e)
+            translated_question = qa.question  # fallback nếu lỗi
+        text += f"{i}. {html.escape(translated_question)}\n"
+
+    # 🔹 Tạo bàn phím chọn câu hỏi
     kb = InlineKeyboardBuilder()
     for i, qa in enumerate(qas, start=1):
         kb.button(
@@ -100,8 +109,8 @@ async def handle_category_qa(callback: types.CallbackQuery, state: FSMContext):
         parse_mode="HTML",
         reply_markup=kb.as_markup()
     )
-    await callback.answer()
 
+    await callback.answer()
 
 @qa_router.callback_query(F.data.startswith("qa_show_"))
 async def handle_show_answer(callback: types.CallbackQuery, state: FSMContext):
@@ -120,8 +129,26 @@ async def handle_show_answer(callback: types.CallbackQuery, state: FSMContext):
         await callback.answer(translator.t("qa.question_not_found"), show_alert=True)
         return
 
-    question = html.escape(qa['question'])
-    answer = html.escape(qa['answer'])
+    # ✨ Dịch câu hỏi & câu trả lời bằng GoogleTranslator
+    try:
+        question = qa['question']
+        answer = qa['answer']
+        target_lang = normalize_lang(lang)
+           
+        # Dịch sang ngôn ngữ người dùng (auto detect gốc)
+        translated_question = GoogleTranslator(source='auto', target=target_lang).translate(question)
+        translated_answer = GoogleTranslator(source='auto', target=target_lang).translate(answer)
+
+        # Escape HTML trước khi hiển thị
+        question = html.escape(translated_question)
+        answer = html.escape(translated_answer)
+
+    except Exception as e:
+        # Nếu lỗi (VD: quota, mạng,...) thì dùng bản gốc
+        question = html.escape(qa['question'])
+        answer = html.escape(qa['answer'])
+
+    # ✂️ Tách câu trả lời dài thành nhiều trang
     pages = split_text(answer)
 
     await state.update_data(
@@ -185,3 +212,13 @@ async def handle_qa_page(callback: types.CallbackQuery, state: FSMContext):
         reply_markup=kb.as_markup()
     )
     await callback.answer()
+def normalize_lang(lang: str) -> str:
+    """Chuyển mã ngôn ngữ Telegram / hệ thống về dạng GoogleTranslator chấp nhận"""
+    lang = lang.lower()
+    if lang in ("zh", "zh-cn", "cn", "ch"):
+        return "zh-CN"
+    elif lang in ("zh-tw", "tw", "hk"):
+        return "zh-TW"
+    elif lang == "vn":  # một số user lưu là 'vn' thay vì 'vi'
+        return "vi"
+    return lang

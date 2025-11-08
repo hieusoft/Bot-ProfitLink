@@ -7,4 +7,5 @@ from .free_trial import free_trial_router
 from .main_menu import main_menu_router
 from .account import account_router
 from .language import language_router
+from .admin import admin_router
 __all__ = ["start_router"]

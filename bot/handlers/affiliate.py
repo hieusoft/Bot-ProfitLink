@@ -116,7 +116,7 @@ async def process_wallet_address(message: types.Message, state: FSMContext):
         await asyncio.sleep(3)
         try:
             await msg.delete()
-            await message.delete()
+          
         except:
             pass
         return
@@ -125,29 +125,29 @@ async def process_wallet_address(message: types.Message, state: FSMContext):
     amount = float(parts[0].strip())
     wallet = parts[1].strip()
 
-    # ⚠️ Số tiền rút tối thiểu
+   
     if amount < 20:
         msg = await message.answer(translator.t("affiliate_withdraw.not_enough_balance"))
         await asyncio.sleep(3)
         try:
             await msg.delete()
-            await message.delete()
+          
         except:
             pass
         return
 
-    # ⚠️ Không đủ số dư
+
     if amount > balance:
         msg = await message.answer(translator.t("affiliate_withdraw.insufficient_balance"))
         await asyncio.sleep(3)
         try:
             await msg.delete()
-            await message.delete()
+           
         except:
             pass
         return
+    
 
-    # ✅ Xoá tin nhắn người dùng sau khi hợp lệ
     try:
         await message.delete()
     except Exception:
@@ -172,11 +172,11 @@ async def process_wallet_address(message: types.Message, state: FSMContext):
         )
 
         # 🕒 Sau vài giây xoá thông báo lỗi ví
-        await asyncio.sleep(3)
-        try:
-            await message.bot.delete_message(chat_id=message.chat.id, message_id=bot_message_id)
-        except:
-            pass
+        # await asyncio.sleep(3)
+        # try:
+        #     await message.bot.delete_message(chat_id=message.chat.id, message_id=bot_message_id)
+        # except:
+        #     pass
 
         await state.clear()
         return
@@ -297,7 +297,8 @@ async def process_social_verification(message: types.Message, state: FSMContext)
         return
     UserService.update_verified_kol(
         user_id=user_id,
-        verified_kol="under_review"
+        verified_kol="under_review",
+        link= social_info
     
     )
     data = await state.get_data()
