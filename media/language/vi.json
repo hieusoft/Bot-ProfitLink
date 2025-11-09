@@ -1,9 +1,9 @@
 {
-     "language_name": "🇻🇳 Vietnamese",
+    "language_name": "🇻🇳 Tiếng Việt",
     "start": {
-        "welcome": "👋 Chào mừng trở lại, {name}!\n\n📊 *Trợ lý Crypto của bạn*\nVui lòng chọn một tùy chọn bên dưới 👇",
-        "no_username": "Nhà giao dịch",
-        "intro": "💎 *Chào mừng bạn đến với Hieusoft Crypto Bot!*\n\nHãy nâng tầm hành trình giao dịch của bạn với tín hiệu premium theo thời gian thực, chương trình hoa hồng trọn đời và hoàn tiền cho mỗi giao dịch — tất cả chỉ trong một bot thông minh. 🚀\n\nChọn hành động bên dưới để bắt đầu kiếm tiền 👇"
+        "welcome": "👋 Chào mừng trở lại, {name}!\n\n📊 *Trợ Lý Crypto Của Bạn*\nVui lòng chọn một tùy chọn bên dưới 👇",
+        "no_username": "Nhà Giao Dịch",
+        "intro": "💎 *Chào mừng đến với Hieusoft Crypto Bot!*\n\nTăng cường hành trình giao dịch của bạn với tín hiệu cao cấp theo thời gian thực, phần thưởng liên kết trọn đời và hoàn tiền từ mọi giao dịch — tất cả trong một bot thông minh. 🚀\n\nChọn hành động tiếp theo bên dưới để bắt đầu kiếm tiền 👇"
     },
     "language": {
         "title": "🌐 Vui lòng chọn ngôn ngữ của bạn:",
@@ -12,157 +12,165 @@
     "account": {
         "title": "💼 <b><u>TÀI KHOẢN CỦA TÔI</u></b>",
         "user": "👤 <b>Người dùng:</b> <i>{name}</i>",
-        "subscription_title": "💎 <b>Thông tin gói đăng ký</b>",
+        "subscription_title": "💎 <b>Thông Tin Đăng Ký</b>",
         "plan": "• <b>Gói:</b> <code>{plan}</code>",
         "status_active": "• <b>Trạng thái:</b> <i>Đang hoạt động</i>",
         "remaining": "• <b>Còn lại:</b> <code>{days} ngày</code>",
-        "expires": "• <b>Hết hạn vào:</b> <code>{date}</code>",
-        "affiliate": "🔗 <b>Liên kết giới thiệu của bạn:</b>\n<code>{link}</code>",
+        "expires": "• <b>Hết hạn:</b> <code>{date}</code>",
+        "affiliate": "🔗 <b>Liên Kết Giới Thiệu Của Bạn:</b>\n<code>{link}</code>",
         "footer_active": "🚀 <i>Cảm ơn bạn đã là thành viên cao cấp!</i>",
-        "status_inactive": "⚠️ <b>Trạng thái:</b> <i>Chưa có gói đăng ký hoạt động</i>",
-        "subscribe_hint": "💎 <i>Hãy đến phần Gói đăng ký để bắt đầu hành trình của bạn!</i>",
-        "footer_inactive": "🌟 <i>Đừng bỏ lỡ tín hiệu cao cấp và các tính năng VIP!</i>"
+        "status_inactive": "⚠️ <b>Trạng thái:</b> <i>Không có gói đăng ký đang hoạt động</i>",
+        "subscribe_hint": "💎 <i>Đến Gói Đăng Ký để bắt đầu hành trình của bạn!</i>",
+        "footer_inactive": "🌟 <i>Đừng bỏ lỡ tín hiệu cao cấp và tính năng VIP!</i>"
     },
     "affiliate_menu": {
-        "title": "🤝 Menu Tiếp Thị Liên Kết",
+        "title": "🤝 Menu Liên Kết",
         "subtitle": "Quản lý chương trình giới thiệu của bạn",
-        "total_commission": "🏦 <b>Tổng hoa hồng:</b> ${balance_text} USD",
-        "referral_stats": "📊 <b>Thống kê giới thiệu</b>",
-        "active": "✅ Hoạt động: <b>{active_count}</b>",
-        "pending": "⏳ Đang chờ: <b>{pending_count}</b>",
-        "referral_link": "🔗 <b>Liên kết giới thiệu của bạn:</b>\n<a href=\"{affiliate_link}\">{affiliate_link}</a>",
-        "footer": "<i>Sử dụng các nút bên dưới để rút tiền hoặc xác minh với tư cách KOL/KOC.</i>"
+        "total_commission": "🏦 <b>Tổng Hoa Hồng:</b> ${balance_text} USD",
+        "referral_stats": "📊 <b>Thống Kê Giới Thiệu</b>",
+        "active": "✅ Đang hoạt động: <b>{active_count}</b>",
+        "pending": "⏳ Chờ xử lý: <b>{pending_count}</b>",
+        "referral_link": "🔗 <b>Liên Kết Giới Thiệu Của Bạn:</b>\n<code>{affiliate_link}</code>",
+        "footer": "<i>Sử dụng các nút bên dưới để rút tiền hoặc xác minh là KOL/KOC.</i>"
     },
     "affiliate_withdraw": {
         "insufficient_balance": "⚠️ Bạn không có đủ số dư để rút tiền.",
-        "not_enough_balance": "❌ Số dư tối thiểu để rút là $20.",
-        "confirm_withdraw": "💰 Bạn sắp rút hoa hồng tiếp thị liên kết.\nSố dư khả dụng: <b>${balance}</b>\n\n👉 Vui lòng nhập <b>số tiền</b> bạn muốn rút và <b>địa chỉ ví BEP-20 (BSC)</b> để nhận tiền.\n\n🧾 Ví dụ: \n\n<code>20|0x7dB8a12F3dA9bC3eDfE8.......</code>",
-        "invalid_wallet": "⚠️ Địa chỉ ví không hợp lệ.\n\nVui lòng cung cấp địa chỉ <b>BEP-20 (BSC)</b> hợp lệ.",
-        "invalid_format": "⚠️ Vui lòng nhập đúng định dạng: <số tiền>|<địa chỉ ví>",
-        "withdraw_success": "✅ <b>Yêu cầu rút tiền đã được gửi!</b>\n\n💵 Số tiền: <b>${balance}</b>\n🏦 Ví: <code>{wallet}</code>\n\nYêu cầu của bạn sẽ được admin xem xét và xử lý sớm.",
-        "new_withdraw_request": "📩 <b>Yêu cầu rút tiền tiếp thị liên kết mới</b>\n\n👤 ID người dùng: <code>{user_id}</code>\n💰 Số tiền: ${balance}\n🏦 Ví: <code>{wallet}</code>\n\n🔗 Telegram: @{username}",
-        "confirm_withdraw_button": "✅ Xác nhận rút tiền",
-        "withdraw_approved": "✅ Yêu cầu rút tiền <b>#{withdraw_id}</b> đã được <b>phê duyệt</b>.\nSố dư của người dùng <code>{user_id}</code> đã được đặt lại về $0.",
-        "user_not_authorized": "⛔ Bạn không được phép thực hiện thao tác này.",
-        "invalid_data_format": "⚠️ Dữ liệu không hợp lệ.",
-        "withdraw_approved_user": "🎉 Yêu cầu rút tiền của bạn đã được phê duyệt và xử lý! Số dư hiện tại của bạn là $0.",
+        "not_enough_balance": "❌ Số dư tối thiểu cần thiết để rút tiền là $20.",
+        "confirm_withdraw": "💰 Bạn sắp rút hoa hồng liên kết của mình.\nSố dư khả dụng: <b>${balance}</b>\n\n👉 Vui lòng nhập <b>số tiền</b> bạn muốn rút và địa chỉ ví <b>BEP-20 (BSC)</b> để nhận tiền.\n\n🧾 Ví dụ: \n\n<code>20|0x7dB8a12F3dA9bC3eDfE8.......</code>",
+        "invalid_wallet": "⚠️ Địa chỉ ví không hợp lệ hoặc số dư không đủ.\n\nVui lòng cung cấp địa chỉ <b>BEP-20 (BSC)</b> hợp lệ và đảm bảo bạn có đủ tiền.",
+        "invalid_format": "⚠️ Vui lòng sử dụng định dạng đúng: <số tiền>|<địa chỉ ví>",
+        "withdraw_success": "✅ <b>Yêu cầu rút tiền đã được nhận!</b>\n\n💵 Số tiền: <b>${balance}</b>\n🏦 Ví: <code>{wallet}</code>\n\nYêu cầu của bạn sẽ được admin xem xét và xử lý sớm.",
+        "new_withdraw_request": "📩 <b>Yêu Cầu Rút Tiền Liên Kết Mới</b>\n\n👤 ID Người dùng: <code>{user_id}</code>\n💰 Số tiền: ${balance}\n🏦 Ví: <code>{wallet}</code>\n\n🔗 Telegram: @{username}",
+        "confirm_withdraw_button": "✅ Xác Nhận Rút Tiền",
+        "withdraw_approved": "✅ Yêu cầu rút tiền <b>#{withdraw_id}</b> đã được <b>phê duyệt</b>.\nSố dư người dùng <code>{user_id}</code> đã được đặt lại về $0.",
+        "user_not_authorized": "⛔ Bạn không có quyền.",
+        "invalid_data_format": "⚠️ Định dạng dữ liệu không hợp lệ.",
+        "withdraw_approved_user": "🎉 Yêu cầu rút tiền của bạn đã được phê duyệt và xử lý! Số dư liên kết của bạn hiện tại là $0.",
         "withdraw_approved_alert": "Rút tiền đã được phê duyệt ✅"
     },
     "affiliate_verify": {
-        "title": "🌟 <b>Xác minh mạng xã hội</b>",
-        "instruction": "Vui lòng gửi liên kết hoặc mô tả ngắn về <b>mạng xã hội</b> của bạn.\nVí dụ:\n- TikTok: https://www.tiktok.com/@tenban\n- Trang hoặc nhóm Facebook\n- Kênh YouTube\n- Hoặc mô tả ngắn về hồ sơ mạng xã hội của bạn.\n\n<i>Gửi liên kết hoặc thông tin bên dưới 👇</i>",
+        "title": "🌟 <b>Xác Minh Mạng Xã Hội</b>",
+        "instruction": "Vui lòng gửi liên kết liên quan đến <b>mạng xã hội</b> của bạn.\nVí dụ:\n<code>https://www.tiktok.com/@yourname</code>\n<code>https://facebook.com/yourpage</code>\n<code>https://youtube.com/@yourchannel</code>\n\n<i>Gửi liên kết của bạn bên dưới 👇</i>",
         "cancel_button": "⬅️ Hủy",
-        "admin_new_request": "📢 <b>Yêu cầu xác minh mạng xã hội mới</b>\n\n👤 ID người dùng: <code>{user_id}</code>\n🔗 Tên người dùng: @{username}\n📝 Thông tin: {social_info}\n\n📎 Telegram: <a href='https://t.me/{username}'>@{username}</a>",
-        "user_success": "✅ <b>Đã gửi yêu cầu xác minh!</b>\n\nĐội ngũ của chúng tôi sẽ xem xét hồ sơ xã hội và liên hệ với bạn sớm.",
-        "alert_under_review": "Bạn đã gửi yêu cầu xác minh. Vui lòng chờ kết quả xem xét.",
-        "alert_approved": "Yêu cầu xác minh của bạn đã được phê duyệt! 🎉",
-        "alert_rejected": "Yêu cầu xác minh của bạn bị từ chối. Vui lòng thử lại.",
-        "alert_social_warning": "⚠️ Vui lòng gửi liên kết mạng xã hội hợp lệ (vd: https://instagram.com/tenban)"
+        "admin_new_request": "📢 <b>Yêu Cầu Xác Minh Mạng Xã Hội Mới</b>\n\n👤 ID Người dùng: <code>{user_id}</code>\n🔗 Tên người dùng: @{username}\n📝 Thông tin: {social_info}\n\n📎 Telegram: <a href='https://t.me/{username}'>@{username}</a>",
+        "user_success": "✅ <b>Yêu cầu xác minh đã được gửi!</b>\n\nĐội ngũ của chúng tôi sẽ xem xét hồ sơ mạng xã hội của bạn và liên hệ sớm.",
+        "alert_under_review": "Bạn đã gửi yêu cầu xác minh rồi. Vui lòng đợi chúng tôi xem xét và phê duyệt.",
+        "alert_approved": "Xác minh của bạn đã được phê duyệt! 🎉",
+        "alert_rejected": "Yêu cầu xác minh của bạn đã bị từ chối. Vui lòng thử lại.",
+        "alert_social_warning": "⚠️ Vui lòng gửi liên kết mạng xã hội hợp lệ.\nVí dụ:\n<code>https://www.tiktok.com/@yourname</code>\n<code>https://facebook.com/yourpage</code>\n<code>https://youtube.com/@yourchannel</code>"
     },
     "cashback": {
-        "title": "⚙️ Tính năng Hoàn tiền đang được cập nhật.\nVui lòng quay lại sau!"
+        "title": "⚙️ Tính năng Hoàn Tiền hiện đang được cập nhật.\nVui lòng quay lại sau!"
     },
     "free_trial": {
-        "title": "🎁 Dùng thử miễn phí 3 ngày",
-        "description": "Trải nghiệm tín hiệu giao dịch cao cấp trong *72 giờ* hoàn toàn miễn phí!",
-        "activate_cta": "Nhấn vào bên dưới để kích hoạt bản dùng thử 👇",
-        "not_found": "❌ Không tìm thấy gói dùng thử miễn phí!",
-        "already_used": "❌ Bạn đã sử dụng bản dùng thử miễn phí rồi!",
+        "title": "🎁 Dùng Thử Miễn Phí 3 Ngày",
+        "description": "Dùng thử tín hiệu giao dịch cao cấp của chúng tôi trong *72 giờ* hoàn toàn miễn phí!",
+        "activate_cta": "Nhấn bên dưới để kích hoạt bản dùng thử của bạn 👇",
+        "not_found": "❌ Không tìm thấy gói Dùng Thử Miễn Phí!",
+        "already_used": "❌ Bạn đã sử dụng bản Dùng Thử Miễn Phí rồi!",
         "already_active": "❌ Bạn đã có gói đăng ký đang hoạt động!",
-        "activated_title": "✅ Đã kích hoạt bản dùng thử miễn phí!",
-        "activated_message": "🎉 Bạn có *{days} ngày* truy cập cao cấp.\nBản dùng thử sẽ hết hạn vào *{expire_time} *.\n\nChúc bạn giao dịch hiệu quả với các tín hiệu cao cấp! 🚀",
-        "success_alert": "✅ Đã kích hoạt dùng thử miễn phí thành công!",
+        "activated_title": "✅ Dùng Thử Miễn Phí Đã Kích Hoạt!",
+        "activated_message": "🎉 Bây giờ bạn có *{days} ngày* truy cập cao cấp.\nBản dùng thử của bạn sẽ hết hạn vào *{expire_time}*.\n\nTận hưởng tín hiệu giao dịch cao cấp và công cụ độc quyền! 🚀",
+        "success_alert": "✅ Dùng Thử Miễn Phí đã được kích hoạt thành công!",
         "join_require_plan": "❌ Vui lòng đăng ký gói trước khi tham gia kênh.",
-        "join_ready": "✅ Bạn có thể tham gia kênh Telegram chính thức của chúng tôi:",
+        "join_ready": "✅ Bây giờ bạn có thể tham gia kênh Telegram chính thức của chúng tôi:",
         "join_inactive": "⚠️ Gói đăng ký của bạn không hoạt động. Vui lòng kích hoạt hoặc gia hạn để tham gia kênh."
     },
     "qa": {
-        "center_title": "🧠 <b>Hieusoft Crypto Bot — Trung tâm Hỏi & Đáp</b>",
-        "center_description": "Chào mừng đến với Trung tâm Hỗ trợ!\n\nTại đây bạn có thể tìm câu trả lời cho các câu hỏi phổ biến về đăng ký, giới thiệu, hoàn tiền và hỗ trợ kỹ thuật.\n\nChọn một chủ đề bên dưới để bắt đầu 👇",
+        "center_title": "🧠 <b>Hieusoft Crypto Bot — Trung Tâm Hỏi Đáp</b>",
+        "center_description": "Chào mừng đến với Trung Tâm Trợ Giúp!\n\nỞ đây bạn có thể tìm câu trả lời cho các câu hỏi thường gặp về đăng ký, liên kết, hoàn tiền và hỗ trợ kỹ thuật.\n\nChọn một chủ đề bên dưới để bắt đầu 👇",
         "invalid_category": "❌ Dữ liệu danh mục không hợp lệ.",
-        "no_qna_found": "❌ Không tìm thấy câu hỏi nào cho danh mục <b>{category}</b>.",
-        "invalid_data": "❌ Dữ liệu không hợp lệ.",
+        "no_qna_found": "❌ Không tìm thấy Hỏi Đáp cho danh mục <b>{category}</b>.",
+        "invalid_data": "❌ Định dạng dữ liệu không hợp lệ.",
         "question_not_found": "❌ Không tìm thấy câu hỏi.",
-        "no_pages_found": "❌ Không tìm thấy trang nào.",
-        "qa_for": "📚 <b>Hỏi & Đáp cho {category}</b>",
+        "no_pages_found": "❌ Không tìm thấy trang.",
+        "qa_for": "📚 <b>Hỏi Đáp cho {category}</b>",
         "question_label": "<b>Câu hỏi:</b> {question}",
-        "answer_label": "<b>Câu trả lời:</b> {answer}"
+        "answer_label": "<b>Câu trả lời:</b> {answer}",
+        "subscription": "Đăng Ký",
+        "affiliate": "Liên Kết",
+        "cashback": "Hoàn Tiền",
+        "technical": "Kỹ Thuật",
+        "support": "Hỗ Trợ"
     },
     "plans": {
-        "available_title": "💎 <b>Các gói đăng ký hiện có</b>\n\n",
+        "available_title": "💎 <b>Các Gói Đăng Ký Có Sẵn</b>\n\n",
         "plan_line_separator": "━━━━━━━━━━━━━━━━━━━━━━━\n",
-        "discount_plan": "✨ <b>{plan_name}</b>\n💰 <s>${price_original}</s> ➡️ <b>${price_discounted}</b>\n💸 <b>Giảm {sale_percent}%</b> đến <i>{sale_end}</i>\n📅 Thời hạn: <code>{duration_days} ngày</code>\n",
+        "discount_plan": "✨ <b>{plan_name}</b>\n💰 <s>${price_original}</s> ➡️ <b>${price_discounted}</b>\n💸 <b>GIẢM {sale_percent}%</b> đến <i>{sale_end}</i>\n📅 Thời hạn: <code>{duration_days} ngày</code>\n",
         "normal_plan": "✨ <b>{plan_name}</b>\n💰 Giá: <b>${price}</b>\n📅 Thời hạn: <code>{duration_days} ngày</code>\n",
-        "premium_intro": "🏆 <b>Các gói cao cấp</b>\n\nMở khóa tiềm năng giao dịch của bạn với tín hiệu VIP và lợi ích độc quyền:\n\n🚀 <b>Tất cả các gói bao gồm:</b>\n• Kênh tín hiệu VIP riêng biệt\n• Hỗ trợ chuyên gia ưu tiên\n• Phân tích thị trường theo thời gian thực\n\n💡 <i>Chọn gói phù hợp nhất với mục tiêu của bạn bên dưới!</i> 👇",
+        "premium_intro": "🏆 <b>Các Gói Đăng Ký Cao Cấp</b>\n\nMở khóa toàn bộ tiềm năng giao dịch của bạn với tín hiệu cao cấp và quyền lợi VIP:\n\n🚀 <b>Tất cả gói bao gồm:</b>\n• Kênh Tín Hiệu VIP Độc Quyền\n• Hỗ Trợ Chuyên Gia Ưu Tiên\n• Thông Tin Thị Trường Theo Thời Gian Thực\n\n💡 <i>Chọn gói phù hợp nhất với mục tiêu của bạn bên dưới!</i> 👇",
         "plan_not_exist": "❌ Gói không tồn tại!",
-        "payment_title": "💎 <b>Gói {plan_name}</b>\n🧾 <b>Mã đơn hàng:</b> <code>{order_id}</code>\n💰 <b>Số tiền:</b> <b>{amount} USDT</b>\n\n<i>Chọn phương thức thanh toán bên dưới 👇</i>",
-        "no_recent_payment": "❌ Không tìm thấy giao dịch thanh toán gần đây!",
-        "oxapay_payment_instructions": "🔗 Nhấn nút bên dưới để thanh toán cho gói *{plan_name}*.\n\n⏳ Sau khi hoàn tất thanh toán, vui lòng đợi vài phút rồi nhấn 'Kiểm tra thanh toán'.",
+        "payment_title": "💎 <b>Gói {plan_name}</b>\n🧾 <b>Mã Đơn Hàng:</b> <code>{order_id}</code>\n💰 <b>Số tiền:</b> <b>{amount} USDT</b>\n\n<i>Chọn phương thức thanh toán của bạn bên dưới 👇</i>",
+        "no_recent_payment": "❌ Không tìm thấy thanh toán gần đây!",
+        "oxapay_payment_instructions": "🔗 Nhấn nút bên dưới để thanh toán cho gói *{plan_name}*.\n\n⏳ Sau khi hoàn tất thanh toán, vui lòng đợi vài phút rồi nhấn 'Kiểm Tra Thanh Toán'.",
         "subscription_not_found": "❌ Không tìm thấy bản ghi đăng ký!",
         "payment_pending": "⏳ Thanh toán cho gói *{plan_name}* vẫn đang chờ xử lý.\nVui lòng hoàn tất thanh toán bên dưới:",
-        "payment_confirmed": "✅ *Thanh toán thành công!*\n\n🎉 Gói *{plan_name}* của bạn đã được kích hoạt.\nChúc bạn trải nghiệm tín hiệu VIP và quyền lợi cao cấp!",
+        "payment_confirmed": "✅ *Thanh Toán Thành Công!*\n\n🎉 Gói đăng ký *{plan_name}* của bạn hiện đã hoạt động.\nTận hưởng quyền truy cập độc quyền vào tín hiệu cao cấp và quyền lợi VIP!",
         "payment_pending_alert": "⏳ Thanh toán chưa được xác nhận. Thử lại sau vài phút.",
-        "payment_confirmed_alert": "✅ Thanh toán đã được xác nhận! Gói đăng ký đã được kích hoạt.",
+        "payment_confirmed_alert": "✅ Thanh toán đã xác nhận! Đăng ký đã được kích hoạt.",
         "subscription_inactive": "⚠️ Gói đăng ký của bạn không hoạt động. Vui lòng kích hoạt hoặc gia hạn để tham gia kênh.",
         "join_channel_no_subscription": "❌ Vui lòng đăng ký gói trước khi tham gia kênh.",
-        "join_channel_success": "✅ Bạn có thể tham gia kênh Telegram chính thức của chúng tôi:"
+        "join_channel_success": "✅ Bây giờ bạn có thể tham gia kênh Telegram chính thức của chúng tôi:",
+        "payment_already_processed": "✅ Thanh toán này đã được xác nhận và xử lý rồi.",
+        "monthly": "Hàng Tháng",
+        "quarterly": "Hàng Quý",
+        "yearly": "Hàng Năm"
     },
     "join_channel": {
         "not_registered": "❌ Vui lòng đăng ký gói trước khi tham gia kênh.",
-        "can_join": "✅ Bạn có thể tham gia kênh Telegram chính thức của chúng tôi:",
+        "can_join": "✅ Bây giờ bạn có thể tham gia kênh Telegram chính thức của chúng tôi:",
         "not_active": "⚠️ Gói đăng ký của bạn không hoạt động. Vui lòng kích hoạt hoặc gia hạn để tham gia kênh."
     },
     "referral": {
-        "new_referral": "🎉 <b>Đã có người đăng ký qua link của bạn!</b>\n\nNgười dùng <code>{username}</code> (ID: <code>{user_id}</code>) vừa đăng ký dưới bạn."
+        "new_referral": "🎉 <b>Người Được Giới Thiệu Mới Đã Đăng Ký!</b>\n\nNgười dùng <code>{username}</code> (ID: <code>{user_id}</code>) đã đăng ký bằng liên kết giới thiệu của bạn."
     },
     "button": {
         "cancel_button": "⬅️ Hủy",
-        "try_again_button": "🔁 Thử lại",
-        "back_button": "↩️ Quay lại",
-        "join_channel": "👉 Tham gia kênh",
-        "next_button": "➡️ Tiếp theo",
-        "pre_button": "⬅️ Trước đó",
-        "withdraw_button": "💵 Rút tiền",
-        "verify_kol": "🧾 Xác minh KOL/KOC",
-        "activate_free_trial": "✅ Kích hoạt dùng thử miễn phí",
-        "join_official_channel": "🚀 Tham gia kênh chính thức",
-        "start_free_trial": "🎯 Bắt đầu dùng thử (3 ngày)",
-        "premium_plan": "💎 Gói cao cấp",
-        "cashback_trading_fee": "💰 Hoàn tiền phí giao dịch",
-        "my_account": "👤 Tài khoản của tôi",
-        "affiliate_center": "🤝 Trung tâm tiếp thị liên kết",
-        "help_q/a": "🧠 Hỗ trợ / Hỏi & Đáp",
-        "support_team": "🧑‍💼 Đội hỗ trợ",
-        "change_language": "🌍 Thay đổi ngôn ngữ",
+        "try_again_button": "🔁 Thử Lại",
+        "back_button": "↩️ Quay Lại",
+        "join_channel": "👉 Tham Gia Kênh",
+        "next_button": "➡️ Tiếp Theo",
+        "pre_button": "⬅️ Trước",
+        "withdraw_button": "💵 Rút Tiền",
+        "verify_kol": "🧾 Xác Minh KOL/KOC",
+        "activate_free_trial": "✅ Kích Hoạt Dùng Thử Miễn Phí",
+        "join_official_channel": "🚀 Tham Gia Kênh Chính Thức",
+        "start_free_trial": "🎯 Bắt Đầu Dùng Thử Miễn Phí (3 Ngày)",
+        "premium_plan": "💎 Gói Cao Cấp",
+        "cashback_trading_fee": "💰 Hoàn Tiền Phí Giao Dịch",
+        "my_account": "👤 Tài Khoản Của Tôi",
+        "affiliate_center": "🤝 Trung Tâm Liên Kết",
+        "help_q/a": "🧠 Trợ Giúp / Hỏi Đáp",
+        "support_team": "🧑‍💼 Đội Hỗ Trợ",
+        "change_language": "🌍 Đổi Ngôn Ngữ",
         "oxa_pay": "💳 OxaPay",
-        "affiliate_balance": "💰 Số dư hoa hồng",
-        "pay_with_oxapay": "🔗 Thanh toán bằng OxaPay",
-        "check_payment": "✅ Kiểm tra thanh toán"
+        "affiliate_balance": "💰 Số Dư Liên Kết",
+        "pay_with_oxapay": "🔗 Thanh Toán Bằng OxaPay",
+        "check_payment": "✅ Kiểm Tra Thanh Toán"
     },
     "affiliate_payment": {
-        "order_summary": "🧾 *Tóm tắt đơn hàng*\n\n📦 *Gói:* {plan_name}\n💰 *Giá:* {price} USDT\n💸 *Số dư của bạn:* {balance} USDT\n🆔 *Mã đơn hàng:* `{order_id}`\n\nBạn có muốn xác nhận mua bằng số dư hoa hồng không?",
-        "confirm_button": "✅ Xác nhận mua",
+        "order_summary": "🧾 *Tóm Tắt Đơn Hàng*\n\n📦 *Gói:* {plan_name}\n💰 *Giá:* {price} USDT\n💸 *Số Dư Của Bạn:* {balance} USDT\n🆔 *Mã Đơn Hàng:* `{order_id}`\n\nBạn có muốn xác nhận mua hàng này bằng số dư liên kết của mình không?",
+        "confirm_button": "✅ Xác Nhận Mua Hàng",
         "balance_changed": "⚠️ Số dư của bạn đã thay đổi. Bạn không còn đủ tiền."
     },
     "affiliate": {
-        "commission_notify": "🎉 Chúc mừng! Bạn vừa nhận **{percent}% hoa hồng** từ lượt giới thiệu `{referral}` đã gia hạn gói **{plan_name}**.\n\n💰 Hoa hồng nhận được: **${earned}**\n🏦 Tổng số dư hoa hồng: **${total}**"
+        "commission_notify": "🎉 Chúc mừng! Bạn vừa kiếm được **hoa hồng {percent}%** từ người được giới thiệu `{referral}` đã gia hạn thành công gói **{plan_name}**.\n\n💰 Hoa hồng kiếm được: **${earned}**\n🏦 Tổng số dư hoa hồng: **${total}**"
     },
     "renew": {
-        "expired_notice": "⚠️ *Gói của bạn đã hết hạn!* ⚠️\n\nVui lòng gia hạn để tiếp tục sử dụng các tính năng cao cấp và tín hiệu VIP. 💎\n\n_Đội ngũ HieuSoft_ ⚡",
-        "about_to_expire": "⏳ Gói của bạn sẽ hết hạn trong {days} ngày nữa!\nGia hạn ngay gói *{plan_name}* và nhận ưu đãi {discount}%! 🎁"
+        "expired_notice": "⚠️ *Gói đăng ký của bạn đã hết hạn!* ⚠️\n\nVui lòng gia hạn gói của bạn để tiếp tục tận hưởng các tính năng và tín hiệu cao cấp. 💎\n\n_Đội Ngũ HieuSoft_ ⚡",
+        "about_to_expire": "⏳ Gói đăng ký của bạn sắp hết hạn trong {days} ngày!\nGia hạn ngay cho gói *{plan_name}* và nhận giảm giá {discount}%! 🎁"
     },
     "notify": {
-        "kol_welcome": "🌟 *Chào mừng Đối tác KOL/KOC mới!* 🌟\n\nTỷ lệ hoa hồng hiện tại của bạn là *{percent}%* 💰\n\nRất vui khi có bạn đồng hành cùng cộng đồng nhà sáng tạo của chúng tôi.\nHãy đón chờ các chiến dịch và phần thưởng hấp dẫn! 💼✨\n\n_Đội ngũ HieuSoft_ ⚡",
-        "withdraw_paid": "💸 *Thanh toán thành công!*\n\nYêu cầu rút tiền của bạn đã được xử lý. 🎉\n🔹 *Số tiền:* {amount}\n🔹 *TXID:* `{txid}`\n\nCảm ơn bạn đã đồng hành cùng *Chương trình Affiliate của HieuSoft*! 💼\n\n_Đội ngũ HieuSoft_ ⚡",
-        "kol_rejected": "⛔ Yêu cầu xác minh KOL/KOC của bạn đã bị từ chối. Vui lòng xem lại yêu cầu và gửi lại.",
-        "kol_not_submitted": "⚠️ Thông tin bạn gửi chưa hợp lệ hoặc chưa đầy đủ. Vui lòng gửi lại thông tin xác minh KOL/KOC.",
-        "withdraw_pending": "⏳ Yêu cầu rút tiền của bạn đang được xử lý. Vui lòng chờ.",
+        "kol_welcome": "🌟 *Chào mừng, Đối Tác KOL/KOC mới của chúng tôi!* 🌟\n\nTỷ lệ hoa hồng hiện tại của bạn là *{percent}%* 💰\n\nChúng tôi rất vui mừng khi bạn tham gia cộng đồng người sáng tạo và đại sứ thương hiệu đang phát triển của chúng tôi.\nHãy theo dõi các chiến dịch sắp tới và phần thưởng độc quyền! 💼✨\n\n_Đội Ngũ HieuSoft_ ⚡",
+        "withdraw_paid": "💸 <b>Hoàn Tất Rút Tiền</b>\n\n💰 <b>Số tiền:</b> {amount} USDT (${amount})\n💳 <b>Địa chỉ:</b> <code>{address}</code>\n✅ <b>Trạng thái:</b> Đã xác nhận\n🆔 <b>Hash:</b> <a href=\"{tx_link}\">{short_txid}</a>\n📆 <b>Ngày:</b> {date}\n\n<i>Cảm ơn bạn đã sử dụng Chương Trình Liên Kết HieuSoft 💼</i>\n<b>— Đội Ngũ HieuSoft ⚡</b>",
+        "kol_rejected": "⛔ Xác minh KOL/KOC của bạn đã bị từ chối. Vui lòng xem lại yêu cầu và thử lại.",
+        "kol_not_submitted": "⚠️ Đơn của bạn không hợp lệ hoặc chưa đầy đủ. Vui lòng gửi lại thông tin xác minh KOL/KOC của bạn.",
+        "withdraw_pending": "⏳ Yêu cầu rút tiền của bạn đang được xử lý. Vui lòng đợi.",
         "withdraw_rejected": "❌ Yêu cầu rút tiền của bạn đã bị từ chối.",
-        "withdraw_user_paid_no_txid": "💰 *Bạn đã thanh toán thành công!*\n\nGiao dịch của bạn với số tiền *{amount} USDT* đã được xác nhận. 🎉\n\nCảm ơn bạn đã tin tưởng và sử dụng *HieuSoft*! 💼✨"
-
+        "withdraw_user_paid_no_txid": "💰 *Bạn đã hoàn tất thanh toán thành công!*\n\nGiao dịch *{amount} USDT* của bạn đã được xác nhận. 🎉\n\nCảm ơn bạn đã tin tưởng *HieuSoft*! 💼✨"
     },
     "errors": {
         "invalid_data": "❌ Dữ liệu không hợp lệ.",
-        "not_enough_affiliate_balance": "⚠️ Bạn không đủ số dư hoa hồng để mua gói này."
+        "not_enough_affiliate_balance": "⚠️ Bạn không có đủ số dư liên kết để mua gói này."
     }
 }

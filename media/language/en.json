@@ -50,14 +50,14 @@
     },
     "affiliate_verify": {
         "title": "🌟 <b>Social Verification</b>",
-        "instruction": "Please send a link or short description related to your <b>social media</b>.\nFor example:\n- TikTok: https://www.tiktok.com/@yourname\n- Facebook page or group\n- YouTube channel\n- Or just a brief text describing your social profile.\n\n<i>Send your link or text below 👇</i>",
+        "instruction": "Please send a link related to your <b>social media</b>.\nFor example:\n<code>https://www.tiktok.com/@yourname</code>\n<code>https://facebook.com/yourpage</code>\n<code>https://youtube.com/@yourchannel</code>\n\n<i>Send your link below 👇</i>",
         "cancel_button": "⬅️ Cancel",
         "admin_new_request": "📢 <b>New Social Verification Request</b>\n\n👤 User ID: <code>{user_id}</code>\n🔗 Username: @{username}\n📝 Info: {social_info}\n\n📎 Telegram: <a href='https://t.me/{username}'>@{username}</a>",
         "user_success": "✅ <b>Verification request sent!</b>\n\nOur team will review your social profile and contact you soon.",
         "alert_under_review": "You have already submitted verification. Please wait for our review and approval.",
         "alert_approved": "Your verification has been approved! 🎉",
         "alert_rejected": "Your verification request was rejected. Please try again.",
-        "alert_social_warning": "⚠️ Please send a valid social media link (e.g., https://instagram.com/yourname)"
+        "alert_social_warning": "⚠️ Please send a valid social media link.\nFor example:\n<code>https://www.tiktok.com/@yourname</code>\n<code>https://facebook.com/yourpage</code>\n<code>https://youtube.com/@yourchannel</code>"
     },
     "cashback": {
         "title": "⚙️ The Cashback feature is currently being updated.\nPlease check back later!"
@@ -86,7 +86,12 @@
         "no_pages_found": "❌ No pages found.",
         "qa_for": "📚 <b>Q&A for {category}</b>",
         "question_label": "<b>Question:</b> {question}",
-        "answer_label": "<b>Answer:</b> {answer}"
+        "answer_label": "<b>Answer:</b> {answer}",
+        "subscription": "Subscription",
+        "affiliate": "Affiliate",
+        "cashback": "Cashback",
+        "technical": "Technical",
+        "support": "Support"
     },
     "plans": {
         "available_title": "💎 <b>Available Subscription Plans</b>\n\n",
@@ -106,7 +111,10 @@
         "subscription_inactive": "⚠️ Your subscription is not active. Please activate or renew it to join the channel.",
         "join_channel_no_subscription": "❌ Please register for a plan before joining the channel.",
         "join_channel_success": "✅ You can now join our official Telegram channel:",
-        "payment_already_processed":"✅ This payment has already been confirmed and processed."
+        "payment_already_processed": "✅ This payment has already been confirmed and processed.",
+        "monthly": "Monthly",
+        "quarterly": "Quarterly",
+        "yearly": "Yearly"
     },
     "join_channel": {
         "not_registered": "❌ Please register for a plan before joining the channel.",
@@ -154,7 +162,7 @@
     },
     "notify": {
         "kol_welcome": "🌟 *Welcome aboard, our new KOL/KOC Partner!* 🌟\n\nYour current commission rate is *{percent}%* 💰\n\nWe’re thrilled to have you join our growing community of creators and brand ambassadors.\nStay tuned for upcoming campaigns and exclusive rewards! 💼✨\n\n_The HieuSoft Team_ ⚡",
-        "withdraw_paid": "💸 *Payment Successful!*\n\nHello partner, your withdrawal request has been successfully processed. 🎉\n🔹 *Amount:* {amount}\n🔹 *TXID:* `{txid}`\n\nThank you for being part of the *HieuSoft Affiliate Program*! 💼\n\n_The HieuSoft Team_ ⚡",
+        "withdraw_paid": "💸 <b>Withdrawal Completed</b>\n\n💰 <b>Amount:</b> {amount} USDT (${amount})\n💳 <b>Address:</b> <code>{address}</code>\n✅ <b>Status:</b> Confirmed\n🆔 <b>Hash:</b> <a href=\"{tx_link}\">{short_txid}</a>\n📆 <b>Date:</b> {date}\n\n<i>Thank you for using HieuSoft Affiliate Program 💼</i>\n<b>— The HieuSoft Team ⚡</b>",
         "kol_rejected": "⛔ Your KOL/KOC verification was rejected. Please review the requirements and try again.",
         "kol_not_submitted": "⚠️ Your submission was invalid or incomplete. Please resubmit your KOL/KOC verification information.",
         "withdraw_pending": "⏳ Your withdrawal request is being processed. Please wait.",

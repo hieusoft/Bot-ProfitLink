@@ -71,23 +71,58 @@ class SendMessage:
 
                 text = None
                 if withdraw.status == "approved":
-                    
-                    text = translator.t(
-                        "notify.withdraw_user_paid_no_txid" if txid == "No TXID available" else "notify.withdraw_paid",
-                        amount=f"{withdraw.amount}",
-                        txid=txid,
-                    )
+                    if txid == "No TXID available":
+                        text = translator.t(
+                            "notify.withdraw_user_paid_no_txid",
+                            amount=f"{withdraw.amount:.2f}"
+                        )
+                    else:
+                       
+                        short_txid = f"{txid[:4]}...{txid[-4:]}"  # → 0x9e...27d1
+                        bsc_link = f"https://bscscan.com/tx/{txid}"
+
+                        
+                        text = translator.t(
+                            "notify.withdraw_paid",
+                            amount=f"{withdraw.amount:.2f}",
+                            address=withdraw.wallet_address,
+                            tx_link=bsc_link,
+                            short_txid=short_txid,
+                            date=withdraw.created_at.strftime("%Y-%m-%d %H:%M:%S")
+                        )
 
                 elif withdraw.status == "pending":
                     text = translator.t("notify.withdraw_pending")
+
                 elif withdraw.status == "rejected":
                     text = translator.t("notify.withdraw_rejected")
 
                 if text:
-                    await self.send(withdraw.user_id, text)
+                    await self.send(
+                        withdraw.user_id,
+                        text,
+                        disable_web_page_preview=True
+                    )
 
-    async def send(self, user_id: int, text: str):
+
+    async def send(self, user_id: int, text: str, **kwargs):
+       
         try:
-            await self.bot.send_message(chat_id=user_id, text=text, parse_mode="Markdown")
+            # Nếu không có parse_mode truyền vào, tự động chọn dựa theo nội dung
+            parse_mode = kwargs.get("parse_mode")
+            if not parse_mode:
+                if "<" in text and ">" in text:
+                    parse_mode = "HTML"
+                elif "*" in text or "_" in text:
+                    parse_mode = "Markdown"
+                else:
+                    parse_mode = None
+
+            await self.bot.send_message(
+                chat_id=user_id,
+                text=text,
+                parse_mode=parse_mode,
+                disable_web_page_preview=kwargs.get("disable_web_page_preview", True)
+            )
         except Exception as e:
             print(f"[SendMessage] ❌ Error sending message to {user_id}: {e}")

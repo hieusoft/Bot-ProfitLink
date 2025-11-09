@@ -15,11 +15,12 @@ def get_qa_menu(lang:str):
     kb = InlineKeyboardBuilder()
 
     for i, cat in enumerate(categories):
+        key = f"qa.{cat.category_name.lower()}" 
         kb.button(
-            text=f"{emojis[i]} {cat.category_name}",
+            text=f"{emojis[i]} {translator.t(key)}",
             callback_data=f"qa_category_{cat.category_id}_{cat.category_name}"
         )
 
-    kb.button(text=f"{translator.t('button.back_button')}", callback_data="back_main")
+    kb.button(text=translator.t("button.back_button"), callback_data="back_main")
     kb.adjust(2)
     return kb.as_markup()

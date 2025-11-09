@@ -13,12 +13,13 @@ affiliate_router = Router()
 ADMIN_CHAT_ID = settings.ADMIN_CHAT_ID
 URL_BOT = settings.URL_BOT
 URL_REGEX = re.compile(
-    r'^(https?:\/\/)?'  # http hoặc https (tùy chọn)
-    r'([\w.-]+)\.'      # tên miền
-    r'([a-zA-Z]{2,})'   # phần mở rộng (com, net, org,...)
-    r'(\/\S*)?$',        # phần path (tùy chọn)
+    r'^(https?:\/\/)'         
+    r'([\w.-]+)\.'           
+    r'([a-zA-Z]{2,})'         
+    r'(\/\S*)?$',         
     re.IGNORECASE
 )
+
 user_langs = {}
 class WithdrawState(StatesGroup):
     waiting_for_wallet = State()
@@ -251,7 +252,7 @@ async def handle_affiliate_verify(callback: types.CallbackQuery, state: FSMConte
         return
 
     kb = InlineKeyboardBuilder()
-    kb.button(text=translator.t("button.cancel_button"), callback_data="affiliate")
+    kb.button(text=translator.t("button.back_button"), callback_data="affiliate")
     markup = kb.as_markup()
 
 
@@ -267,64 +268,94 @@ async def handle_affiliate_verify(callback: types.CallbackQuery, state: FSMConte
     await state.set_state(VerifyState.waiting_for_social_link)
     await callback.answer()
 
-
 @affiliate_router.message(VerifyState.waiting_for_social_link)
 async def process_social_verification(message: types.Message, state: FSMContext):
-    
     user_id = message.from_user.id
     lang = user_langs.get(user_id, "en")
     translator = Translator(lang)
 
     username = message.from_user.username or "No username"
-    social_info = message.text.strip()
+    social_text = message.text.strip()
+
 
     try:
         await message.delete()
     except Exception:
         pass
-    if not URL_REGEX.match(social_info):
-        warn_msg = await message.answer(
-           translator.t("affiliate_verify.alert_social_warning"),
-            parse_mode="HTML"
-        )
-        async def _delete_later(bot, chat_id, message_id, delay=5):
-            await asyncio.sleep(delay)
-            try:
-                await bot.delete_message(chat_id=chat_id, message_id=message_id)
-            except Exception:
-                pass
-        asyncio.create_task(_delete_later(message.bot, warn_msg.chat.id, warn_msg.message_id, delay=5))
-        return
-    UserService.update_verified_kol(
-        user_id=user_id,
-        verified_kol="under_review",
-        link= social_info
-    
-    )
+
     data = await state.get_data()
     edit_msg_id = data.get("edit_msg_id")
 
-    try:
-        await message.delete()
-    except Exception:
-        pass
+    # Tách các link theo dòng
+    links = [line.strip() for line in social_text.splitlines() if line.strip()]
+
+    # Nếu không có link nào
+    if not links:
+        await message.answer(translator.t("affiliate_verify.empty_links"))
+        return
+
+    # Kiểm tra từng link
+    invalid_links = [link for link in links if not URL_REGEX.match(link)]
+
+    if invalid_links:
+        kb = InlineKeyboardBuilder()
+        kb.button(
+            text=translator.t("button.try_again_button"),
+            callback_data="aff_verify"
+        )
+        kb.button(
+            text=translator.t("button.back_button"),
+            callback_data="affiliate"
+        )
+        markup = kb.as_markup()
+
+        # ⚠️ Gộp các link sai để hiển thị cho người dùng (nếu cần)
+        bad_list = "\n".join(invalid_links)
+        warn_text = translator.t("affiliate_verify.alert_social_warning")
+
+        try:
+            await message.bot.edit_message_text(
+                chat_id=user_id,
+                message_id=edit_msg_id,
+                text=warn_text,
+                parse_mode="HTML",
+                reply_markup=markup
+            )
+        except Exception:
+            await message.bot.send_message(
+                chat_id=user_id,
+                text=warn_text,
+                parse_mode="HTML",
+                reply_markup=markup
+            )
+
+        await state.clear()
+        return
+
+    # ✅ Nếu tất cả link hợp lệ
+    combined_links = "\n".join(links)
+
+    UserService.update_verified_kol(
+        user_id=user_id,
+        verified_kol="under_review",
+        link=combined_links   # 🟢 Lưu tất cả link trong 1 chuỗi (ngăn cách bằng xuống dòng)
+    )
+
     admin_text = translator.t(
         "affiliate_verify.admin_new_request",
         user_id=user_id,
         username=username,
-        social_info=social_info
+        social_info=combined_links
     )
 
-
-    
-   
-
-
+    # Gửi cho admin
     await message.bot.send_message(
         chat_id=ADMIN_CHAT_ID,
         text=admin_text,
         parse_mode="HTML"
     )
+
+    # Gửi lại cho user
     try:
         await message.bot.edit_message_text(
             chat_id=user_id,

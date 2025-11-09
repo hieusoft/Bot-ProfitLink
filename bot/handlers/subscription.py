@@ -38,14 +38,15 @@ async def open_subscription_menu(callback: types.CallbackQuery):
         price_text = f"${plan.price:.2f}"
         sale_start = plan.sale_start.astimezone(tz_vn) if plan.sale_start else None
         sale_end = plan.sale_end.astimezone(tz_vn) if plan.sale_end else None
-
+        plan_name = (plan.name).lower()
         plans_text += translator.t("plans.plan_line_separator")
 
         if plan.sale_percent > 0 and sale_start and sale_end and sale_start <= now_vn <= sale_end:
             discounted_price = plan.price * (1 - plan.sale_percent / 100)
             plans_text += translator.t(
                 "plans.discount_plan",
-                plan_name=plan.name,
+                plan_name=translator.t(f"plans.{plan_name}"),  # ✅ Dùng f-string ở đây
+
                 price_original=f"{plan.price:.2f}",
                 price_discounted=f"{discounted_price:.2f}",
                 sale_percent=f"{plan.sale_percent:.0f}",
@@ -65,7 +66,7 @@ async def open_subscription_menu(callback: types.CallbackQuery):
     except Exception:
         pass
 
-    # Gửi tin nhắn mới với nội dung trong JSON
+
     await callback.message.answer(
         text=f"{translator.t('plans.premium_intro')}\n\n{plans_text}",
         parse_mode="HTML",
